@@ -5,14 +5,19 @@ import {
     Image
 } from 'react-native';
 
-export default function SignIn() {
+export default function SignIn({navigation}) {
+
     const [currUserID, newUserID] = useState("");
     const [currPassword, newPassword] = useState("");
+
+    const pressHandler = () =>{
+        navigation.navigate('SignUp');
+    }
     return (
         <View style={styles.container}>
 
             <Text style={styles.logo}>Sign In</Text>
-            <Image style={styles.ImageStyle} source={require('../assets/ProfileAvatar.jpg')} />
+            <Image style={styles.ImageStyle} source={require('./Images/ProfileAvatar.jpg')} />
             <View style={styles.inputView} >
                 <TextInput
                     style={styles.inputText}
@@ -38,7 +43,7 @@ export default function SignIn() {
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={pressHandler}>
                 <Text style={styles.loginText}>Signup</Text>
             </TouchableOpacity>
         </View>
@@ -66,12 +71,13 @@ const styles = StyleSheet.create({
         height: 50,
         marginBottom: 20,
         justifyContent: "center",
-        padding: 20
+        padding: 20,
     },
     inputText: {
         height: 50,
         fontSize: 18,
-        color: "white"
+        color: "white",
+        
     },
     forgot: {
         color: "#ccc",
