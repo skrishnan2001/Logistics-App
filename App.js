@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import SignIn from "./Application/SignIn";
-import SignUp from "./Application/SignUp";
+import SignIn from "./app/screens/SignIn";
+import SignUp from "./app/screens/SignUp";
 
 export default function App() {
   return (
