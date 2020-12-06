@@ -5,14 +5,40 @@ import {
     Image
 } from 'react-native';
 
-export default function SignIn({navigation}) {
+export default function SignIn({ navigation }) {
 
     const [currUserID, newUserID] = useState("");
     const [currPassword, newPassword] = useState("");
+    const [passState, newPassState] = useState("");
+    const [userState, newUserState] = useState("");
 
-    const pressHandler = () =>{
+    const pressHandler = () => {
         navigation.navigate('SignUp');
     }
+
+    const passNotEmpty = () => {
+        if (currPassword == "" || currUserID == "") {
+            if (currPassword == "") {
+                newPassState("Password required");
+            }
+            else {
+                newPassState("");
+            }
+            if (currUserID == "") {
+                newUserState("Username required");
+            }
+            else {
+                newUserState("");
+            }
+        }
+        else
+        {
+            newUserState("");
+            newPassState("");
+            return <View />
+        }
+    }
+
     return (
         <View style={styles.container}>
 
@@ -26,6 +52,10 @@ export default function SignIn({navigation}) {
                     onChangeText={text => newUserID(text)} />
             </View>
 
+            <View style={{ width: '75%' }}>
+                <Text style={styles.validation}>{userState}</Text>
+            </View>
+
             <View style={styles.inputView} >
                 <TextInput
                     style={styles.inputText}
@@ -34,17 +64,22 @@ export default function SignIn({navigation}) {
                     secureTextEntry
                     onChangeText={text => newPassword(text)} />
             </View>
+            <View style={{ width: '75%' }}>
+                <Text style={styles.validation}>{passState}
+                </Text>
+            </View>
 
-            <TouchableOpacity>
-                <Text style={styles.forgot}>Forgot Password?</Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginBtn}>
+            <TouchableOpacity style={styles.loginBtn} onPress={passNotEmpty}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={pressHandler}>
                 <Text style={styles.loginText}>Signup</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+                <Text style={styles.forgot}>Forgot Password?</Text>
             </TouchableOpacity>
         </View>
     );
@@ -69,19 +104,20 @@ const styles = StyleSheet.create({
         backgroundColor: "#465881",
         borderRadius: 25,
         height: 50,
-        marginBottom: 20,
+        marginBottom: 13,
         justifyContent: "center",
         padding: 20,
     },
     inputText: {
         height: 50,
-        fontSize: 18,
+        fontSize: 20,
         color: "white",
-        
+
     },
     forgot: {
         color: "#ccc",
-        fontSize: 16
+        fontSize: 16,
+        marginTop: 10
     },
     loginText: {
         color: "white",
@@ -101,7 +137,14 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 40,
-        marginBottom: 10
+        marginTop: 13,
+        marginBottom: 15
     },
+    validation: {
+        color: "crimson",
+        fontSize: 15,
+        fontWeight: 'bold',
+        textAlign: "left",
+        marginBottom: 13
+    }
 });
