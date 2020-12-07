@@ -2,29 +2,25 @@ import React, { useState } from 'react';
 import {
   StyleSheet, Text,
   View, TextInput,
-  TouchableOpacity, ScrollView
+  TouchableOpacity, 
 } from 'react-native';
 
 export default function SignUp() {
-  const [setName, nextName] = useState("");
   const [setPhone, newPhone] = useState("");
   const [setEmail, newEmail] = useState("");
-  const [address, nextAddress] = useState("");
   const [setPassword, nextPassword] = useState("");
   const [setConfirm, nextConfirmPassword] = useState("");
 
-  const [nameState, newNameState] = useState("");
   const [phoneState, newPhoneState] = useState("");
   const [emailState, newEmailState] = useState("");
   const [passwordState, newPasswordState] = useState("");
   const [confirmState, newConfirmState] = useState("");
-  const [addressState, newAddressState] = useState("");
 
   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   const validate = () => {
-    if (setName == "" || setPhone == "" || setEmail == "" ||
-      setPassword == "" || setConfirm == "" || address == "") {
+    if (setPhone == "" || setEmail == "" ||
+      setPassword == "" || setConfirm == "" || reg.test(setEmail) == false ) {
       if (setEmail == "") {
         newEmailState("Email required");
       }
@@ -34,23 +30,11 @@ export default function SignUp() {
       else {
         newEmailState("");
       }
-      if (setName == "") {
-        newNameState("Name required");
-      }
-      else {
-        newNameState("");
-      }
       if (setPhone == "") {
         newPhoneState("Mobile number required");
       }
       else {
         newPhoneState("");
-      }
-      if (address == "") {
-        newAddressState("Address required");
-      }
-      else {
-        newAddressState("");
       }
       if (setPassword == "") {
         newPasswordState("Password required");
@@ -71,101 +55,72 @@ export default function SignUp() {
     else {
       newPasswordState("");
       newEmailState("");
-      newEmailState("");
       newPhoneState("");
       newConfirmState("");
-      newAddressState("");
       return <View />
     }
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.logo}>Sign Up</Text>
+    <View style={styles.container}>
+      <Text style={styles.logo}>Sign Up</Text>
 
-        <View style={styles.inputView} >
-          <TextInput
-            style={styles.inputText}
-            placeholder="Name..."
-            placeholderTextColor="#003f5c"
-            onChangeText={text => nextName(text)} />
-        </View>
-
-        <View style={{ width: '75%' }}>
-          <Text style={styles.validation}>{nameState}</Text>
-        </View>
-
-        <View style={styles.inputView} >
-          <TextInput
-            style={styles.inputText}
-            placeholder="Mobile no..."
-            keyboardType='numeric'
-            maxLength={10}
-            placeholderTextColor="#003f5c"
-            onChangeText={text => newPhone(text)} />
-        </View>
-
-        <View style={{ width: '75%' }}>
-          <Text style={styles.validation}>{phoneState}</Text>
-        </View>
-
-        <View style={styles.inputView} >
-          <TextInput
-            style={styles.inputText}
-            placeholder="Email ID..."
-            placeholderTextColor="#003f5c"
-            onChangeText={text => newEmail(text)} />
-        </View>
-
-        <View style={{ width: '75%' }}>
-          <Text style={styles.validation}>{emailState}</Text>
-        </View>
-
-        <View style={styles.inputView} >
-          <TextInput
-            style={styles.inputText}
-            placeholder="Address..."
-            placeholderTextColor="#003f5c"
-            multiline
-            onChangeText={text => nextAddress(text)} />
-        </View>
-
-        <View style={{ width: '75%' }}>
-          <Text style={styles.validation}>{addressState}</Text>
-        </View>
-
-        <View style={styles.inputView} >
-          <TextInput
-            style={styles.inputText}
-            placeholder="Password..."
-            placeholderTextColor="#003f5c"
-            secureTextEntry
-            onChangeText={text => nextPassword(text)} />
-        </View>
-
-        <View style={{ width: '75%' }}>
-          <Text style={styles.validation}>{passwordState}</Text>
-        </View>
-
-        <View style={styles.inputView} >
-          <TextInput
-            style={styles.inputText}
-            placeholder="Confirm password..."
-            placeholderTextColor="#003f5c"
-            secureTextEntry
-            onChangeText={text => nextConfirmPassword(text)} />
-        </View>
-
-        <View style={{ width: '75%' }}>
-          <Text style={styles.validation}>{confirmState}</Text>
-        </View>
-
-        <TouchableOpacity style={styles.loginBtn} onPress={validate}>
-          <Text style={styles.loginText}>SIGN UP</Text>
-        </TouchableOpacity>
+      <View style={styles.inputView} >
+        <TextInput
+          style={styles.inputText}
+          placeholder="Mobile no..."
+          keyboardType='numeric'
+          maxLength={10}
+          placeholderTextColor="#003f5c"
+          onChangeText={text => newPhone(text)} />
       </View>
-    </ScrollView>
+
+      <View style={{ width: '75%' }}>
+        <Text style={styles.validation}>{phoneState}</Text>
+      </View>
+
+      <View style={styles.inputView} >
+        <TextInput
+          style={styles.inputText}
+          placeholder="Email ID..."
+          placeholderTextColor="#003f5c"
+          onChangeText={text => newEmail(text)} />
+      </View>
+
+      <View style={{ width: '75%' }}>
+        <Text style={styles.validation}>{emailState}</Text>
+      </View>
+
+      <View style={styles.inputView} >
+        <TextInput
+          style={styles.inputText}
+          placeholder="Password..."
+          placeholderTextColor="#003f5c"
+          secureTextEntry
+          onChangeText={text => nextPassword(text)} />
+      </View>
+
+      <View style={{ width: '75%' }}>
+        <Text style={styles.validation}>{passwordState}</Text>
+      </View>
+
+      <View style={styles.inputView} >
+        <TextInput
+          style={styles.inputText}
+          placeholder="Confirm password..."
+          placeholderTextColor="#003f5c"
+          secureTextEntry
+          onChangeText={text => nextConfirmPassword(text)} />
+      </View>
+
+      <View style={{ width: '75%' }}>
+        <Text style={styles.validation}>{confirmState}</Text>
+      </View>
+
+      <TouchableOpacity style={styles.loginBtn} onPress={validate}>
+        <Text style={styles.loginText}>SIGN UP</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 

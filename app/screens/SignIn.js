@@ -4,7 +4,6 @@ import {
     TextInput, TouchableOpacity,
     Image
 } from 'react-native';
-import SignUp from './SignUp';
 
 export default function SignIn({ navigation }) {
 
@@ -13,23 +12,27 @@ export default function SignIn({ navigation }) {
     const [passState, newPassState] = useState("");
     const [userState, newUserState] = useState("");
 
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
     const passNotEmpty = () => {
-        if (currPassword == "" || currUserID == "") {
+        if (currPassword == "" || currUserID == "" || reg.test(currUserID) == false) {
+            if (currUserID == "") {
+                newUserState("Username required");
+            }
+            else if (reg.test(currUserID) == false) {
+                newUserState("Invalid Email Format");
+            }
+            else {
+                newUserState("");
+            }
             if (currPassword == "") {
                 newPassState("Password required");
             }
             else {
                 newPassState("");
             }
-            if (currUserID == "") {
-                newUserState("Username required");
-            }
-            else {
-                newUserState("");
-            }
         }
-        else
-        {
+        else {
             newUserState("");
             newPassState("");
             return <View />
@@ -44,7 +47,7 @@ export default function SignIn({ navigation }) {
             <View style={styles.inputView} >
                 <TextInput
                     style={styles.inputText}
-                    placeholder="Username..."
+                    placeholder="Email..."
                     placeholderTextColor="#003f5c"
                     onChangeText={text => newUserID(text)} />
             </View>
