@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -12,20 +12,107 @@ import {
   onValueChange,
 } from "react-native";
 
+/*const display = () => {
+  <Text>{this.state.pickup}{this.delivery}{this.phone}{this.PickerSelectedVal}{this.dimension}{this.weight}{this.type}{this.checked}{this.order}</Text>
+}*/
 
-class Booking extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      pickup: '',
-      delivery: '',
-      phone: 0,
-      PickerSelectedVal: '',
-      checked: '',
-      order: '',
+
+export default function Booking() {
+  const [pickup, setpickup] = useState("");
+  const [delivery, setdelivery] = useState("");
+  const [phone, setphone] = useState("");
+  const [PickerSelectedVal, setPickerSelectedVal] = useState("Bulk");
+  const [dimension, setdimension] = useState("");
+  const [weight, setweight] = useState("");
+  const [type, settype] = useState("");
+  const [order, setorder] = useState("");
+  const [check, setcheck] = useState(false);
+
+  const [pickuperr, setpickuperr] = useState("");
+  const [deliveryerr, setdeliveryerr] = useState("");
+  const [phoneerr, setphoneerr] = useState("");
+  const [PickerSelectedValerr, setPickerSelectedValerr] = useState("");
+  const [dimensionerr, setdimensionerr] = useState("");
+  const [weighterr, setweighterr] = useState("");
+  const [typeerr, settypeerr] = useState("");
+  const [ordererr, setordererr] = useState("");
+  const [checkerr, setcheckerr] = useState("");
+
+
+  const validate = () => {
+    if (pickup == "" || delivery == "" || phone == "" || PickerSelectedVal == "" || dimension == "" || weight == "" || weight>1500
+    || type == "" || order =="" || check == false) {
+      if (pickup == "") {
+        setpickuperr("Pickup address required");
+      }
+      else {
+        setpickuperr("");
+      }
+      if (delivery == "") {
+        setdeliveryerr("Delivery address required");
+      }
+      else {
+        setdeliveryerr("");
+      }
+      if (phone == "") {
+        setphoneerr("Phone number required");
+      }
+      else {
+        setphoneerr("");
+      }
+      if (PickerSelectedVal == "") {
+        setPickerSelectedValerr("Select either Bulk or Break-Bulk");
+      }
+      else {
+        setPickerSelectedValerr("");
+      }
+      if (dimension == "") {
+        setdimensionerr("Dimension required");
+      }
+      else {
+        setdimensionerr("");
+      }
+      if (weight == "") {
+        setweighterr("Weight required");
+      }
+      else if(weight>1500){
+        setweighterr("Enter weight below 1500");
+      }
+      else {
+        setweighterr("");
+      }
+      if (type == "") {
+        settypeerr("Type required");
+      }
+      else {
+        settypeerr("");
+      }
+      if (order == "") {
+        setordererr("Order Value required");
+      }
+      else {
+        setordererr("");
+      }
+      if(check==false){
+        setcheckerr("Please include the insurance");
+      }
+      else{
+        setcheckerr("");
+      }
+    }
+    else {
+      setpickuperr("");
+      setdeliveryerr("");
+      setphoneerr("");
+      setPickerSelectedValerr("");
+      setdimensionerr("");
+      setweighterr("");
+      settypeerr("");
+      setordererr("");
+      setcheckerr("");
+      return <View />
     }
   }
-  render() {
     return (
       <TouchableWithoutFeedback
         onPress={() => {
@@ -33,64 +120,94 @@ class Booking extends React.Component {
         }}
       >
         <View style={styles.total}>
+
           <View>
             <Text style={styles.container}>Booking</Text>
           </View>
+          
           <View>
             <Text style={styles.text}>Pickup Address</Text>
             <TextInput multiline={true} style={styles.input}
-              onChangeText={(text) => { this.setState({ pickup: text }) }}
-            />
+              onChangeText={(text) =>  setpickup(text)} />
+            <View style={{ width: '75%' }}>
+              <Text style={styles.validation}>{pickuperr}</Text>
+            </View>
+
             <Text style={styles.text}>Delivery Address</Text>
             <TextInput multiline={true} style={styles.input}
-              onChangeText={(text) => { this.setState({ delivery: text }) }}
-            />
+            onChangeText={(text) =>  setdelivery(text)} />
+            <View style={{ width: '75%' }}>
+              <Text style={styles.validation}>{deliveryerr}</Text>
+            </View>
+
             <Text style={styles.text}>Phone number</Text>
-            <TextInput style={styles.inputsingle} keyboardType="number-pad"
-              onChangeText={(text) => { this.setState({ phone: text }) }}
-            />
+            <TextInput style={styles.inputsingle} keyboardType="number-pad" maxLength={10}
+             onChangeText={(text) =>  setphone(text)} />
+             <View style={{ width: '75%' }}>
+               <Text style={styles.validation}>{phoneerr}</Text>
+             </View>
+
             <Text style={styles.text}>Category</Text>
-            <Picker selectedValue={this.state.PickerSelectedVal} style={[styles.inputsingle ]}
-              onValueChange={(itemValue, itemIndex) => this.setState({ PickerSelectedVal: itemValue })}>
+            <Picker selectedValue={PickerSelectedVal} style={[styles.inputsingle ]}
+              onValueChange={(itemValue, itemIndex) => setPickerSelectedVal(itemValue)}>
               <Picker.Item label="Bulk" value="Bulk" />
-              <Picker.Item label="Break Bulk" value="Break Bulk" />
+              <Picker.Item label="Break-Bulk" value="Break-Bulk" />
             </Picker>
+            <View style={{ width: '75%' }}>
+               <Text style={styles.validation}>{PickerSelectedValerr}</Text>
+            </View>
+
             <Text style={styles.text2}>Consignment details :</Text>
             <Text style={styles.text}>1. Dimension</Text>
-            <TextInput style={styles.inputsingle} placeholder="l*b*h" placeholderTextColor="#003f5c"
-              onChangeText={(text) => { this.setState({ phone: text }) }}
-            />
+            <TextInput style={styles.inputsingle} placeholder="length × breadth × height" placeholderTextColor="#003f5c"
+              onChangeText={(text) =>  setdimension(text)} />
+              <View style={{ width: '75%' }}>
+                <Text style={styles.validation}>{dimensionerr}</Text>
+              </View>
+
             <Text style={styles.text}>2. Weight</Text>
-            <TextInput style={styles.inputsingle} placeholder="In kg" placeholderTextColor="#003f5c"
-              onChangeText={(text) => { this.setState({ phone: text }) }}
-            />
+            <TextInput style={styles.inputsingle} keyboardType="number-pad" placeholder="In kg" placeholderTextColor="#003f5c"
+            onChangeText={(text) =>  setweight(text)} />
+            <View style={{ width: '75%' }}>
+              <Text style={styles.validation}>{weighterr}</Text>
+            </View>
+
             <Text style={styles.text}>3. Type</Text>
             <TextInput style={styles.inputsingle} placeholder="electronic etc.." placeholderTextColor="#003f5c"
-              onChangeText={(text) => { this.setState({ phone: text }) }}
-            />
+            onChangeText={(text) =>  settype(text)} />
+            <View style={{ width: '75%' }}>
+              <Text style={styles.validation}>{typeerr}</Text>
+            </View>
+
             <Text style={styles.text2}>Declaration :</Text>
             <Text style={styles.text}>Order Value</Text>
             <TextInput style={styles.inputsingle} keyboardType="number-pad"
-              onChangeText={(text) => { this.setState({ order: text }) }}
-            />
+            onChangeText={(text) =>  setorder(text)} />
+            <View style={{ width: '75%' }}>
+              <Text style={styles.validation}>{ordererr}</Text>
+            </View>
+
             <View style={{ flexDirection: 'column'}}>
-              <View style={{ flexDirection: 'row', marginTop:10, borderColor: 'white'}}>
+              <View style={{ flexDirection: 'row', marginTop:1, borderColor: 'white'}}>
                 <CheckBox 
-                  value={true || false}
-                  onValueChange={() => this.setState({ checked: !this.state.checked })}
+                  value={check}
+                  onValueChange={setcheck}
                 />
                 <Text style={styles.text2}>  Insurance</Text>
               </View>
             </View>
+            <View style={{ width: '75%' }}>
+              <Text style={styles.validation}>{checkerr}</Text>
+            </View>
+
             <TouchableOpacity style={styles.loginBtn}>
-                <Text style={styles.loginText}>Confirm Booking</Text>
+                <Text style={styles.loginText} onPress={validate}>Confirm Booking</Text>
             </TouchableOpacity>
           </View>
         </View>
       </TouchableWithoutFeedback>
     )
   }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -107,12 +224,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: -20,
     marginLeft: 120,
-    marginBottom: 10,
+    marginBottom: 5,
     borderRadius: 30,
     width: 250,
     height: 80,
     color: "white",
     backgroundColor: "#465881",
+    textAlignVertical: 'top',
   },
   inputsingle: {
     borderWidth: 1,
@@ -121,11 +239,11 @@ const styles = StyleSheet.create({
     marginTop: -20,
     borderRadius: 125,
     marginLeft: 120,
-    marginBottom: 10,
+    marginBottom: 5,
     width: 250,
     height: 30,
     color: "white",
-    backgroundColor: "#465881",
+    backgroundColor: "#465881"
   },
   checkbox: {
     alignSelf: "center",
@@ -158,6 +276,12 @@ const styles = StyleSheet.create({
     color: "#ccc",
     fontSize: 18,
   },
+  validation: {
+    color: "crimson",
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: "left",
+    marginBottom: 1
+  },
 });
 
-export default Booking;
