@@ -1,10 +1,14 @@
-import React,{useState} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Navigator from './Routes/homeStack';
+import HomeScreenNavigator from './app/navigation/HomeScreenNavigator';
+
 
 export default function App() {
   return (
-    <Navigator/>
+    <NavigationContainer>
+      <HomeScreenNavigator />
+    </NavigationContainer>
   );
 }
 

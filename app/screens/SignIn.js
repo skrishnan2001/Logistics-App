@@ -4,6 +4,7 @@ import {
     TextInput, TouchableOpacity,
     Image
 } from 'react-native';
+import SignUp from './SignUp';
 
 export default function SignIn({ navigation }) {
 
@@ -11,10 +12,6 @@ export default function SignIn({ navigation }) {
     const [currPassword, newPassword] = useState("");
     const [passState, newPassState] = useState("");
     const [userState, newUserState] = useState("");
-
-    const pressHandler = () => {
-        navigation.navigate('SignUp');
-    }
 
     const passNotEmpty = () => {
         if (currPassword == "" || currUserID == "") {
@@ -74,7 +71,7 @@ export default function SignIn({ navigation }) {
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={pressHandler}>
+            <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
                 <Text style={styles.loginText}>Signup</Text>
             </TouchableOpacity>
 
