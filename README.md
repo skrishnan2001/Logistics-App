@@ -13,6 +13,7 @@ npm install @react-navigation/bottom-tabs
 ## For User-Authentication(Using firebase)
 
 npm install firebase --save
+
 npm install @react-native-community/async-storage --save
 
 ## for using stars in rating(Form.js)
