@@ -31,7 +31,7 @@ const AuthStack = () => {
     routeName = "Login";
   }
   return (
-    <Stack.Navigator initialRouteName={"Onboarding"}>
+    <Stack.Navigator initialRouteName={routeName}>
       <Stack.Screen
         name="Onboarding"
         component={OnboardingScreen}

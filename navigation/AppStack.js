@@ -1,15 +1,11 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen';
+import React from "react";
+// import { createStackNavigator } from '@react-navigation/stack';
+import MainTabScreen from "../screens/MainTabScreen";
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 
 const AppStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name='Home' component={HomeScreen} />
-    </Stack.Navigator>
-  );
-}
+  return <MainTabScreen />;
+};
 
 export default AppStack;
