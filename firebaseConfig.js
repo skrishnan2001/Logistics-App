@@ -8,9 +8,9 @@ var firebaseConfig = {
   storageBucket: "logistics-b2982.appspot.com",
   messagingSenderId: "800935389411",
   appId: "1:800935389411:web:e42115d0016acb708fbdd6",
-  measurementId: "G-8NWCGW9M38"
+  measurementId: "G-8NWCGW9M38",
 };
 // Initialize Firebase
-const Firebase=firebase.initializeApp(firebaseConfig);
-
-export default Firebase
+const Firebase = firebase.initializeApp(firebaseConfig);
+export const db = Firebase.database();
+export default Firebase;

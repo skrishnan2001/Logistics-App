@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -12,8 +12,12 @@ import {
   ScrollView,
   onValueChange,
 } from "react-native";
+import { db } from "../firebaseConfig";
+import Firebase from "../firebaseConfig";
+import { AuthContext } from "../navigation/AuthProvider";
 
 const BookingScreen = () => {
+  const { user } = useContext(AuthContext);
   const [pickup, setpickup] = useState("");
   const [delivery, setdelivery] = useState("");
   const [phone, setphone] = useState("");
@@ -33,6 +37,34 @@ const BookingScreen = () => {
   const [typeerr, settypeerr] = useState("");
   const [ordererr, setordererr] = useState("");
   const [checkerr, setcheckerr] = useState("");
+  const clearInput = () => {
+    setpickup("");
+    setdelivery("");
+    setphone("");
+    setPickerSelectedVal("Bulk");
+    setdimension("");
+    setweight("");
+    settype("");
+    setorder("");
+    setcheck(false);
+  };
+  const addItems = () => {
+    db.ref(`/users/${user.uid}`).push({
+      pickup: pickup,
+      delivery: delivery,
+      phone: phone,
+      PickerSelectedVal: PickerSelectedVal,
+      dimension: dimension,
+      weight: weight,
+      type: type,
+      order: order,
+      insurance: check,
+    });
+  };
+  const handleSubmit = () => {
+    addItems();
+    alert("Order Placed Successfully");
+  };
 
   const validate = () => {
     if (
@@ -104,6 +136,8 @@ const BookingScreen = () => {
       settypeerr("");
       setordererr("");
       setcheckerr("");
+      handleSubmit();
+      clearInput();
       return <View />;
     }
   };
