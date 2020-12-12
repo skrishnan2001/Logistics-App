@@ -3,46 +3,72 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
   TouchableWithoutFeedback,
   Keyboard,
   Picker,
   CheckBox,
-  TouchableOpacity,
   ScrollView,
-  onValueChange,
 } from "react-native";
 import { db } from "../firebaseConfig";
-import Firebase from "../firebaseConfig";
+import FormInput from '../components/FormInput';
+import FormButton from '../components/FormButton';
 import { AuthContext } from "../navigation/AuthProvider";
 
 const BookingScreen = () => {
   const { user } = useContext(AuthContext);
+
   const [pickup, setpickup] = useState("");
+  const [pickup2, setpickup2] = useState("");
+  const [pickup3, setpickup3] = useState("");
+
   const [delivery, setdelivery] = useState("");
+  const [delivery2, setdelivery2] = useState("");
+  const [delivery3, setdelivery3] = useState("");
+
   const [phone, setphone] = useState("");
   const [PickerSelectedVal, setPickerSelectedVal] = useState("Bulk");
+
   const [dimension, setdimension] = useState("");
+  const [dimension2, setdimension2] = useState("");
+  const [dimension3, setdimension3] = useState("");
+
   const [weight, setweight] = useState("");
   const [type, settype] = useState("");
   const [order, setorder] = useState("");
   const [check, setcheck] = useState(false);
 
+  //----States for handling errors -----
   const [pickuperr, setpickuperr] = useState("");
+  const [pickup2err, setpickup2err] = useState("");
+  const [pickup3err, setpickup3err] = useState("");
+
   const [deliveryerr, setdeliveryerr] = useState("");
+  const [deliveryerr2, setdeliveryerr2] = useState("");
+  const [deliveryerr3, setdeliveryerr3] = useState("");
+
   const [phoneerr, setphoneerr] = useState("");
   const [PickerSelectedValerr, setPickerSelectedValerr] = useState("");
+
   const [dimensionerr, setdimensionerr] = useState("");
+  const [dimensionerr2, setdimensionerr2] = useState("");
+  const [dimensionerr3, setdimensionerr3] = useState("");
+
   const [weighterr, setweighterr] = useState("");
   const [typeerr, settypeerr] = useState("");
   const [ordererr, setordererr] = useState("");
-  const [checkerr, setcheckerr] = useState("");
+
   const clearInput = () => {
     setpickup("");
+    setpickup2("");
+    setpickup3("");
     setdelivery("");
+    setdelivery2("");
+    setdelivery3("");
     setphone("");
     setPickerSelectedVal("Bulk");
     setdimension("");
+    setdimension2("");
+    setdimension3("");
     setweight("");
     settype("");
     setorder("");
@@ -50,11 +76,17 @@ const BookingScreen = () => {
   };
   const addItems = () => {
     db.ref(`/users/${user.uid}`).push({
-      pickup: pickup,
-      delivery: delivery,
+      residence_locality_pickup: pickup,
+      city_state_pickup: pickup2,
+      pincode_pickup: pickup3,
+      residence_locality_delivery: delivery,
+      city_state_delivery2: delivery2,
+      pincode_delivery: delivery3,
       phone: phone,
       PickerSelectedVal: PickerSelectedVal,
-      dimension: dimension,
+      length: dimension,
+      breadth: dimension2,
+      height: dimension3,
       weight: weight,
       type: type,
       order: order,
@@ -68,26 +100,45 @@ const BookingScreen = () => {
 
   const validate = () => {
     if (
-      pickup == "" ||
-      delivery == "" ||
+      pickup == "" || pickup2 == "" || pickup3 == "" ||
+      delivery == "" || delivery2 == "" || delivery3 == "" ||
       phone == "" ||
       PickerSelectedVal == "" ||
-      dimension == "" ||
+      dimension == "" || dimension2 == "" || dimension3 == "" ||
       weight == "" ||
-      weight > 1500 ||
+      weight > 1500 || weight <= 0 ||
       type == "" ||
-      order == "" ||
-      check == false
+      order == ""
     ) {
       if (pickup == "") {
-        setpickuperr("Pickup address required");
+        setpickuperr("Pickup address field 1 required");
       } else {
         setpickuperr("");
       }
+      if (pickup2 == "") {
+        setpickup2err("Pickup address field 2 required");
+      } else {
+        setpickup2err("");
+      }
+      if (pickup3 == "") {
+        setpickup3err("Pickup address pincode required");
+      } else {
+        setpickup3err("");
+      }
       if (delivery == "") {
-        setdeliveryerr("Delivery address required");
+        setdeliveryerr("Delivery address field 1 required");
       } else {
         setdeliveryerr("");
+      }
+      if (delivery2 == "") {
+        setdeliveryerr2("Delivery address field 2 required");
+      } else {
+        setdeliveryerr2("");
+      }
+      if (delivery3 == "") {
+        setdeliveryerr3("Delivery address pincode required");
+      } else {
+        setdeliveryerr3("");
       }
       if (phone == "") {
         setphoneerr("Phone number required");
@@ -100,14 +151,24 @@ const BookingScreen = () => {
         setPickerSelectedValerr("");
       }
       if (dimension == "") {
-        setdimensionerr("Dimension required");
+        setdimensionerr("Length required");
       } else {
         setdimensionerr("");
       }
+      if (dimension2 == "") {
+        setdimensionerr2("Breadth required");
+      } else {
+        setdimensionerr2("");
+      }
+      if (dimension3 == "") {
+        setdimensionerr3("Height required");
+      } else {
+        setdimensionerr3("");
+      }
       if (weight == "") {
         setweighterr("Weight required");
-      } else if (weight > 1500) {
-        setweighterr("Enter weight below 1500");
+      } else if (weight > 1500 || weight <= 0) {
+        setweighterr("Weight must be in the range (0-1500)Kgs");
       } else {
         setweighterr("");
       }
@@ -121,21 +182,21 @@ const BookingScreen = () => {
       } else {
         setordererr("");
       }
-      if (check == false) {
-        setcheckerr("Please include the insurance");
-      } else {
-        setcheckerr("");
-      }
     } else {
       setpickuperr("");
+      setpickup2err("");
+      setpickup3err("");
       setdeliveryerr("");
+      setdeliveryerr2("");
+      setdeliveryerr3("");
       setphoneerr("");
       setPickerSelectedValerr("");
       setdimensionerr("");
+      setdimensionerr2("");
+      setdimensionerr3("");
       setweighterr("");
       settypeerr("");
       setordererr("");
-      setcheckerr("");
       handleSubmit();
       clearInput();
       return <View />;
@@ -143,49 +204,94 @@ const BookingScreen = () => {
   };
   return (
     <ScrollView>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-        }}
-      >
-        <View style={styles.total}>
-          <View>
-            <Text style={styles.container}>Booking</Text>
-          </View>
-
-          <View>
+      <View style={styles.container}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+          }}
+        >
+          <View style={[styles.container, { paddingHorizontal: 10 }]}>
             <Text style={styles.text}>Pickup Address</Text>
-            <TextInput
+            <FormInput
+              labelValue={pickup}
               multiline={true}
-              style={styles.input}
               onChangeText={(text) => setpickup(text)}
+              placeholderText="Residence,locality..."
+              autoCorrect={false}
             />
-            <View style={{ width: "75%" }}>
+            <View>
               <Text style={styles.validation}>{pickuperr}</Text>
             </View>
 
-            <Text style={styles.text}>Delivery Address</Text>
-            <TextInput
-              multiline={true}
-              style={styles.input}
-              onChangeText={(text) => setdelivery(text)}
+            <FormInput
+              labelValue={pickup2}
+              onChangeText={(text) => setpickup2(text)}
+              placeholderText="City,State..."
+              autoCorrect={false}
             />
-            <View style={{ width: "75%" }}>
+            <View>
+              <Text style={styles.validation}>{pickup2err}</Text>
+            </View>
+
+            <FormInput
+              labelValue={pickup3}
+              onChangeText={(text) => setpickup3(text)}
+              placeholderText="Pincode..."
+              keyboardType="number-pad"
+              maxLength={6}
+            />
+            <View>
+              <Text style={styles.validation}>{pickup3err}</Text>
+            </View>
+
+            <Text style={[styles.text, { marginTop: 20 }]}>Delivery Address</Text>
+            <FormInput
+              labelValue={delivery}
+              multiline={true}
+              onChangeText={(text) => setdelivery(text)}
+              placeholderText="Residence,locality..."
+              autoCorrect={false}
+            />
+            <View>
               <Text style={styles.validation}>{deliveryerr}</Text>
             </View>
 
-            <Text style={styles.text}>Phone number</Text>
-            <TextInput
-              style={styles.inputsingle}
+            <FormInput
+              labelValue={delivery2}
+              onChangeText={(text) => setdelivery2(text)}
+              placeholderText="City,State..."
+              autoCorrect={false}
+            />
+            <View>
+              <Text style={styles.validation}>{deliveryerr2}</Text>
+            </View>
+
+            <FormInput
+              labelValue={delivery3}
+              onChangeText={(text) => setdelivery3(text)}
+              placeholderText="Pincode..."
+              autoCorrect={false}
+              keyboardType="number-pad"
+              maxLength={6}
+            />
+            <View>
+              <Text style={styles.validation}>{deliveryerr3}</Text>
+            </View>
+
+            <Text style={[styles.text, { marginTop: 20 }]}>Phone number</Text>
+            <FormInput
+              labelValue={phone}
+              onChangeText={(text) => setphone(text)}
+              placeholderText="+91-"
+              autoCorrect={false}
               keyboardType="number-pad"
               maxLength={10}
-              onChangeText={(text) => setphone(text)}
             />
-            <View style={{ width: "75%" }}>
+            <View>
               <Text style={styles.validation}>{phoneerr}</Text>
             </View>
 
-            <Text style={styles.text}>Category</Text>
+            <Text style={[styles.text, { marginTop: 20 }]}>Category (Bulk/Break-Bulk)</Text>
             <Picker
               selectedValue={PickerSelectedVal}
               style={[styles.inputsingle]}
@@ -200,53 +306,85 @@ const BookingScreen = () => {
               <Text style={styles.validation}>{PickerSelectedValerr}</Text>
             </View>
 
-            <Text style={styles.text2}>Consignment details :</Text>
-            <Text style={styles.text}>1. Dimension</Text>
-            <TextInput
-              style={styles.inputsingle}
-              placeholder="length × breadth × height"
-              placeholderTextColor="#003f5c"
+            <Text style={[styles.text, { textDecorationLine: 'underline' }]}>Consignment Details </Text>
+            <Text style={[styles.text, { marginTop: 20, fontWeight: "normal" }]}>1. Dimensions</Text>
+
+            <FormInput
+              labelValue={dimension}
               onChangeText={(text) => setdimension(text)}
+              placeholderText="Length (in metres)..."
+              autoCorrect={false}
+              keyboardType="number-pad"
+              maxLength={5}
             />
-            <View style={{ width: "75%" }}>
+            <View>
               <Text style={styles.validation}>{dimensionerr}</Text>
             </View>
 
-            <Text style={styles.text}>2. Weight</Text>
-            <TextInput
-              style={styles.inputsingle}
+            <FormInput
+              labelValue={dimension2}
+              onChangeText={(text) => setdimension2(text)}
+              placeholderText="Breadth (in metres)..."
+              autoCorrect={false}
               keyboardType="number-pad"
-              placeholder="In kg"
-              placeholderTextColor="#003f5c"
-              onChangeText={(text) => setweight(text)}
+              maxLength={5}
             />
-            <View style={{ width: "75%" }}>
+            <View>
+              <Text style={styles.validation}>{dimensionerr2}</Text>
+            </View>
+
+            <FormInput
+              labelValue={dimension3}
+              onChangeText={(text) => setdimension3(text)}
+              placeholderText="Height (in metres)..."
+              autoCorrect={false}
+              keyboardType="number-pad"
+              maxLength={5}
+            />
+            <View>
+              <Text style={styles.validation}>{dimensionerr3}</Text>
+            </View>
+
+            <Text style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}>2. Weight</Text>
+
+            <FormInput
+              labelValue={weight}
+              onChangeText={(text) => setweight(text)}
+              placeholderText="Weight (in Kgs)..."
+              autoCorrect={false}
+              keyboardType="number-pad"
+              maxLength={4}
+            />
+            <View>
               <Text style={styles.validation}>{weighterr}</Text>
             </View>
 
-            <Text style={styles.text}>3. Type</Text>
-            <TextInput
-              style={styles.inputsingle}
-              placeholder="electronic etc.."
-              placeholderTextColor="#003f5c"
+            <Text style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}>3. Type</Text>
+
+            <FormInput
+              labelValue={type}
               onChangeText={(text) => settype(text)}
+              placeholderText="Electronic etc.."
+              autoCorrect={false}
             />
-            <View style={{ width: "75%" }}>
+            <View>
               <Text style={styles.validation}>{typeerr}</Text>
             </View>
 
-            <Text style={styles.text2}>Declaration :</Text>
-            <Text style={styles.text}>Order Value</Text>
-            <TextInput
-              style={styles.inputsingle}
-              keyboardType="number-pad"
+            <Text style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}>Order Value</Text>
+
+            <FormInput
+              labelValue={order}
               onChangeText={(text) => setorder(text)}
+              placeholderText="Qty..."
+              keyboardType="number-pad"
+              autoCorrect={false}
             />
-            <View style={{ width: "75%" }}>
+            <View>
               <Text style={styles.validation}>{ordererr}</Text>
             </View>
 
-            <View style={{ flexDirection: "column" }}>
+            <View style={{ flexDirection: "column", marginTop: 10 }}>
               <View
                 style={{
                   flexDirection: "row",
@@ -255,33 +393,28 @@ const BookingScreen = () => {
                 }}
               >
                 <CheckBox value={check} onValueChange={setcheck} />
-                <Text style={styles.text2}> Insurance</Text>
+                <Text style={[styles.text, { fontSize: 20, fontWeight: "normal" }]}> Insurance</Text>
               </View>
             </View>
-            <View style={{ width: "75%" }}>
-              <Text style={styles.validation}>{checkerr}</Text>
-            </View>
 
-            <TouchableOpacity style={styles.loginBtn}>
-              <Text style={styles.loginText} onPress={validate}>
-                Confirm Booking
-              </Text>
-            </TouchableOpacity>
+            <FormButton
+              buttonTitle="Confirm Booking"
+              onPress={validate}
+            />
           </View>
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </View>
     </ScrollView>
   );
 };
 export default BookingScreen;
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    marginLeft: 10,
-    alignItems: "center",
-    fontWeight: "bold",
-    fontSize: 50,
-    color: "#fb5b5a",
+    backgroundColor: '#f9fafd',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
   input: {
     borderWidth: 1,
@@ -290,7 +423,7 @@ const styles = StyleSheet.create({
     marginTop: -20,
     marginLeft: 140,
     marginBottom: 5,
-    borderRadius: 30,
+    borderRadius: 5,
     width: 250,
     height: 80,
     color: "white",
@@ -301,22 +434,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#777",
     padding: 5,
-    marginTop: -20,
+    marginTop: 10,
     borderRadius: 125,
-    marginLeft: 140,
     marginBottom: 5,
     width: 250,
     height: 30,
-    color: "white",
+    color: "#2e64e5",
     backgroundColor: "#465881",
   },
   checkbox: {
     alignSelf: "center",
   },
-  total: {
-    backgroundColor: "#003f5c",
-    alignItems: "center",
-  },
+
   loginBtn: {
     width: 200,
     backgroundColor: "#fb5b5a",
@@ -333,9 +462,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+
   text: {
-    color: "#ccc",
-    fontSize: 16,
+    color: '#051d5f',
+    fontSize: 20,
+    fontWeight: "bold"
   },
   text2: {
     color: "#ccc",
@@ -343,7 +474,7 @@ const styles = StyleSheet.create({
   },
   validation: {
     color: "crimson",
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: "bold",
     textAlign: "left",
     marginBottom: 1,
