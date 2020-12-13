@@ -34,6 +34,7 @@ const BookingScreen = () => {
 
   const [weight, setweight] = useState("");
   const [type, settype] = useState("");
+  const [vehicle, setVehicle] = useState("");
   const [order, setorder] = useState("");
   const [check, setcheck] = useState(false);
 
@@ -88,12 +89,22 @@ const BookingScreen = () => {
       breadth: dimension2,
       height: dimension3,
       weight: weight,
+      vehicle: vehicle,
       type: type,
       order: order,
       insurance: check,
     });
   };
+
+  const VehiclePicker = () => {
+    if(dimension<5 && weight<5) setVehicle("two-wheeler");
+    if((dimension>=5 && dimension<10) && (weight>=5 && weight<10)) setVehicle("four -wheeler");
+    if((dimension>=10 && dimension<20) && (weight>=10 && weight<20) ) setVehicle("mini-van");
+    if(dimension>20) setVehicle("truck");
+  }
+
   const handleSubmit = () => {
+    VehiclePicker();
     addItems();
     alert("Order Placed Successfully");
   };
@@ -380,6 +391,7 @@ const BookingScreen = () => {
               keyboardType="number-pad"
               autoCorrect={false}
             />
+
             <View>
               <Text style={styles.validation}>{ordererr}</Text>
             </View>
