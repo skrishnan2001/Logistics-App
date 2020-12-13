@@ -97,10 +97,11 @@ const BookingScreen = () => {
   };
 
   const VehiclePicker = () => {
-    if(dimension<5 && weight<5) setVehicle("two-wheeler");
-    if((dimension>=5 && dimension<10) && (weight>=5 && weight<10)) setVehicle("four -wheeler");
-    if((dimension>=10 && dimension<20) && (weight>=10 && weight<20) ) setVehicle("mini-van");
-    if(dimension>20) setVehicle("truck");
+    var volume = dimension * dimension2 * dimension3;
+    if (volume < 3 || weight < 5) { setVehicle("two-wheeler"); }
+    else if ((volume >= 3 && volume < 7) || (weight >= 5 && weight < 50)) { setVehicle("four-wheeler"); }
+    else if ((volume >= 7 && volume < 12) || (weight >= 50 && weight < 100)) { setVehicle("mini-van"); }
+    else { setVehicle("truck"); }
   }
 
   const handleSubmit = () => {
