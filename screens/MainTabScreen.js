@@ -9,6 +9,7 @@ import BookingScreen from "./Booking";
 import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./Profile";
 import SignupScreen from "./SignupScreen";
+import UpdateUserDetails from "./UpdateUserDetails";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -65,12 +66,30 @@ const BookingStackScreen = ({ navigation }) => {
   );
 };
 
-const ProfileStackScreen = ({ navigation }) => {
+const ProfileStackScreen = ({navigation}) => {
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="Profile"
         component={ProfileScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="UpdateUserDetails"
+        component={UpdateUserDetails}
         options={{
           headerLeft: () => (
             <Icon.Button

@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import * as firebase from "firebase";
 import Dialog from "react-native-dialog";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const { user, logout } = useContext(AuthContext);
   const [currentPassword, setcurrentPassword] = useState(null);
   const [newPassword, setnewPassword] = useState(null);
@@ -67,7 +67,7 @@ const ProfileScreen = () => {
         <View style={styles.body}>
           <View style={styles.bodyContent}>
             <Text style={styles.name}>{user.uid}</Text>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => {}}>
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('UpdateUserDetails')}>
               <Text>Update / Set Details</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -76,7 +76,7 @@ const ProfileScreen = () => {
             >
               <Text>Booking History</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => {}}>
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => { }}>
               <Text>Reset Email</Text>
             </TouchableOpacity>
             <TouchableOpacity
