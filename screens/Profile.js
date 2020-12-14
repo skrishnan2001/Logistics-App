@@ -28,7 +28,8 @@ const ProfileScreen = ({ navigation }) => {
         user
           .updatePassword(newPassword)
           .then(() => {
-            console.log("Password updated!");
+            alert("Password updated!");
+            logout();
           })
           .catch((error) => {
             console.log(error);
@@ -67,7 +68,10 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.body}>
           <View style={styles.bodyContent}>
             <Text style={styles.name}>{user.uid}</Text>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('UpdateUserDetails')}>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={() => navigation.navigate("UpdateUserDetails")}
+            >
               <Text>Update / Set Details</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -76,7 +80,7 @@ const ProfileScreen = ({ navigation }) => {
             >
               <Text>Booking History</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => { }}>
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => {}}>
               <Text>Reset Email</Text>
             </TouchableOpacity>
             <TouchableOpacity
