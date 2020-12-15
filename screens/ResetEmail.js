@@ -11,26 +11,44 @@ import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
 import { windowHeight } from "../utils/Dimensions";
-import { db } from "../firebaseConfig";
+import * as firebase from "firebase";
 
 export default function UpdateUserDetails({ navigation }) {
-  const { user } = useContext(AuthContext);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const { user, logout } = useContext(AuthContext);
+  const [currentPassword, setcurrentPassword] = useState(null);
+  const [newEmail, setnewEmail] = useState(null);
 
-  const addItems = () => {
-    db.ref(`/users/ProfileDetails/${user.uid}`).push({
-      Name: name,
-      Phone_number: phone,
-    });
+  const reauthenticate = (currentPassword) => {
+    var user = firebase.auth().currentUser;
+    var cred = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      currentPassword
+    );
+    return user.reauthenticateWithCredential(cred);
+  };
+  const changeEmail = (currentPassword, newEmail) => {
+    reauthenticate(currentPassword)
+      .then(() => {
+        var user = firebase.auth().currentUser;
+        user
+          .updateEmail(newEmail)
+          .then(() => {
+            Alert.alert("Your Email has been updated!");
+            logout();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  const updateHandle = () => {
-    addItems();
-    Alert.alert("Your details have been updated");
+  const handleSubmit = () => {
+    changeEmail(currentPassword, newEmail);
     navigation.navigate("Profile");
   };
-
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -48,25 +66,26 @@ export default function UpdateUserDetails({ navigation }) {
         </View>
         <View style={{ marginTop: 65, marginHorizontal: 20 }}>
           <FormInput
-            labelValue={name}
-            onChangeText={(text) => setName(text)}
-            placeholderText="Name..."
+            onChangeText={(text) => setcurrentPassword(text)}
+            placeholderText="Enter Current Password..."
             autoCorrect={false}
+            iconType="lock"
+            secureTextEntry={true}
           />
 
           <FormInput
-            labelValue={phone}
-            onChangeText={(text) => setPhone(text)}
-            placeholderText="Mobile number"
+            onChangeText={(text) => setnewEmail(text)}
+            placeholderText="Enter New Email..."
+            iconType="user"
+            keyboardType="email-address"
+            autoCapitalize="none"
             autoCorrect={false}
-            keyboardType="number-pad"
-            maxLength={10}
           />
 
           <FormButton
             buttonTitle="Update"
             style={styles.buttonContainer}
-            onPress={updateHandle}
+            onPress={handleSubmit}
           />
           <FormButton
             buttonTitle="Back to Profile"

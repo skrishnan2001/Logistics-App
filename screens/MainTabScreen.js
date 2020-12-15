@@ -10,6 +10,8 @@ import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./Profile";
 import SignupScreen from "./SignupScreen";
 import UpdateUserDetails from "./UpdateUserDetails";
+import ResetPassword from "./ResetPassword";
+import ResetEmail from "./ResetEmail";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -66,7 +68,7 @@ const BookingStackScreen = ({ navigation }) => {
   );
 };
 
-const ProfileStackScreen = ({navigation}) => {
+const ProfileStackScreen = ({ navigation }) => {
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
@@ -90,6 +92,42 @@ const ProfileStackScreen = ({navigation}) => {
       <ProfileStack.Screen
         name="UpdateUserDetails"
         component={UpdateUserDetails}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Reset-Password"
+        component={ResetPassword}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Reset-Email"
+        component={ResetEmail}
         options={{
           headerLeft: () => (
             <Icon.Button

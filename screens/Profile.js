@@ -3,54 +3,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { AuthContext } from "../navigation/AuthProvider";
 import Icon from "react-native-vector-icons/Ionicons";
-import * as firebase from "firebase";
-import Dialog from "react-native-dialog";
 
 const ProfileScreen = ({ navigation }) => {
   const { user, logout } = useContext(AuthContext);
-  const [currentPassword, setcurrentPassword] = useState(null);
-  const [newPassword, setnewPassword] = useState(null);
-  const [visible1, setVisible1] = useState(false);
-  const [visible2, setVisible2] = useState(false);
 
-  const reauthenticate = (currentPassword) => {
-    var user = firebase.auth().currentUser;
-    var cred = firebase.auth.EmailAuthProvider.credential(
-      user.email,
-      currentPassword
-    );
-    return user.reauthenticateWithCredential(cred);
-  };
-  const changePassword = (currentPassword, newPassword) => {
-    reauthenticate(currentPassword)
-      .then(() => {
-        var user = firebase.auth().currentUser;
-        user
-          .updatePassword(newPassword)
-          .then(() => {
-            console.log("Password updated!");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const showDialog1 = () => {
-    setVisible1(true);
-  };
-
-  const handleCancel = () => {
-    setVisible1(false);
-    setVisible2(false);
-  };
-
-  const handleSubmit1 = () => {
-    setVisible1(false);
-    setVisible2(true);
-  };
   const handleSubmit2 = () => {
     setVisible2(false);
     changePassword(currentPassword, newPassword);
@@ -67,7 +23,10 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.body}>
           <View style={styles.bodyContent}>
             <Text style={styles.name}>{user.uid}</Text>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('UpdateUserDetails')}>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={() => navigation.navigate("UpdateUserDetails")}
+            >
               <Text>Update / Set Details</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -76,37 +35,20 @@ const ProfileScreen = ({ navigation }) => {
             >
               <Text>Booking History</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => { }}>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={() => {
+                navigation.navigate("Reset-Email");
+              }}
+            >
               <Text>Reset Email</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={showDialog1}
+              onPress={() => navigation.navigate("Reset-Password")}
             >
               <Text>Reset Password</Text>
             </TouchableOpacity>
-            <Dialog.Container visible={visible1}>
-              <Dialog.Title>Reset Password</Dialog.Title>
-              <Dialog.Description>Enter Current Password</Dialog.Description>
-              <Dialog.Input
-                onChangeText={(text) => setcurrentPassword(text)}
-                placeholderText="Current Password"
-                secureTextEntry={true}
-              ></Dialog.Input>
-              <Dialog.Button label="Cancel" onPress={handleCancel} />
-              <Dialog.Button label="Submit" onPress={handleSubmit1} />
-            </Dialog.Container>
-            <Dialog.Container visible={visible2}>
-              <Dialog.Title>Reset Password</Dialog.Title>
-              <Dialog.Description>Enter New Password</Dialog.Description>
-              <Dialog.Input
-                onChangeText={(text) => setnewPassword(text)}
-                placeholderText="New Password"
-                secureTextEntry={true}
-              ></Dialog.Input>
-              <Dialog.Button label="Cancel" onPress={handleCancel} />
-              <Dialog.Button label="Submit" onPress={handleSubmit2} />
-            </Dialog.Container>
           </View>
         </View>
       </View>
