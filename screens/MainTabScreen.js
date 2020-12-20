@@ -9,6 +9,7 @@ import BookingScreen from "./Booking";
 import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./Profile";
 import SignupScreen from "./SignupScreen";
+import InvoiceScreen from "./InvoiceScreen";
 import UpdateUserDetails from "./UpdateUserDetails";
 import ResetPassword from "./ResetPassword";
 import ResetEmail from "./ResetEmail";
@@ -49,6 +50,24 @@ const BookingStackScreen = ({ navigation }) => {
       <BookingStack.Screen
         name="Booking"
         component={BookingScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <BookingStack.Screen
+        name="Invoice"
+        component={InvoiceScreen}
         options={{
           headerLeft: () => (
             <Icon.Button

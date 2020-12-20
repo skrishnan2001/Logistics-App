@@ -10,11 +10,11 @@ import {
   ScrollView,
 } from "react-native";
 import { db } from "../firebaseConfig";
-import FormInput from '../components/FormInput';
-import FormButton from '../components/FormButton';
+import FormInput from "../components/FormInput";
+import FormButton from "../components/FormButton";
 import { AuthContext } from "../navigation/AuthProvider";
 
-const BookingScreen = () => {
+const BookingScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
 
   const [pickup, setpickup] = useState("");
@@ -37,7 +37,7 @@ const BookingScreen = () => {
   const [vehicle, setVehicle] = useState("");
   const [order, setorder] = useState("");
   const [check, setcheck] = useState(false);
-
+  const [priority, setPriority] = useState(false);
   //----States for handling errors -----
   const [pickuperr, setpickuperr] = useState("");
   const [pickup2err, setpickup2err] = useState("");
@@ -74,6 +74,7 @@ const BookingScreen = () => {
     settype("");
     setorder("");
     setcheck(false);
+    setPriority(false);
   };
   const addItems = () => {
     db.ref(`/users/booking/${user.uid}`).push({
@@ -93,32 +94,46 @@ const BookingScreen = () => {
       type: type,
       order: order,
       insurance: check,
+      priority_booking: priority,
     });
   };
 
   const VehiclePicker = () => {
     var volume = dimension * dimension2 * dimension3;
-    if (volume < 3 || weight < 5) { setVehicle("two-wheeler"); }
-    else if ((volume >= 3 && volume < 7) || (weight >= 5 && weight < 50)) { setVehicle("four-wheeler"); }
-    else if ((volume >= 7 && volume < 12) || (weight >= 50 && weight < 100)) { setVehicle("mini-van"); }
-    else { setVehicle("truck"); }
-  }
+    if (volume < 3 || weight < 5) {
+      setVehicle("two-wheeler");
+    } else if ((volume >= 3 && volume < 7) || (weight >= 5 && weight < 50)) {
+      setVehicle("four-wheeler");
+    } else if ((volume >= 7 && volume < 12) || (weight >= 50 && weight < 100)) {
+      setVehicle("mini-van");
+    } else {
+      setVehicle("truck");
+    }
+  };
 
   const handleSubmit = () => {
     VehiclePicker();
     addItems();
     alert("Order Placed Successfully");
+    navigation.navigate("Invoice");
   };
 
   const validate = () => {
     if (
-      pickup == "" || pickup2 == "" || pickup3 == "" ||
-      delivery == "" || delivery2 == "" || delivery3 == "" ||
+      pickup == "" ||
+      pickup2 == "" ||
+      pickup3 == "" ||
+      delivery == "" ||
+      delivery2 == "" ||
+      delivery3 == "" ||
       phone == "" ||
       PickerSelectedVal == "" ||
-      dimension == "" || dimension2 == "" || dimension3 == "" ||
+      dimension == "" ||
+      dimension2 == "" ||
+      dimension3 == "" ||
       weight == "" ||
-      weight > 1500 || weight <= 0 ||
+      weight > 1500 ||
+      weight <= 0 ||
       type == "" ||
       order == ""
     ) {
@@ -256,7 +271,9 @@ const BookingScreen = () => {
               <Text style={styles.validation}>{pickup3err}</Text>
             </View>
 
-            <Text style={[styles.text, { marginTop: 20 }]}>Delivery Address</Text>
+            <Text style={[styles.text, { marginTop: 20 }]}>
+              Delivery Address
+            </Text>
             <FormInput
               labelValue={delivery}
               multiline={true}
@@ -303,7 +320,9 @@ const BookingScreen = () => {
               <Text style={styles.validation}>{phoneerr}</Text>
             </View>
 
-            <Text style={[styles.text, { marginTop: 20 }]}>Category (Bulk/Break-Bulk)</Text>
+            <Text style={[styles.text, { marginTop: 20 }]}>
+              Category (Bulk/Break-Bulk)
+            </Text>
             <Picker
               selectedValue={PickerSelectedVal}
               style={[styles.inputsingle]}
@@ -318,8 +337,14 @@ const BookingScreen = () => {
               <Text style={styles.validation}>{PickerSelectedValerr}</Text>
             </View>
 
-            <Text style={[styles.text, { textDecorationLine: 'underline' }]}>Consignment Details </Text>
-            <Text style={[styles.text, { marginTop: 20, fontWeight: "normal" }]}>1. Dimensions</Text>
+            <Text style={[styles.text, { textDecorationLine: "underline" }]}>
+              Consignment Details{" "}
+            </Text>
+            <Text
+              style={[styles.text, { marginTop: 20, fontWeight: "normal" }]}
+            >
+              1. Dimensions
+            </Text>
 
             <FormInput
               labelValue={dimension}
@@ -357,7 +382,11 @@ const BookingScreen = () => {
               <Text style={styles.validation}>{dimensionerr3}</Text>
             </View>
 
-            <Text style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}>2. Weight</Text>
+            <Text
+              style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}
+            >
+              2. Weight
+            </Text>
 
             <FormInput
               labelValue={weight}
@@ -371,7 +400,11 @@ const BookingScreen = () => {
               <Text style={styles.validation}>{weighterr}</Text>
             </View>
 
-            <Text style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}>3. Type</Text>
+            <Text
+              style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}
+            >
+              3. Type
+            </Text>
 
             <FormInput
               labelValue={type}
@@ -383,7 +416,11 @@ const BookingScreen = () => {
               <Text style={styles.validation}>{typeerr}</Text>
             </View>
 
-            <Text style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}>Order Value</Text>
+            <Text
+              style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}
+            >
+              Order Value
+            </Text>
 
             <FormInput
               labelValue={order}
@@ -406,14 +443,33 @@ const BookingScreen = () => {
                 }}
               >
                 <CheckBox value={check} onValueChange={setcheck} />
-                <Text style={[styles.text, { fontSize: 20, fontWeight: "normal" }]}> Insurance</Text>
+                <Text
+                  style={[styles.text, { fontSize: 20, fontWeight: "normal" }]}
+                >
+                  {" "}
+                  Insurance
+                </Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: "column", marginTop: 10 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 1,
+                  borderColor: "white",
+                }}
+              >
+                <CheckBox value={check} onValueChange={setPriority} />
+                <Text
+                  style={[styles.text, { fontSize: 20, fontWeight: "normal" }]}
+                >
+                  {" "}
+                  Priority Booking
+                </Text>
               </View>
             </View>
 
-            <FormButton
-              buttonTitle="Confirm Booking"
-              onPress={validate}
-            />
+            <FormButton buttonTitle="Confirm Booking" onPress={validate} />
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -423,10 +479,10 @@ const BookingScreen = () => {
 export default BookingScreen;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f9fafd',
+    backgroundColor: "#f9fafd",
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   input: {
@@ -477,9 +533,9 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    color: '#051d5f',
+    color: "#051d5f",
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   text2: {
     color: "#ccc",
