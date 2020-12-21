@@ -77,7 +77,7 @@ const BookingScreen = ({ navigation }) => {
     setPriority(false);
   };
   const addItems = () => {
-    db.ref(`/admin/booking/${user.uid}`).push({
+    db.ref(`/admin/booking`).push({
       residence_locality_pickup: pickup,
       city_state_pickup: pickup2,
       pincode_pickup: pickup3,
