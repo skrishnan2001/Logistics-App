@@ -1,6 +1,5 @@
 import React, { useContext, useState, Component } from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { db } from "../firebaseConfig";
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
 import {
@@ -9,16 +8,62 @@ import {
   Row,
   Rows,
   Col,
+  Cols
 } from "react-native-table-component";
 import * as firebase from "firebase";
 
 const InvoiceScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
+  var phone,
+    pickup,
+    pickup2,//City,state and pincode for pickup address
+    delivery,
+    delivery2,//City,state and pincode for delivery address
+    category,
+    length,
+    breadth,
+    height,
+    weight,
+    type,
+    order_val,
+    insurance,
+    priority;
+  var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
+  bookingRef.limitToLast(1).on("child_added", function (data) {
+    var newBooking = data.val();
+    // console.log("Pick-up: " + newBooking.residence_locality_pickup);
+    // console.log("Drop: " + newBooking.residence_locality_delivery);
+    // console.log("Phone number: " + newBooking.phone);
+    phone = newBooking.phone;
+    pickup = newBooking.residence_locality_pickup;
+    pickup2 = newBooking.city_state_pickup + "," + newBooking.pincode_pickup;
+    delivery = newBooking.residence_locality_delivery;
+    delivery2 = newBooking.city_state_delivery2 + "," + newBooking.pincode_delivery;
+    category = newBooking.PickerSelectedVal;
+    length = newBooking.length;
+    breadth = newBooking.breadth;
+    height = newBooking.height;
+    weight = newBooking.weight;
+    type = newBooking.type;
+    order_val = newBooking.order;
+    if (newBooking.insurance == true)
+      insurance = "Yes";
+    else
+      insurance = "No";
+
+    if (newBooking.Priority_Booking == true)
+      priority = "Yes";
+    else
+      priority = "No";
+  });
+
   const [curr, next] = useState({
     tableHead: ["", "Details"],
     tableTitle: [
-      "Pickup Address",
-      "Delivery Address",
+      "Pickup-Add1",
+      "Pickup-Add2",
+      "Delivery-Add1",
+      "Delivery-Add2",
       "Phone number",
       "Category",
       "Dimension",
@@ -26,82 +71,68 @@ const InvoiceScreen = ({ navigation }) => {
       "Type",
       "Order Value",
       "Insurance",
+      "Priority Booking",
     ],
     tableData: [
-      ["49 street"],
-      ["67 Street"],
-      ["123456789"],
-      ["Bulk"],
-      ["25*35*68"],
-      ["45"],
-      ["Elect"],
-      ["100"],
-      ["Yes"],
+      [`${pickup}`],
+      [`${pickup2}`],
+      [`${delivery}`],
+      [`${delivery2}`],
+      [`${phone}`],
+      [`${category}`],
+      [`${length}*${breadth}*${height}`],
+      [`${weight}`],
+      [`${type}`],
+      [`${order_val}`],
+      [`${insurance}`],
+      [`${priority}`]
     ],
-  });
-
-  var ref = firebase.database().ref();
-  ref.on(
-    "value",
-    function (snapshot) {
-      console.log(snapshot.val());
-    },
-    function (error) {
-      console.log("Error: " + error.code);
-    }
-  );
-
-  var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
-
-  bookingRef.on("child_added", function (data, prevChildKey) {
-    var newBooking = data.val();
-    console.log("Pick-up: " + newBooking.residence_locality_pickup);
-    console.log("Drop: " + newBooking.residence_locality_delivery);
-    console.log("Phone number: " + newBooking.phone);
-    console.log("Previous Player: " + prevChildKey);
   });
 
   const state = curr;
   return (
-    <View style={styles.container}>
-      <Text style={styles.top}>Invoice</Text>
-      <Table borderStyle={{ borderWidth: 2 }}>
-        <Row
-          data={state.tableHead}
-          flexArr={[1, 4.1, 1, 1]}
-          style={styles.head}
-          textStyle={styles.text}
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.top}>Booking Details</Text>
+        <Table borderStyle={{ borderWidth: 2 }}>
+          <Row
+            data={state.tableHead}
+            flexArr={[0, 2.02, 0, 0]}
+            style={styles.head}
+            textStyle={styles.text}
+          />
+          <TableWrapper style={styles.wrapper}>
+            <Col
+              data={state.tableTitle}
+              style={styles.title}
+              heightArr={[60, 60, 60]}
+              textStyle={styles.text}
+            />
+            <Rows
+              data={state.tableData}
+              flexArr={[0, 0, 2]}
+              style={styles.row}
+              textStyle={styles.text}
+            />
+          </TableWrapper>
+        </Table>
+        <FormButton
+          buttonTitle="Redirect to Fresh-Booking"
+          onPress={() => navigation.navigate("Booking")}
         />
-        <TableWrapper style={styles.wrapper}>
-          <Col
-            data={state.tableTitle}
-            style={styles.title}
-            textStyle={styles.text}
-          />
-          <Rows
-            data={state.tableData}
-            flexArr={[2, 1, 1]}
-            style={styles.row}
-            textStyle={styles.text}
-          />
-        </TableWrapper>
-      </Table>
-      <FormButton
-        buttonTitle="Redirect to Fresh-Booking"
-        onPress={() => navigation.navigate("Booking")}
-      />
-    </View>
+      </View>
+    </ScrollView>
   );
-}
+};
 
 export default InvoiceScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, paddingTop: 50, backgroundColor: "#fff" },
+  container: { flex: 1, paddingHorizontal: 20, paddingVertical: 50, backgroundColor: "#fff" },
   head: { height: 40, backgroundColor: "#f1f8ff" },
   wrapper: { flexDirection: "row" },
-  title: { flex: 1, backgroundColor: "#f6f8fa", height: 400 },
-  row: { height: 44.5 },
+  title: { flex: 1, backgroundColor: "#f6f8fa" },
+  row: { height: 60 },
   text: { textAlign: "center" },
-  top: { textAlign: "center", fontSize: 40, paddingBottom: 20 },
+  top: { textAlign: "center", fontSize: 30, paddingBottom: 20,color: '#051d5f' },
 });
