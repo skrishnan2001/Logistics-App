@@ -28,7 +28,7 @@ const InvoiceScreen = ({ navigation }) => {
     order_val,
     insurance,
     priority;
-  var bookingRef = firebase.database().ref(`/admin/booking/${user.uid}`);
+  var bookingRef = firebase.database().ref(`/admin/booking`);
   bookingRef.limitToLast(1).on("child_added", function (data) {
     var newBooking = data.val();
     // console.log("Pick-up: " + newBooking.residence_locality_pickup);
