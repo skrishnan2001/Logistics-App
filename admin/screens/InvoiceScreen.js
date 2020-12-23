@@ -57,6 +57,27 @@ const InvoiceScreen = ({ navigation }) => {
       priority = "No";
   });
 
+
+  var dbRef = firebase.database().ref("/users/booking/");
+    dbRef.on("value", function (snapshot) {
+      const data = snapshot.val();
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          var val = data[key];
+          console.log("User ID:" + key + "-");
+          for (var key_2 in val) {
+            if (val.hasOwnProperty(key_2)) {
+              var val_2 = val[key_2];
+              console.log("Order ID:" + key_2 + "-");
+              console.log(val_2);
+            }
+          }
+          console.log("----------------------");
+        }
+      }
+    });
+
+
   const [curr, next] = useState({
     tableHead: ["", "Details"],
     tableTitle: [

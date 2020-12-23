@@ -1,11 +1,11 @@
 import React from 'react';
 import * as firebase from "firebase";
-import Card from "../app/components/Card";
+import Card from "../components/Card";
 import { View, FlatList } from 'react-native';
 
 
 
-function Orders(props) {
+function Orders({navigation}) {
     var users = [];
     var dbRef = firebase.database().ref("/users/booking/");
     dbRef.on("value", function (snapshot) {
@@ -36,7 +36,7 @@ function Orders(props) {
     <View style={{
         backgroundColor: '#f8f4f4',
         padding: 20,
-        paddingTop: 100
+        paddingTop: 50
         }} 
     >
         <FlatList 
@@ -51,6 +51,7 @@ function Orders(props) {
                 />      
             }
         />
+        
     </View>
   );
 }

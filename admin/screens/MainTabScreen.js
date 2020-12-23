@@ -7,7 +7,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import BookingScreen from "./Booking";
 import HomeScreen from "./HomeScreen";
-import ProfileScreen from "./Profile";
+import Orders from "./Orders";
 
 import InvoiceScreen from "./InvoiceScreen";
 import ResetPassword from "./ResetPassword";
@@ -15,7 +15,7 @@ import ResetPassword from "./ResetPassword";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
-const ProfileStack = createStackNavigator();
+const OrderStack = createStackNavigator();
 const SignInStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
@@ -86,12 +86,12 @@ const BookingStackScreen = ({ navigation }) => {
   );
 };
 
-const ProfileStackScreen = ({ navigation }) => {
+const OrderStackScreen = ({ navigation }) => {
   return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen
-        name="Profile"
-        component={ProfileScreen}
+    <OrderStack.Navigator>
+      <OrderStack.Screen
+        name="Orders"
+        component={Orders}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -107,7 +107,7 @@ const ProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      <ProfileStack.Screen
+      <OrderStack.Screen
         name="Reset-Password"
         component={ResetPassword}
         options={{
@@ -125,7 +125,7 @@ const ProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-    </ProfileStack.Navigator>
+    </OrderStack.Navigator>
   );
 };
 
@@ -186,10 +186,10 @@ const bottomTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileStackScreen}
+        name="Orders"
+        component={OrderStackScreen}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Orders",
           tabBarColor: "#34ebc0",
           tabBarIcon: ({ color }) => (
             <Icon name="ios-person" color={color} size={26} />
@@ -216,7 +216,7 @@ const DrawerNav = () => {
     >
       <Drawer.Screen name="Home" component={bottomTabNav} />
       <Drawer.Screen name="Booking" component={BookingStackScreen} />
-      <Drawer.Screen name="Profile" component={ProfileStackScreen} />
+      <Drawer.Screen name="Orders" component={OrderStackScreen} />
       {/* <Drawer.Screen name="SignIn" component={SignInStackScreen} /> */}
     </Drawer.Navigator>
   );

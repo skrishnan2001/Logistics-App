@@ -7,8 +7,8 @@ const HomeScreen = () => {
   const {user, logout} = useContext(AuthContext);
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Welcome Admin</Text>
-      <FormButton buttonTitle='Logout' onPress={() => logout()} />
+      <Text style={styles.text}>Welcome Admin </Text>
+      <FormButton buttonTitle='Logout' onPress={() => {}} />
     </View>
   );
 }
