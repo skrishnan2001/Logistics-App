@@ -19,9 +19,8 @@ import {
 } from "react-native-table-component";
 import * as firebase from "firebase";
 
-const InvoiceScreen = ({ route, navigation }) => {
+const InvoiceAdmin = ({ navigation }) => {
   const { user } = useContext(AuthContext);
-
   var phone,
     pickup,
     pickup2, //City,state and pincode for pickup address
@@ -36,18 +35,18 @@ const InvoiceScreen = ({ route, navigation }) => {
     order_val,
     insurance,
     priority;
-  const { user_id, order_id } = route.params;
-  var bookingRef = firebase
-    .database()
-    .ref(`/users/booking/${user_id}/${order_id}`);
-  bookingRef.on("value", function (data) {
+  var bookingRef = firebase.database().ref(`/admin/booking`);
+  bookingRef.limitToLast(1).on("child_added", function (data) {
     var newBooking = data.val();
+    // console.log("Pick-up: " + newBooking.residence_locality_pickup);
+    // console.log("Drop: " + newBooking.residence_locality_delivery);
+    // console.log("Phone number: " + newBooking.phone);
     phone = newBooking.phone;
     pickup = newBooking.residence_locality_pickup;
-    pickup2 = newBooking.city_state_pickup + "," + newBooking.pincode_pickup;
+    pickup2 = newBooking.city_state_pickup + ", " + newBooking.pincode_pickup;
     delivery = newBooking.residence_locality_delivery;
     delivery2 =
-      newBooking.city_state_delivery2 + "," + newBooking.pincode_delivery;
+      newBooking.city_state_delivery2 + ", " + newBooking.pincode_delivery;
     category = newBooking.PickerSelectedVal;
     length = newBooking.length;
     breadth = newBooking.breadth;
@@ -60,6 +59,25 @@ const InvoiceScreen = ({ route, navigation }) => {
 
     if (newBooking.Priority_Booking == true) priority = "Yes";
     else priority = "No";
+  });
+
+  var dbRef = firebase.database().ref("/users/booking/");
+  dbRef.on("value", function (snapshot) {
+    const data = snapshot.val();
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        var val = data[key];
+        console.log("User ID:" + key + "-");
+        for (var key_2 in val) {
+          if (val.hasOwnProperty(key_2)) {
+            var val_2 = val[key_2];
+            console.log("Order ID:" + key_2 + "-");
+            console.log(val_2);
+          }
+        }
+        console.log("----------------------");
+      }
+    }
   });
 
   const [curr, next] = useState({
@@ -85,7 +103,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${delivery2}`],
       [`${phone}`],
       [`${category}`],
-      [`${length}*${breadth}*${height}`],
+      [`${length}x${breadth}x${height}`],
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],
@@ -122,15 +140,15 @@ const InvoiceScreen = ({ route, navigation }) => {
           </TableWrapper>
         </Table>
         <FormButton
-          buttonTitle="Back to Orders"
-          onPress={() => navigation.navigate("Orders")}
+          buttonTitle="Redirect to Fresh-Booking"
+          onPress={() => navigation.navigate("Booking")}
         />
       </View>
     </ScrollView>
   );
 };
 
-export default InvoiceScreen;
+export default InvoiceAdmin;
 
 const styles = StyleSheet.create({
   container: {
@@ -146,7 +164,7 @@ const styles = StyleSheet.create({
   text: { textAlign: "center" },
   top: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 30,
     paddingBottom: 20,
     color: "#051d5f",
   },

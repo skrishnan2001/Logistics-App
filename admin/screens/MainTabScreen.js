@@ -10,8 +10,8 @@ import HomeScreen from "./HomeScreen";
 import Orders from "./Orders";
 
 import InvoiceScreen from "./InvoiceScreen";
+import InvoiceAdmin from "./InvoiceAdmin";
 import ResetPassword from "./ResetPassword";
-
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -65,8 +65,8 @@ const BookingStackScreen = ({ navigation }) => {
         }}
       />
       <BookingStack.Screen
-        name="Invoice"
-        component={InvoiceScreen}
+        name="Invoice-admin"
+        component={InvoiceAdmin}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -107,9 +107,27 @@ const OrderStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      <OrderStack.Screen
+      {/* <OrderStack.Screen
         name="Reset-Password"
         component={ResetPassword}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      /> */}
+      <OrderStack.Screen
+        name="Invoice"
+        component={InvoiceScreen}
         options={{
           headerLeft: () => (
             <Icon.Button
