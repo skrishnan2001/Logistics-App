@@ -17,6 +17,8 @@ import { AuthContext } from "../navigation/AuthProvider";
 const BookingScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
 
+  var vehicle;
+
   const [pickup, setpickup] = useState("");
   const [pickup2, setpickup2] = useState("");
   const [pickup3, setpickup3] = useState("");
@@ -34,7 +36,6 @@ const BookingScreen = ({ navigation }) => {
 
   const [weight, setweight] = useState("");
   const [type, settype] = useState("");
-  const [vehicle, setVehicle] = useState("");
   const [order, setorder] = useState("");
   const [check, setcheck] = useState(false);
   const [Priority,setPriority] = useState(false);
@@ -75,6 +76,7 @@ const BookingScreen = ({ navigation }) => {
     setorder("");
     setcheck(false);
     setPriority(false);
+    vehicle="";
   };
   const addItems = () => {
     db.ref(`/users/booking/${user.uid}`).push({
@@ -101,13 +103,13 @@ const BookingScreen = ({ navigation }) => {
   const VehiclePicker = () => {
     var volume = dimension * dimension2 * dimension3;
     if (volume < 3 || weight < 5) {
-      setVehicle("two-wheeler");
+      vehicle="two-wheeler";
     } else if ((volume >= 3 && volume < 7) || (weight >= 5 && weight < 50)) {
-      setVehicle("four-wheeler");
+      vehicle="four-wheeler";
     } else if ((volume >= 7 && volume < 12) || (weight >= 50 && weight < 100)) {
-      setVehicle("mini-van");
+      vehicle="mini-van";
     } else {
-      setVehicle("truck");
+      vehicle="truck";
     }
   };
 
