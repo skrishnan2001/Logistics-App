@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 
-function Card({userId, orderId, type, weight}) {
+function Cards({userId, orderId}) {
     return (
         <View style={styles.card} >
             <View style={styles.detailsContainer}>
-                <Text>User Id:{userId}</Text>
-                <Text>Order Id:{orderId}</Text>
-                <Text>Type: {type}</Text>
-                <Text>Weight: {weight}</Text>
+                <Text style={{fontSize:18,fontWeight:'bold',color: "#051d5f"}}>USER ID</Text>
+                <Text style={{fontSize:15,color:"#2f4f4f"}}>{userId}</Text>
+                <Text style={{fontSize:18,fontWeight:'bold',color: "#051d5f",marginTop:10}}>ORDER ID</Text>
+                <Text style={{fontSize:15,color:"#2f4f4f"}}>{orderId}</Text>
             </View>
         </View>
     );
@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginBottom: 20,
         overflow: "hidden",
+        padding:20
     },
     detailsContainer:{
         marginTop: 5,
-        padding: 10,
     },
     image: {
         width: "100%",
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Card;
+export default Cards;

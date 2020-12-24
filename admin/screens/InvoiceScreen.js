@@ -98,7 +98,7 @@ const InvoiceScreen = ({ route, navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.top}>Booking Details</Text>
+        <Text style={styles.top}>Order Details</Text>
         <Table borderStyle={{ borderWidth: 2 }}>
           <Row
             data={state.tableHead}

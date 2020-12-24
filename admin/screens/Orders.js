@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import * as firebase from "firebase";
-import Card from "../components/Card";
-import { View, FlatList } from "react-native";
+import Cards from "../components/Cards";
+import { View, FlatList, TextInput } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import InvoiceScreen from "./InvoiceScreen";
+import FormInput from "../components/FormInput";
 
 const Orders = ({ navigation }) => {
   var users = [];
@@ -30,40 +30,54 @@ const Orders = ({ navigation }) => {
         }
       }
     }
-    console.log(users);
+    //console.log(users);
   });
   const [user_id, setuserid] = useState();
   const [order_id, setorderid] = useState();
-
+  const [arrHolder, setarrHolder] = useState(users);
+  const [data_history, setdata_history] = useState(users);
   const Check = (user_id, order_id, item) => {
     setuserid(user_id);
     setorderid(order_id);
-    console.log(user_id);
-    console.log(order_id);
     navigation.navigate("Invoice", { user_id: user_id, order_id: order_id });
   };
 
+  const filter_func = (text) => {
+    const newData = data_history.filter((items) => {
+      var order = items.orderid;
+      //console.log(order.includes(text));
+      return order.includes(text);
+    });
+    setarrHolder(newData);
+  };
+  // console.log(data_history);
   return (
     <View
       style={{
         backgroundColor: "#f8f4f4",
         padding: 20,
         paddingTop: 50,
+        flex: 1
       }}
     >
+
+      <FormInput
+        onChangeText={(text) => filter_func(text)}
+        placeholderText="Search..."
+        iconType="search1"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+
       <FlatList
-        data={users}
+        style={{ marginTop: 10 }}
+        data={arrHolder}
         keyExtractor={(user) => user.id}
         renderItem={({ item }) => (
           <TouchableWithoutFeedback
             onPress={Check.bind(this, item.userid, item.orderid)}
           >
-            <Card
-              userId={item.userid}
-              orderId={item.orderid}
-              type={item.type}
-              weight={item.weight}
-            />
+            <Cards userId={item.userid} orderId={item.orderid} />
           </TouchableWithoutFeedback>
         )}
       />
