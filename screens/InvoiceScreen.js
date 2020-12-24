@@ -46,6 +46,7 @@ const InvoiceScreen = ({ navigation }) => {
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
+    vehicle = newBooking.vehicle;
     if (newBooking.insurance == true)
       insurance = "Yes";
     else
@@ -70,6 +71,7 @@ const InvoiceScreen = ({ navigation }) => {
       "Weight",
       "Type",
       "Order Value",
+      "Vehicle",
       "Insurance",
       "Priority Booking",
     ],
@@ -84,6 +86,7 @@ const InvoiceScreen = ({ navigation }) => {
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],
+      [`${vehicle}`],
       [`${insurance}`],
       [`${priority}`]
     ],
