@@ -4,45 +4,41 @@ import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { AuthContext } from "../navigation/AuthProvider";
 import Icon from "react-native-vector-icons/Ionicons";
 
-const ProfileScreen = ({ navigation }) => {
+const RequestsScreen = ({ navigation }) => {
   const { user, logout } = useContext(AuthContext);
 
-  const handleSubmit2 = () => {
-    setVisible2(false);
-    changePassword(currentPassword, newPassword);
-  };
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.header}></View>
-        <Image
+        <View style={styles.header}><Image
           style={styles.avatar}
-          source={{ uri: "https://bootdey.com/img/Content/avatar/avatar6.png" }}
-        />
+          source={{ uri: "https://image.freepik.com/free-vector/documents-with-office-briefcase-vector-illustration-flat-cartoon-style_101884-104.jpg" }}
+        /></View>
+        
         <View style={styles.body}>
           <View style={styles.bodyContent}>
             <Text style={styles.name}>{user.uid}</Text>
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate("UpdateUserDetails")}
+              onPress={() => navigation.navigate("Leave")}
             >
-              <Text style={styles.textStyle}>Update / Set Details</Text>
+              <Text style={styles.textStyle}>Leave</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => {
-                navigation.navigate("Reset-Email");
+                {};
               }}
             >
-              <Text style={styles.textStyle}>Reset Email</Text>
+              <Text style={styles.textStyle}>Appraisal</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate("Reset-Password")}
+              onPress={() => {}}
             >
-              <Text style={styles.textStyle}>Reset Password</Text>
+              <Text style={styles.textStyle}>Reschedule</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -51,22 +47,10 @@ const ProfileScreen = ({ navigation }) => {
   );
 };
 
-export default ProfileScreen;
+export default RequestsScreen;
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "#00BFFF",
-    height: 200,
-  },
-  avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-    borderWidth: 4,
-    borderColor: "white",
-    marginBottom: 10,
-    alignSelf: "center",
-    position: "absolute",
-    marginTop: 130,
+    height: 230,
   },
   name: {
     fontSize: 22,
@@ -82,7 +66,7 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   name: {
-    fontSize: 28,
+    fontSize: 25,
     color: "#696969",
     fontWeight: "600",
   },
@@ -98,8 +82,15 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: "#00BFFF",
   },
+  avatar: {
+    width: '100%',
+    height: 250,
+    borderWidth: 4,
+    alignSelf: "center",
+    position: "absolute",
+  },
   textStyle:{
-    fontWeight:'bold',
-    color: "white",
-}
+      fontWeight:'bold',
+      color: "white",
+  }
 });

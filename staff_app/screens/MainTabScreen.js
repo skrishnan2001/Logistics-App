@@ -10,9 +10,12 @@ import ProfileScreen from "./Profile";
 import UpdateUserDetails from "./UpdateUserDetails";
 import ResetPassword from "./ResetPassword";
 import ResetEmail from "./ResetEmail";
+import RequestsScreen from "./Requests";
+import Leave from "./Leave";
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const RequestStack = createStackNavigator();
 const SignInStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
@@ -37,6 +40,49 @@ const HomeStackScreen = ({ navigation }) => {
         }}
       />
     </HomeStack.Navigator>
+  );
+};
+
+const RequestsStackScreen = ({ navigation }) => {
+  return (
+    <RequestStack.Navigator>
+      <RequestStack.Screen
+        name="Requests"
+        component={RequestsScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <RequestStack.Screen
+        name="Leave"
+        component={Leave}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </RequestStack.Navigator>
   );
 };
 
@@ -166,6 +212,18 @@ const bottomTabNav = () => {
       />
 
       <Tab.Screen
+        name="Request"
+        component={RequestsStackScreen}
+        options={{
+          tabBarLabel: "Request",
+          tabBarColor: "#34ebc0",
+          tabBarIcon: ({ color }) => (
+            <Icon name="ios-briefcase" color={color} size={26} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
         name="Profile"
         component={ProfileStackScreen}
         options={{
@@ -195,6 +253,7 @@ const DrawerNav = () => {
       }}
     >
       <Drawer.Screen name="Home" component={bottomTabNav} />
+      <Drawer.Screen name="Requests" component={RequestsStackScreen}/>
       <Drawer.Screen name="Profile" component={ProfileStackScreen} />
       {/* <Drawer.Screen name="SignIn" component={SignInStackScreen} /> */}
     </Drawer.Navigator>
