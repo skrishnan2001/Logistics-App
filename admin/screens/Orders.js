@@ -57,10 +57,7 @@ const Orders = ({ navigation }) => {
   const filter_func = (text) => {
     const newData = data_history.filter((items) => {
       var order = items[`${PickerSelectedVal}`];
-      if (
-        PickerSelectedVal == "prior_booking" ||
-        PickerSelectedVal == "insurance"
-      ) {
+      if(PickerSelectedVal == "prior_booking" || PickerSelectedVal == "insurance"){
         if (items[`${PickerSelectedVal}`]) order = "Yes";
         else order = "No";
       }

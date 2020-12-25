@@ -1,5 +1,12 @@
 import React, { useContext, useState, Component } from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
 import {
@@ -8,17 +15,18 @@ import {
   Row,
   Rows,
   Col,
-  Cols
+  Cols,
 } from "react-native-table-component";
 import * as firebase from "firebase";
 
-const InvoiceScreen = ({ navigation }) => {
+const InvoiceScreen = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
+
   var phone,
     pickup,
-    pickup2,//City,state and pincode for pickup address
+    pickup2, //City,state and pincode for pickup address
     delivery,
-    delivery2,//City,state and pincode for delivery address
+    delivery2, //City,state and pincode for delivery address
     category,
     length,
     breadth,
@@ -28,17 +36,18 @@ const InvoiceScreen = ({ navigation }) => {
     order_val,
     insurance,
     priority;
-  var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
-  bookingRef.limitToLast(1).on("child_added", function (data) {
+  const { user_id, order_id } = route.params;
+  var bookingRef = firebase
+    .database()
+    .ref(`/users/booking/${user_id}/${order_id}`);
+  bookingRef.on("value", function (data) {
     var newBooking = data.val();
-    // console.log("Pick-up: " + newBooking.residence_locality_pickup);
-    // console.log("Drop: " + newBooking.residence_locality_delivery);
-    // console.log("Phone number: " + newBooking.phone);
     phone = newBooking.phone;
     pickup = newBooking.residence_locality_pickup;
     pickup2 = newBooking.city_state_pickup + "," + newBooking.pincode_pickup;
     delivery = newBooking.residence_locality_delivery;
-    delivery2 = newBooking.city_state_delivery2 + "," + newBooking.pincode_delivery;
+    delivery2 =
+      newBooking.city_state_delivery2 + "," + newBooking.pincode_delivery;
     category = newBooking.PickerSelectedVal;
     length = newBooking.length;
     breadth = newBooking.breadth;
@@ -46,16 +55,11 @@ const InvoiceScreen = ({ navigation }) => {
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
-    vehicle = newBooking.vehicle;
-    if (newBooking.insurance == true)
-      insurance = "Yes";
-    else
-      insurance = "No";
+    if (newBooking.insurance == true) insurance = "Yes";
+    else insurance = "No";
 
-    if (newBooking.Priority_Booking == true)
-      priority = "Yes";
-    else
-      priority = "No";
+    if (newBooking.Priority_Booking == true) priority = "Yes";
+    else priority = "No";
   });
 
   const [curr, next] = useState({
@@ -65,15 +69,14 @@ const InvoiceScreen = ({ navigation }) => {
       "Pickup-Add2",
       "Delivery-Add1",
       "Delivery-Add2",
-      "Phone number",
+      "Phone no.",
       "Category",
       "Dimension",
       "Weight",
       "Type",
       "Order Value",
-      "Vehicle",
       "Insurance",
-      "Priority Booking",
+      "Prior-Booking",
     ],
     tableData: [
       [`${pickup}`],
@@ -82,13 +85,12 @@ const InvoiceScreen = ({ navigation }) => {
       [`${delivery2}`],
       [`${phone}`],
       [`${category}`],
-      [`${length}*${breadth}*${height}`],
+      [`${length}${breadth}${height}`],
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],
-      [`${vehicle}`],
       [`${insurance}`],
-      [`${priority}`]
+      [`${priority}`],
     ],
   });
 
@@ -96,7 +98,7 @@ const InvoiceScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.top}>Booking Details</Text>
+        <Text style={styles.top}>Order Details</Text>
         <Table borderStyle={{ borderWidth: 2 }}>
           <Row
             data={state.tableHead}
@@ -120,8 +122,8 @@ const InvoiceScreen = ({ navigation }) => {
           </TableWrapper>
         </Table>
         <FormButton
-          buttonTitle="Redirect to Fresh-Booking"
-          onPress={() => navigation.navigate("Booking")}
+          buttonTitle="Back to Orders"
+          onPress={() => navigation.navigate("Orders")}
         />
       </View>
     </ScrollView>
@@ -131,11 +133,21 @@ const InvoiceScreen = ({ navigation }) => {
 export default InvoiceScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 20, paddingVertical: 50, backgroundColor: "#fff" },
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 50,
+    backgroundColor: "#fff",
+  },
   head: { height: 40, backgroundColor: "#f1f8ff" },
   wrapper: { flexDirection: "row" },
   title: { flex: 1, backgroundColor: "#f6f8fa" },
   row: { height: 60 },
   text: { textAlign: "center" },
-  top: { textAlign: "center", fontSize: 30, paddingBottom: 20,color: '#051d5f' },
+  top: {
+    textAlign: "center",
+    fontSize: 20,
+    paddingBottom: 20,
+    color: "#051d5f",
+  },
 });

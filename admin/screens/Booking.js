@@ -79,10 +79,12 @@ const BookingScreen = ({ navigation }) => {
   const addItems = () => {
     db.ref(`/admin/booking`).push({
       residence_locality_pickup: pickup,
-      city_state_pickup: pickup2,
+      city_pickup: str[0],
+      state_pickup: str[1],
       pincode_pickup: pickup3,
       residence_locality_delivery: delivery,
-      city_state_delivery2: delivery2,
+      city_delivery: str1[0],
+      state_delivery: str1[1],
       pincode_delivery: delivery3,
       phone: phone,
       PickerSelectedVal: PickerSelectedVal,
@@ -97,6 +99,9 @@ const BookingScreen = ({ navigation }) => {
       Priority_Booking: Priority,
     });
   };
+
+  var str = pickup2.split(',');
+  var str1 = delivery2.split(',');
 
   const VehiclePicker = () => {
     var volume = dimension * dimension2 * dimension3;
