@@ -10,9 +10,11 @@ import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./Profile";
 import SignupScreen from "./SignupScreen";
 import InvoiceScreen from "./InvoiceScreen";
+import InvoiceBooking from "./InvoiceBooking";
 import UpdateUserDetails from "./UpdateUserDetails";
 import ResetPassword from "./ResetPassword";
 import ResetEmail from "./ResetEmail";
+import History from "./History";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -66,8 +68,8 @@ const BookingStackScreen = ({ navigation }) => {
         }}
       />
       <BookingStack.Screen
-        name="Invoice"
-        component={InvoiceScreen}
+        name="Invoice-Booking"
+        component={InvoiceBooking}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -147,6 +149,42 @@ const ProfileStackScreen = ({ navigation }) => {
       <ProfileStack.Screen
         name="Reset-Email"
         component={ResetEmail}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="History"
+        component={History}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Invoice"
+        component={InvoiceScreen}
         options={{
           headerLeft: () => (
             <Icon.Button
