@@ -36,7 +36,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     order_val,
     insurance,
     priority;
-  const { user_id, order_id } = route.params;
+  const { user_id, order_id, screen } = route.params;
   var bookingRef = firebase
     .database()
     .ref(`/users/booking/${user_id}/${order_id}`);
@@ -122,8 +122,8 @@ const InvoiceScreen = ({ route, navigation }) => {
           </TableWrapper>
         </Table>
         <FormButton
-          buttonTitle="Back to Orders"
-          onPress={() => navigation.navigate("Orders")}
+          buttonTitle={"Back to " + screen}
+          onPress={() => navigation.navigate(screen)}
         />
       </View>
     </ScrollView>

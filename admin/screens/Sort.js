@@ -50,7 +50,7 @@ const Sort = ({ navigation }) => {
   const Check = (user_id, order_id, item) => {
     setuserid(user_id);
     setorderid(order_id);
-    navigation.navigate("Invoice", { user_id: user_id, order_id: order_id });
+    navigation.navigate("Invoice", { user_id: user_id, order_id: order_id, screen: "Sort" });
   };
 
   const [state, setstate] = useState();

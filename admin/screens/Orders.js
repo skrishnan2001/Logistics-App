@@ -40,7 +40,6 @@ const Orders = ({ navigation }) => {
         }
       }
     }
-    console.log(users);
   });
   const [user_id, setuserid] = useState();
   const [order_id, setorderid] = useState();
@@ -51,7 +50,7 @@ const Orders = ({ navigation }) => {
   const Check = (user_id, order_id, item) => {
     setuserid(user_id);
     setorderid(order_id);
-    navigation.navigate("Invoice", { user_id: user_id, order_id: order_id });
+    navigation.navigate("Invoice", { user_id: user_id, order_id: order_id, screen: "Orders" });
   };
 
   const filter_func = (text) => {
@@ -61,13 +60,10 @@ const Orders = ({ navigation }) => {
         if (items[`${PickerSelectedVal}`]) order = "Yes";
         else order = "No";
       }
-      console.log(items[`${PickerSelectedVal}`]);
-      console.log(order.includes(text));
       return order.includes(text);
     });
     setarrHolder(newData);
   };
-  console.log(data_history);
   return (
     <View
       style={{
