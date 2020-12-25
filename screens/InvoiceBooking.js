@@ -19,7 +19,7 @@ import {
 } from "react-native-table-component";
 import * as firebase from "firebase";
 
-const InvoiceScreen = ({ route, navigation }) => {
+const InvoiceBooking = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   var phone,
     pickup,
@@ -35,12 +35,12 @@ const InvoiceScreen = ({ route, navigation }) => {
     order_val,
     insurance,
     priority;
-  const { user_id, order_id } = route.params;
-  var bookingRef = firebase
-    .database()
-    .ref(`/users/booking/${user_id}/${order_id}`);
-  bookingRef.on("value", function (data) {
+  var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
+  bookingRef.limitToLast(1).on("child_added", function (data) {
     var newBooking = data.val();
+    // console.log("Pick-up: " + newBooking.residence_locality_pickup);
+    // console.log("Drop: " + newBooking.residence_locality_delivery);
+    // console.log("Phone number: " + newBooking.phone);
     phone = newBooking.phone;
     pickup = newBooking.residence_locality_pickup;
     pickup2 = newBooking.city_state_pickup + "," + newBooking.pincode_pickup;
@@ -129,7 +129,7 @@ const InvoiceScreen = ({ route, navigation }) => {
   );
 };
 
-export default InvoiceScreen;
+export default InvoiceBooking;
 
 const styles = StyleSheet.create({
   container: {

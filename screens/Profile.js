@@ -31,7 +31,7 @@ const ProfileScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => alert("button worked")}
+              onPress={() => navigation.navigate("History")}
             >
               <Text>Booking History</Text>
             </TouchableOpacity>
