@@ -10,6 +10,7 @@ import {
     Text
 } from "react-native";
 import FormButton from "../components/FormButton";
+import FormInput from "../components/FormInput";
 import { windowHeight } from "../utils/Dimensions";
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
@@ -21,16 +22,17 @@ export default function Leave({ navigation }) {
     const { user } = useContext(AuthContext);
     const yourDate = new Date()
     const NewDate = moment(yourDate, 'DD-MM-YYYY')
-    var today=NewDate
     const [fromdate, setfromdate] = useState(NewDate);
     const [todate, settodate] = useState(NewDate);
+    const [reason, setReason] = useState("");
 
     var addItems = () => {
         db.ref(`/staff/Requests/Leaves/${user.uid}`).push({
-        From_Date: fromdate.toLocaleString(),
-        To_Date: todate.toLocaleString(),
-         });
-     };
+            From_Date: fromdate.toLocaleString(),
+            To_Date: todate.toLocaleString(),
+            Reason: reason
+        });
+    };
 
     const updateHandle = () => {
         addItems();
@@ -39,13 +41,8 @@ export default function Leave({ navigation }) {
     };
 
     return (
-        <TouchableWithoutFeedback
-            onPress={() => {
-                Keyboard.dismiss();
-            }}
-        >
-            <SafeAreaView>
-                <ScrollView>
+        <SafeAreaView>
+            <ScrollView>
                 <View>
                     <View style={styles.header}>
                         <Image
@@ -64,7 +61,7 @@ export default function Leave({ navigation }) {
                             placeholder="select date"
                             format="DD-MM-YYYY"
                             minDate={new Date(Date.now())}
-                            maxDate="01-01-2022"
+                            maxDate={new Date(Date.now() + (24 * 60 * 60 * 1000 * 7 * 4 * 3))}
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             customStyles={{
@@ -77,7 +74,7 @@ export default function Leave({ navigation }) {
                                 },
                                 dateInput: {
                                     marginLeft: 36,
-                                    borderWidth:0
+                                    borderWidth: 0
                                 },
                             }}
                             onDateChange={(date) => {
@@ -93,7 +90,7 @@ export default function Leave({ navigation }) {
                             placeholder="select date"
                             format="DD-MM-YYYY"
                             minDate={new Date(Date.now())}
-                            maxDate="01-01-2022"
+                            maxDate={new Date(Date.now() + (24 * 60 * 60 * 1000 * 7 * 4 * 3))}
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             customStyles={{
@@ -106,28 +103,35 @@ export default function Leave({ navigation }) {
                                 },
                                 dateInput: {
                                     marginLeft: 36,
-                                    borderWidth:0
+                                    borderWidth: 0
                                 },
                             }}
                             onDateChange={(date) => {
                                 settodate(date);
                             }}
                         />
-
+                        <Text style={[styles.text, { marginTop: 20 }]}>Reason</Text>
+                        <FormInput
+                            labelValue={reason}
+                            onChangeText={(text) => setReason(text)}
+                            placeholderText="Reason for taking leave..."
+                            autoCorrect={false}
+                            multiline={true}
+                        />
                         <FormButton
                             buttonTitle="Seek Permission"
                             style={styles.buttonContainer}
                             onPress={updateHandle}
                         />
                         <FormButton
+                            style={[styles.buttonContainer, { backgroundColor: '#2e64e5', marginTop: 20, marginBottom: 20 }]}
                             buttonTitle="Back to Requests"
                             onPress={() => navigation.navigate("Requests")}
                         />
                     </View>
                 </View>
-                </ScrollView>
-            </SafeAreaView>
-        </TouchableWithoutFeedback>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
         position: "absolute",
     },
     buttonContainer: {
-        marginTop: 50,
+        marginTop: 40,
         width: "100%",
         height: windowHeight / 15,
         backgroundColor: "crimson",
@@ -161,13 +165,13 @@ const styles = StyleSheet.create({
     },
     datePickerStyle: {
         width: '100%',
-        marginTop: 20,
+        marginTop: 10,
         borderColor: '#ccc',
         borderRadius: 3,
         borderWidth: 0,
         alignItems: 'center',
         backgroundColor: '#fff',
-        padding:5
+        padding: 5
     },
     text: {
         color: '#051d5f',
