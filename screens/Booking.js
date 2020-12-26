@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useContext } from "react";
 import {
   StyleSheet,
@@ -77,8 +76,10 @@ const BookingScreen = ({ navigation }) => {
     setcheck(false);
     setPriority(false);
   };
+  var str = pickup2.split(",");
+  var str1 = delivery2.split(",");
   const addItems = () => {
-    db.ref(`/admin/booking`).push({
+    db.ref(`/users/booking/${user.uid}`).push({
       residence_locality_pickup: pickup,
       city_pickup: str[0],
       state_pickup: str[1],
@@ -101,9 +102,6 @@ const BookingScreen = ({ navigation }) => {
     });
   };
 
-  var str = pickup2.split(',');
-  var str1 = delivery2.split(',');
-
   const VehiclePicker = () => {
     var volume = dimension * dimension2 * dimension3;
     if (volume < 3 || weight < 5) {
@@ -121,7 +119,7 @@ const BookingScreen = ({ navigation }) => {
     VehiclePicker();
     addItems();
     alert("Order Placed Successfully");
-    navigation.navigate("Invoice-admin");
+    navigation.navigate("Invoice-Booking");
   };
 
   const validate = () => {
@@ -558,4 +556,3 @@ const styles = StyleSheet.create({
     marginBottom: 1,
   },
 });
-
