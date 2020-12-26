@@ -13,24 +13,27 @@ import FormButton from "../components/FormButton";
 import { windowHeight } from "../utils/Dimensions";
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
+import { AuthContext } from "../navigation/AuthProvider";
+import { db } from "../firebaseConfig";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function Leave({ navigation }) {
-    //const { user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const yourDate = new Date()
     const NewDate = moment(yourDate, 'DD-MM-YYYY')
+    var today=NewDate
     const [fromdate, setfromdate] = useState(NewDate);
     const [todate, settodate] = useState(NewDate);
 
-    // const addItems = () => {
-    //     db.ref(`/staff/ProfileDetails/${user.uid}`).push({
-    //     Name: name,
-    //     Phone_number: phone,
-    //     });
-    // };
+    var addItems = () => {
+        db.ref(`/staff/Requests/Leaves/${user.uid}`).push({
+        From_Date: fromdate.toLocaleString(),
+        To_Date: todate.toLocaleString(),
+         });
+     };
 
     const updateHandle = () => {
-        //addItems();
+        addItems();
         Alert.alert("Your request for leave has been sent!");
         navigation.navigate("Requests");
     };
@@ -60,7 +63,7 @@ export default function Leave({ navigation }) {
                             mode="date" // The enum of date, datetime and time
                             placeholder="select date"
                             format="DD-MM-YYYY"
-                            minDate="25-12-2020"
+                            minDate={new Date(Date.now())}
                             maxDate="01-01-2022"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
@@ -74,6 +77,7 @@ export default function Leave({ navigation }) {
                                 },
                                 dateInput: {
                                     marginLeft: 36,
+                                    borderWidth:0
                                 },
                             }}
                             onDateChange={(date) => {
@@ -88,7 +92,7 @@ export default function Leave({ navigation }) {
                             mode="date" // The enum of date, datetime and time
                             placeholder="select date"
                             format="DD-MM-YYYY"
-                            minDate="25-12-2020"
+                            minDate={new Date(Date.now())}
                             maxDate="01-01-2022"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
@@ -102,6 +106,7 @@ export default function Leave({ navigation }) {
                                 },
                                 dateInput: {
                                     marginLeft: 36,
+                                    borderWidth:0
                                 },
                             }}
                             onDateChange={(date) => {
@@ -162,7 +167,7 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         alignItems: 'center',
         backgroundColor: '#fff',
-
+        padding:5
     },
     text: {
         color: '#051d5f',
