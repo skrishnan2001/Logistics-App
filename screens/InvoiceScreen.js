@@ -45,10 +45,10 @@ const InvoiceScreen = ({ route, navigation }) => {
     var newBooking = data.val();
     phone = newBooking.phone;
     pickup = newBooking.residence_locality_pickup;
-    pickup2 = newBooking.city_state_pickup + "," + newBooking.pincode_pickup;
+    pickup2 = newBooking.city_pickup + ", " + newBooking.state_pickup + ", " + newBooking.pincode_pickup;
     delivery = newBooking.residence_locality_delivery;
     delivery2 =
-      newBooking.city_state_delivery2 + "," + newBooking.pincode_delivery;
+      newBooking.city_delivery + "," + newBooking.state_delivery  + "," + newBooking.pincode_delivery;
     category = newBooking.PickerSelectedVal;
     length = newBooking.length;
     breadth = newBooking.breadth;
