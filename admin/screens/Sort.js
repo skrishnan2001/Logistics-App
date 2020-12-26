@@ -41,6 +41,7 @@ const Sort = ({ navigation }) => {
         }
       }
     }
+    console.log(users);
   });
   const [user_id, setuserid] = useState();
   const [order_id, setorderid] = useState();
@@ -50,7 +51,7 @@ const Sort = ({ navigation }) => {
   const Check = (user_id, order_id, item) => {
     setuserid(user_id);
     setorderid(order_id);
-    navigation.navigate("Invoice", { user_id: user_id, order_id: order_id, screen: "Sort" });
+    navigation.navigate("Invoice", { user_id: user_id, order_id: order_id });
   };
 
   const [state, setstate] = useState();
@@ -66,7 +67,15 @@ const Sort = ({ navigation }) => {
       return (order.includes(text1) && order1.includes(text2) && order2.includes(text3));
     });
     setarrHolder(newData);
+    
   };
+  var count=0;
+  console.log(arrHolder);
+  for (var j in arrHolder) {
+    if (arrHolder.hasOwnProperty(j)) {
+      count+=1;
+    }
+  }
   return (
     <View
       style={{
@@ -101,7 +110,7 @@ const Sort = ({ navigation }) => {
      />
 
     <FormButton buttonTitle="Sort" onPress={filter_func.bind(this, state, city, pincode)} />
-
+    <Text style={[styles.text, { marginTop: 20 }]}>Number of orders is {count}</Text>
       <FlatList
         data={arrHolder}
         keyExtractor={(user) => user.id}
