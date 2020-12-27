@@ -34,7 +34,7 @@ const BookingScreen = ({ navigation }) => {
 
   const [weight, setweight] = useState("");
   const [type, settype] = useState("");
-  const [vehicle, setVehicle] = useState("");
+  //const [vehicle, setVehicle] = useState("");
   const [order, setorder] = useState("");
   const [check, setcheck] = useState(false);
   const [Priority, setPriority] = useState(false);
@@ -57,6 +57,8 @@ const BookingScreen = ({ navigation }) => {
   const [weighterr, setweighterr] = useState("");
   const [typeerr, settypeerr] = useState("");
   const [ordererr, setordererr] = useState("");
+
+  var vehicle_type="";
 
   const clearInput = () => {
     setpickup("");
@@ -94,7 +96,7 @@ const BookingScreen = ({ navigation }) => {
       breadth: dimension2,
       height: dimension3,
       weight: weight,
-      vehicle: vehicle,
+      vehicle: vehicle_type,
       type: type,
       order: order,
       insurance: check,
@@ -105,13 +107,13 @@ const BookingScreen = ({ navigation }) => {
   const VehiclePicker = () => {
     var volume = dimension * dimension2 * dimension3;
     if (volume < 3 || weight < 5) {
-      setVehicle("two-wheeler");
+      vehicle_type="two-wheeler";
     } else if ((volume >= 3 && volume < 7) || (weight >= 5 && weight < 50)) {
-      setVehicle("four-wheeler");
+      vehicle_type="four-wheeler";
     } else if ((volume >= 7 && volume < 12) || (weight >= 50 && weight < 100)) {
-      setVehicle("mini-van");
+      vehicle_type="mini-van";
     } else {
-      setVehicle("truck");
+      vehicle_type="truck";
     }
   };
 

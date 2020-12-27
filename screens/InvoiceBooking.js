@@ -33,6 +33,7 @@ const InvoiceBooking = ({ navigation }) => {
     weight,
     type,
     order_val,
+    vehicle_type,
     insurance,
     priority;
   var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
@@ -54,6 +55,7 @@ const InvoiceBooking = ({ navigation }) => {
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
+    vehicle_type=newBooking.vehicle;
     if (newBooking.insurance == true) insurance = "Yes";
     else insurance = "No";
 
@@ -74,6 +76,7 @@ const InvoiceBooking = ({ navigation }) => {
       "Weight",
       "Type",
       "Order Value",
+      "Vehicle",
       "Insurance",
       "Prior-Booking",
     ],
@@ -88,6 +91,7 @@ const InvoiceBooking = ({ navigation }) => {
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],
+      [`${vehicle_type}`],
       [`${insurance}`],
       [`${priority}`],
     ],

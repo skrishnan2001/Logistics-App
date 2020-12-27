@@ -34,6 +34,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     weight,
     type,
     order_val,
+    vehicle_type,
     insurance,
     priority;
   const { user_id, order_id } = route.params;
@@ -64,6 +65,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
+    vehicle_type=newBooking.vehicle;
     if (newBooking.insurance == true) insurance = "Yes";
     else insurance = "No";
 
@@ -84,6 +86,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       "Weight",
       "Type",
       "Order Value",
+      "Vehicle",
       "Insurance",
       "Prior-Booking",
     ],
@@ -94,10 +97,11 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${delivery2}`],
       [`${phone}`],
       [`${category}`],
-      [`${length}${breadth}${height}`],
+      [`${length}*${breadth}*${height}`],
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],
+      [`${vehicle_type}`],
       [`${insurance}`],
       [`${priority}`],
     ],
