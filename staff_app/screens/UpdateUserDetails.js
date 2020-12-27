@@ -25,8 +25,18 @@ export default function UpdateUserDetails({ navigation }) {
     });
   };
 
+  const addStafftoAdmin = () => {
+    var hashedID=user.uid;
+    db.ref(`/admin/Staffs/${user.uid}`).push({
+      Staff_ID:hashedID,
+      Name: name,
+      Phone_number: phone,
+    });
+  };
+
   const updateHandle = () => {
     addItems();
+    addStafftoAdmin();
     Alert.alert("Your details have been updated");
     navigation.navigate("Profile");
   };

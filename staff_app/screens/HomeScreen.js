@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet,Alert } from "react-native";
 import FormButton from "../components/FormButton";
 import { AuthContext } from "../navigation/AuthProvider";
 import * as firebase from "firebase";
 
 const HomeScreen = () => {
   const { user, logout } = useContext(AuthContext);
+  Alert.alert("Update your profile to get your consignment");
 
   return (
     <View style={styles.container}>
