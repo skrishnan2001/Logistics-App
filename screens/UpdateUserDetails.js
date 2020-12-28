@@ -19,9 +19,24 @@ export default function UpdateUserDetails({ navigation }) {
   const [phone, setPhone] = useState("");
 
   const addItems = () => {
-    db.ref(`/users/ProfileDetails/${user.uid}`).push({
-      Name: name,
-      Phone_number: phone,
+    var ref = db.ref(`/users/ProfileDetails/`);
+    ref.once("value").then(function (snapshot) {
+      if (snapshot.child(`${user.uid}`).exists()) {
+        var key;
+        var dbref = db.ref(`/users/ProfileDetails/${user.uid}`);
+        dbref.limitToLast(1).on("child_added", function (snapshot) {
+          key = snapshot.key;
+        });
+        dbref.child(`${key}`).set({
+          Name: name,
+          Phone_number: phone,
+        });
+      } else {
+        db.ref(`/users/ProfileDetails/${user.uid}`).push({
+          Name: name,
+          Phone_number: phone,
+        });
+      }
     });
   };
 
