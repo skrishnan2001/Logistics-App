@@ -34,7 +34,7 @@ const BookingScreen = ({ navigation }) => {
 
   const [weight, setweight] = useState("");
   const [type, settype] = useState("");
-  const [vehicle, setVehicle] = useState("");
+  //const [vehicle, setVehicle] = useState("");
   const [order, setorder] = useState("");
   const [check, setcheck] = useState(false);
   const [Priority, setPriority] = useState(false);
@@ -58,6 +58,9 @@ const BookingScreen = ({ navigation }) => {
   const [typeerr, settypeerr] = useState("");
   const [ordererr, setordererr] = useState("");
 
+  var vehicle_type = "";
+  var zone = "";
+
   const clearInput = () => {
     setpickup("");
     setpickup2("");
@@ -76,8 +79,10 @@ const BookingScreen = ({ navigation }) => {
     setcheck(false);
     setPriority(false);
   };
-  const addItems = () => {
-    db.ref(`/admin/booking`).push({
+  var str = pickup2.split(",");
+  var str1 = delivery2.split(",");
+  const addItems = (d) => {
+    db.ref(`/admin/booking/`).push({
       residence_locality_pickup: pickup,
       city_pickup: str[0],
       state_pickup: str[1],
@@ -92,33 +97,42 @@ const BookingScreen = ({ navigation }) => {
       breadth: dimension2,
       height: dimension3,
       weight: weight,
-      vehicle: vehicle,
+      vehicle: vehicle_type,
       type: type,
       order: order,
       insurance: check,
       Priority_Booking: Priority,
+      Time: d,
+      zone: zone,
     });
   };
-
-  var str = pickup2.split(',');
-  var str1 = delivery2.split(',');
 
   const VehiclePicker = () => {
     var volume = dimension * dimension2 * dimension3;
     if (volume < 3 || weight < 5) {
-      setVehicle("two-wheeler");
+      vehicle_type = "two-wheeler";
     } else if ((volume >= 3 && volume < 7) || (weight >= 5 && weight < 50)) {
-      setVehicle("four-wheeler");
+      vehicle_type = "four-wheeler";
     } else if ((volume >= 7 && volume < 12) || (weight >= 50 && weight < 100)) {
-      setVehicle("mini-van");
+      vehicle_type = "mini-van";
     } else {
-      setVehicle("truck");
+      vehicle_type = "truck";
     }
   };
-
+  const zone_Allotment = () => {
+    var north = ["600081", "600011", "600060", "601204", "600019"];
+    var south = ["600020", "600016", "600004", "600042", "600087"];
+    var central = ["600017", "600018", "600005", "600018", "600040"];
+    if (north.includes(pickup3)) zone = "North";
+    else if (south.includes(pickup3)) zone = "South";
+    else if (central.includes(pickup3)) zone = "Central";
+    else zone = "Others";
+  };
   const handleSubmit = () => {
     VehiclePicker();
-    addItems();
+    zone_Allotment();
+    var d = new Date();
+    addItems(d.toString());
     alert("Order Placed Successfully");
     navigation.navigate("Invoice-admin");
   };

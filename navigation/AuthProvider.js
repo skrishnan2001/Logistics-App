@@ -1,10 +1,10 @@
-import React, {createContext, useState} from 'react';
-import {Alert} from 'react-native';
-import Firebase from '../firebaseConfig';
+import React, { createContext, useState } from "react";
+import { Alert } from "react-native";
+import Firebase from "../firebaseConfig";
 
 export const AuthContext = createContext();
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   return (
@@ -16,37 +16,27 @@ const AuthProvider = ({children}) => {
         login: async (email, password) => {
           try {
             Firebase.auth().signInWithEmailAndPassword(email, password);
-
-
           } catch (e) {
             console.log(e);
             Alert.alert(
-                  "Login Authentication Error",
-                  {e},
-                  [
-                    { text: "OK", onPress: () => console.log("OK Pressed") }
-                  ],
-                  { cancelable: false }
-                );
-
+              "Login Authentication Error",
+              { e },
+              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+              { cancelable: false }
+            );
           }
         },
         register: async (email, password) => {
           try {
-            Firebase.auth().createUserWithEmailAndPassword(email, password)
-
-
-
+            Firebase.auth().createUserWithEmailAndPassword(email, password);
           } catch (e) {
-            console.log("error"+e);
+            console.log("error" + e);
             Alert.alert(
-                  "Signup Authentication Error",
-                  {e},
-                  [
-                    { text: "OK", onPress: () => console.log("OK Pressed") }
-                  ],
-                  { cancelable: false }
-                );
+              "Signup Authentication Error",
+              { e },
+              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+              { cancelable: false }
+            );
           }
         },
         logout: async () => {
@@ -56,7 +46,8 @@ const AuthProvider = ({children}) => {
             console.log(e);
           }
         },
-      }}>
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

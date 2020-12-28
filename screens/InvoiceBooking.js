@@ -35,7 +35,8 @@ const InvoiceBooking = ({ navigation }) => {
     order_val,
     vehicle_type,
     insurance,
-    priority;
+    priority,
+    shorttime;
   var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
   bookingRef.limitToLast(1).on("child_added", function (data) {
     var newBooking = data.val();
@@ -44,10 +45,19 @@ const InvoiceBooking = ({ navigation }) => {
     // console.log("Phone number: " + newBooking.phone);
     phone = newBooking.phone;
     pickup = newBooking.residence_locality_pickup;
-    pickup2 = newBooking.city_pickup + ", " + newBooking.state_pickup + ", " + newBooking.pincode_pickup;
+    pickup2 =
+      newBooking.city_pickup +
+      ", " +
+      newBooking.state_pickup +
+      ", " +
+      newBooking.pincode_pickup;
     delivery = newBooking.residence_locality_delivery;
     delivery2 =
-      newBooking.city_delivery + "," + newBooking.state_delivery  + "," + newBooking.pincode_delivery;
+      newBooking.city_delivery +
+      "," +
+      newBooking.state_delivery +
+      "," +
+      newBooking.pincode_delivery;
     category = newBooking.PickerSelectedVal;
     length = newBooking.length;
     breadth = newBooking.breadth;
@@ -55,7 +65,18 @@ const InvoiceBooking = ({ navigation }) => {
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
-    vehicle_type=newBooking.vehicle;
+    vehicle_type = newBooking.vehicle;
+    time = new Date(newBooking.Time);
+    shorttime =
+      time.getDate() +
+      "/" +
+      (time.getMonth() + 1) +
+      "/" +
+      time.getFullYear() +
+      " , " +
+      time.getHours() +
+      ":" +
+      time.getMinutes();
     if (newBooking.insurance == true) insurance = "Yes";
     else insurance = "No";
 
@@ -79,6 +100,7 @@ const InvoiceBooking = ({ navigation }) => {
       "Vehicle",
       "Insurance",
       "Prior-Booking",
+      "Booking-Time",
     ],
     tableData: [
       [`${pickup}`],
@@ -94,6 +116,7 @@ const InvoiceBooking = ({ navigation }) => {
       [`${vehicle_type}`],
       [`${insurance}`],
       [`${priority}`],
+      [`${shorttime}`],
     ],
   });
 

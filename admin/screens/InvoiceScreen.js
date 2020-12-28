@@ -35,7 +35,9 @@ const InvoiceScreen = ({ route, navigation }) => {
     type,
     order_val,
     insurance,
-    priority;
+    priority,
+    shorttime,
+    vehicle_type;
   const { user_id, order_id, screen } = route.params;
   var bookingRef = firebase
     .database()
@@ -44,10 +46,19 @@ const InvoiceScreen = ({ route, navigation }) => {
     var newBooking = data.val();
     phone = newBooking.phone;
     pickup = newBooking.residence_locality_pickup;
-    pickup2 = newBooking.city_pickup + ", " + newBooking.state_pickup + ", " + newBooking.pincode_pickup;
+    pickup2 =
+      newBooking.city_pickup +
+      ", " +
+      newBooking.state_pickup +
+      ", " +
+      newBooking.pincode_pickup;
     delivery = newBooking.residence_locality_delivery;
     delivery2 =
-      newBooking.city_delivery + "," + newBooking.state_delivery  + "," + newBooking.pincode_delivery;
+      newBooking.city_delivery +
+      "," +
+      newBooking.state_delivery +
+      "," +
+      newBooking.pincode_delivery;
     category = newBooking.PickerSelectedVal;
     length = newBooking.length;
     breadth = newBooking.breadth;
@@ -55,6 +66,19 @@ const InvoiceScreen = ({ route, navigation }) => {
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
+    vehicle_type = newBooking.vehicle;
+    time = new Date(newBooking.Time);
+    shorttime =
+      time.getDate() +
+      "/" +
+      (time.getMonth() + 1) +
+      "/" +
+      time.getFullYear() +
+      " , " +
+      time.getHours() +
+      ":" +
+      time.getMinutes();
+
     if (newBooking.insurance == true) insurance = "Yes";
     else insurance = "No";
 
@@ -77,6 +101,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       "Order Value",
       "Insurance",
       "Prior-Booking",
+      "Booking-Time",
     ],
     tableData: [
       [`${pickup}`],
@@ -91,6 +116,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${order_val}`],
       [`${insurance}`],
       [`${priority}`],
+      [`${shorttime}`],
     ],
   });
 
@@ -121,9 +147,9 @@ const InvoiceScreen = ({ route, navigation }) => {
             />
           </TableWrapper>
         </Table>
-       <FormButton
-          buttonTitle={"Back to Sort"}
-          onPress={() => navigation.navigate("Sort")}
+        <FormButton
+          buttonTitle={"Back to Orders"}
+          onPress={() => navigation.navigate("Orders")}
         />
       </View>
     </ScrollView>

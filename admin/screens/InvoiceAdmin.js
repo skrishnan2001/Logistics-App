@@ -19,9 +19,8 @@ import {
 } from "react-native-table-component";
 import * as firebase from "firebase";
 
-const InvoiceScreen = ({ route, navigation }) => {
+const InvoiceAdmin = ({ navigation }) => {
   const { user } = useContext(AuthContext);
-
   var phone,
     pickup,
     pickup2, //City,state and pincode for pickup address
@@ -34,20 +33,31 @@ const InvoiceScreen = ({ route, navigation }) => {
     weight,
     type,
     order_val,
+    vehicle_type,
     insurance,
-    priority;
-  const { user_id, order_id } = route.params;
-  var bookingRef = firebase
-    .database()
-    .ref(`/users/booking/${user_id}/${order_id}`);
-  bookingRef.on("value", function (data) {
+    priority,
+    shorttime;
+  var bookingRef = firebase.database().ref(`/admin/booking/`);
+  bookingRef.limitToLast(1).on("child_added", function (data) {
     var newBooking = data.val();
+    // console.log("Pick-up: " + newBooking.residence_locality_pickup);
+    // console.log("Drop: " + newBooking.residence_locality_delivery);
+    // console.log("Phone number: " + newBooking.phone);
     phone = newBooking.phone;
     pickup = newBooking.residence_locality_pickup;
-    pickup2 = newBooking.city_pickup + ", " + newBooking.state_pickup + ", " + newBooking.pincode_pickup;
+    pickup2 =
+      newBooking.city_pickup +
+      ", " +
+      newBooking.state_pickup +
+      ", " +
+      newBooking.pincode_pickup;
     delivery = newBooking.residence_locality_delivery;
     delivery2 =
-      newBooking.city_delivery + "," + newBooking.state_delivery  + "," + newBooking.pincode_delivery;
+      newBooking.city_delivery +
+      "," +
+      newBooking.state_delivery +
+      "," +
+      newBooking.pincode_delivery;
     category = newBooking.PickerSelectedVal;
     length = newBooking.length;
     breadth = newBooking.breadth;
@@ -55,6 +65,18 @@ const InvoiceScreen = ({ route, navigation }) => {
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
+    vehicle_type = newBooking.vehicle;
+    var time = new Date(newBooking.Time);
+    shorttime =
+      time.getDate() +
+      "/" +
+      (time.getMonth() + 1) +
+      "/" +
+      time.getFullYear() +
+      " , " +
+      time.getHours() +
+      ":" +
+      time.getMinutes();
     if (newBooking.insurance == true) insurance = "Yes";
     else insurance = "No";
 
@@ -75,8 +97,10 @@ const InvoiceScreen = ({ route, navigation }) => {
       "Weight",
       "Type",
       "Order Value",
+      "Vehicle",
       "Insurance",
       "Prior-Booking",
+      "Booking-Time",
     ],
     tableData: [
       [`${pickup}`],
@@ -85,12 +109,14 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${delivery2}`],
       [`${phone}`],
       [`${category}`],
-      [`${length}${breadth}${height}`],
+      [`${length}*${breadth}*${height}`],
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],
+      [`${vehicle_type}`],
       [`${insurance}`],
       [`${priority}`],
+      [`${shorttime}`],
     ],
   });
 
@@ -98,7 +124,7 @@ const InvoiceScreen = ({ route, navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.top}>Order Details</Text>
+        <Text style={styles.top}>Booking Details</Text>
         <Table borderStyle={{ borderWidth: 2 }}>
           <Row
             data={state.tableHead}
@@ -122,15 +148,15 @@ const InvoiceScreen = ({ route, navigation }) => {
           </TableWrapper>
         </Table>
         <FormButton
-          buttonTitle="Back to Orders"
-          onPress={() => navigation.navigate("Orders")}
+          buttonTitle="Redirect to Fresh-Booking"
+          onPress={() => navigation.navigate("Booking")}
         />
       </View>
     </ScrollView>
   );
 };
 
-export default InvoiceScreen;
+export default InvoiceAdmin;
 
 const styles = StyleSheet.create({
   container: {

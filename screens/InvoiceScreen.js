@@ -36,7 +36,8 @@ const InvoiceScreen = ({ route, navigation }) => {
     order_val,
     vehicle_type,
     insurance,
-    priority;
+    priority,
+    shorttime;
   const { user_id, order_id } = route.params;
   var bookingRef = firebase
     .database()
@@ -65,7 +66,18 @@ const InvoiceScreen = ({ route, navigation }) => {
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
-    vehicle_type=newBooking.vehicle;
+    vehicle_type = newBooking.vehicle;
+    time = new Date(newBooking.Time);
+    shorttime =
+      time.getDate() +
+      "/" +
+      (time.getMonth() + 1) +
+      "/" +
+      time.getFullYear() +
+      " , " +
+      time.getHours() +
+      ":" +
+      time.getMinutes();
     if (newBooking.insurance == true) insurance = "Yes";
     else insurance = "No";
 
@@ -89,6 +101,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       "Vehicle",
       "Insurance",
       "Prior-Booking",
+      "Booking-Time",
     ],
     tableData: [
       [`${pickup}`],
@@ -104,6 +117,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${vehicle_type}`],
       [`${insurance}`],
       [`${priority}`],
+      [`${shorttime}`],
     ],
   });
 

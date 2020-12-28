@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import * as firebase from "firebase";
 import Cards from "../components/Cards";
 import FormButton from "../components/FormButton";
-import {
-  View,
-  FlatList,
-  Picker,
-  StyleSheet,
-  Text,
-} from "react-native";
+import { View, FlatList, Picker, StyleSheet, Text } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormInput from "../components/FormInput";
 
@@ -34,6 +28,7 @@ const Sort = ({ navigation }) => {
               state_delivery: val_2["state_delivery"],
               pc_del: val_2["pincode_delivery"],
               pc_pick: val_2["pincode_pickup"],
+              time: val_2["Time"],
             };
             i++;
             users.push(user);
@@ -64,16 +59,19 @@ const Sort = ({ navigation }) => {
       var order1 = items.city_pickup;
       var order2 = items.pc_pick;
       //console.log(order.includes(text));
-      return (order.includes(text1) && order1.includes(text2) && order2.includes(text3));
+      return (
+        order.includes(text1) &&
+        order1.includes(text2) &&
+        order2.includes(text3)
+      );
     });
     setarrHolder(newData);
-    
   };
-  var count=0;
+  var count = 0;
   console.log(arrHolder);
   for (var j in arrHolder) {
     if (arrHolder.hasOwnProperty(j)) {
-      count+=1;
+      count += 1;
     }
   }
   return (
@@ -85,7 +83,6 @@ const Sort = ({ navigation }) => {
       }}
     >
       <Text style={[styles.text, { marginTop: 20 }]}>Search Filter</Text>
-      
 
       <FormInput
         onChangeText={(text) => setstate(text)}
@@ -94,7 +91,7 @@ const Sort = ({ navigation }) => {
         autoCapitalize="none"
         autoCorrect={false}
       />
-     <FormInput
+      <FormInput
         onChangeText={(text) => setcity(text)}
         placeholderText="City"
         iconType="search1"
@@ -107,10 +104,15 @@ const Sort = ({ navigation }) => {
         iconType="search1"
         autoCapitalize="none"
         autoCorrect={false}
-     />
+      />
 
-    <FormButton buttonTitle="Sort" onPress={filter_func.bind(this, state, city, pincode)} />
-    <Text style={[styles.text, { marginTop: 20 }]}>Number of orders is {count}</Text>
+      <FormButton
+        buttonTitle="Sort"
+        onPress={filter_func.bind(this, state, city, pincode)}
+      />
+      <Text style={[styles.text, { marginTop: 20 }]}>
+        Number of orders is {count}
+      </Text>
       <FlatList
         data={arrHolder}
         keyExtractor={(user) => user.id}
