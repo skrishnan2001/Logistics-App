@@ -19,24 +19,30 @@ export default function UpdateUserDetails({ navigation }) {
   const [phone, setPhone] = useState("");
 
   const addItems = () => {
-    db.ref(`/staff/ProfileDetails/${user.uid}`).push({
-      Name: name,
-      Phone_number: phone,
+    var ref = db.ref(`/staff/ProfileDetails/`);
+    ref.once("value").then(function (snapshot) {
+      if (snapshot.child(`${user.uid}`).exists()) {
+        var key;
+        var dbref = db.ref(`/staff/ProfileDetails/${user.uid}`);
+        dbref.limitToLast(1).on("child_added", function (snapshot) {
+          key = snapshot.key;
+        });
+        dbref.child(`${key}`).set({
+          Name: name,
+          Phone_number: phone,
+        });
+      } else {
+        db.ref(`/staff/ProfileDetails/${user.uid}`).push({
+          Name: name,
+          Phone_number: phone,
+        });
+      }
     });
   };
 
-  const addStafftoAdmin = () => {
-    var hashedID=user.uid;
-    db.ref(`/admin/Staffs/${user.uid}`).push({
-      Staff_ID:hashedID,
-      Name: name,
-      Phone_number: phone,
-    });
-  };
 
   const updateHandle = () => {
     addItems();
-    addStafftoAdmin();
     Alert.alert("Your details have been updated");
     navigation.navigate("Profile");
   };
