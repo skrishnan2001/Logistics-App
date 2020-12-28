@@ -13,6 +13,8 @@ import { db } from "../firebaseConfig";
 import FormInput from "../components/FormInput";
 import FormButton from "../components/FormButton";
 import { AuthContext } from "../navigation/AuthProvider";
+import * as firebase from "firebase";
+
 
 const BookingScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
@@ -105,7 +107,17 @@ const BookingScreen = ({ navigation }) => {
       Time: d,
       zone: zone,
     });
-    db.ref(`/admin/booking/${zone}/${user.uid}`).push({
+
+    var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
+    var OrderID;
+    bookingRef.limitToLast(1).on('child_added', function (snapshot) {
+      OrderID = snapshot.key;
+    });
+
+    var hashedID = user.uid;
+    db.ref(`/admin/booking/${zone}/`).push({
+      CustomerID: hashedID,
+      Order_ID: OrderID,
       residence_locality_pickup: pickup,
       city_pickup: str[0],
       state_pickup: str[1],
