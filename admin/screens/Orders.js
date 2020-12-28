@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as firebase from "firebase";
-import Cards from "../components/Cards";
-import { View, FlatList, Picker, StyleSheet, Text } from "react-native";
+import CardSchedule from "../components/CardSchedule";
+import { View, FlatList, Picker, StyleSheet, Text, Button } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormInput from "../components/FormInput";
 
@@ -169,11 +169,13 @@ const Orders = ({ navigation }) => {
         data={arrHolder}
         keyExtractor={(user) => user.id}
         renderItem={({ item }) => (
-          <TouchableWithoutFeedback
-            onPress={Check.bind(this, item.userid, item.orderid)}
-          >
-            <Cards userId={item.userid} orderId={item.orderid} />
-          </TouchableWithoutFeedback>
+          <View>
+            <CardSchedule
+              userId={item.userid}
+              orderId={item.orderid}
+              genInvoice={Check.bind(this, item.userid, item.orderid)}
+            />
+          </View>
         )}
         style={{ marginTop: 10 }}
       />
