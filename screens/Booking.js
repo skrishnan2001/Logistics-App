@@ -173,12 +173,14 @@ const BookingScreen = ({ navigation }) => {
   };
 
   const validate = () => {
-    if (
+     if (
       pickup == "" ||
       pickup2 == "" ||
+      pickup2.includes(",")==false ||
       pickup3 == "" ||
       delivery == "" ||
       delivery2 == "" ||
+      delivery2.includes(",")==false ||
       delivery3 == "" ||
       phone == "" ||
       PickerSelectedVal == "" ||
@@ -198,7 +200,10 @@ const BookingScreen = ({ navigation }) => {
       }
       if (pickup2 == "") {
         setpickup2err("Pickup address field 2 required");
-      } else {
+      } else if(pickup2.includes(",")==false){
+        setpickup2err("Include comma(,) between city and state");
+      }
+      else {
         setpickup2err("");
       }
       if (pickup3 == "") {
@@ -213,7 +218,9 @@ const BookingScreen = ({ navigation }) => {
       }
       if (delivery2 == "") {
         setdeliveryerr2("Delivery address field 2 required");
-      } else {
+      } else if(delivery2.includes(",")==false){
+        setdeliveryerr2("Include comma(,) between city and state");
+      }else {
         setdeliveryerr2("");
       }
       if (delivery3 == "") {
