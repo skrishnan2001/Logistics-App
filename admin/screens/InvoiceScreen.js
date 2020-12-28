@@ -149,7 +149,7 @@ const InvoiceScreen = ({ route, navigation }) => {
         </Table>
         <FormButton
           buttonTitle={"Back to Orders"}
-          onPress={() => navigation.navigate("Orders")}
+          onPress={() => navigation.goBack()}
         />
       </View>
     </ScrollView>
