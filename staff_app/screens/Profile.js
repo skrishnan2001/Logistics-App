@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { AuthContext } from "../navigation/AuthProvider";
-import Icon from "react-native-vector-icons/Ionicons";
 
 const ProfileScreen = ({ navigation }) => {
   const { user, logout } = useContext(AuthContext);
@@ -23,6 +22,12 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.body}>
           <View style={styles.bodyContent}>
             <Text style={styles.name}>{user.uid}</Text>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={() => navigation.navigate("MyOrders")}
+            >
+              <Text style={styles.textStyle}>My Orders</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => navigation.navigate("UpdateUserDetails")}

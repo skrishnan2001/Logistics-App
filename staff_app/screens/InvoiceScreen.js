@@ -20,6 +20,8 @@ import {
 import * as firebase from "firebase";
 
 const InvoiceScreen = ({ route, navigation }) => {
+  const { user } = useContext(AuthContext);
+
   var phone,
     pickup,
     pickup2, //City,state and pincode for pickup address
@@ -32,10 +34,11 @@ const InvoiceScreen = ({ route, navigation }) => {
     weight,
     type,
     order_val,
+    vehicle_type,
     insurance,
     priority,
-    vehicle_type;
-  const { user_id, order_id, screen } = route.params;
+    shorttime;
+  const { user_id, order_id } = route.params;
   var bookingRef = firebase
     .database()
     .ref(`/users/booking/${user_id}/${order_id}`);
@@ -64,7 +67,17 @@ const InvoiceScreen = ({ route, navigation }) => {
     type = newBooking.type;
     order_val = newBooking.order;
     vehicle_type = newBooking.vehicle;
-
+    time = new Date(newBooking.Time);
+    shorttime =
+      time.getDate() +
+      "/" +
+      (time.getMonth() + 1) +
+      "/" +
+      time.getFullYear() +
+      " , " +
+      time.getHours() +
+      ":" +
+      time.getMinutes();
     if (newBooking.insurance == true) insurance = "Yes";
     else insurance = "No";
 
@@ -85,8 +98,10 @@ const InvoiceScreen = ({ route, navigation }) => {
       "Weight",
       "Type",
       "Order Value",
+      "Vehicle",
       "Insurance",
       "Prior-Booking",
+      "Booking-Time",
     ],
     tableData: [
       [`${pickup}`],
@@ -95,12 +110,14 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${delivery2}`],
       [`${phone}`],
       [`${category}`],
-      [`${length}${breadth}${height}`],
+      [`${length}*${breadth}*${height}`],
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],
+      [`${vehicle_type}`],
       [`${insurance}`],
       [`${priority}`],
+      [`${shorttime}`],
     ],
   });
 
@@ -132,7 +149,7 @@ const InvoiceScreen = ({ route, navigation }) => {
           </TableWrapper>
         </Table>
         <FormButton
-          buttonTitle={"Back to Deliveries"}
+          buttonTitle="Back to Orders"
           onPress={() => navigation.goBack()}
         />
       </View>

@@ -12,6 +12,7 @@ import ResetPassword from "./ResetPassword";
 import ResetEmail from "./ResetEmail";
 import RequestsScreen from "./Requests";
 import Leave from "./Leave";
+import MyOrders from "./MyOrders";
 import InvoiceScreen from "./InvoiceScreen";
 
 const HomeStack = createStackNavigator();
@@ -25,24 +26,6 @@ const HomeStackScreen = ({ navigation }) => {
       <HomeStack.Screen
         name="Home"
         component={HomeScreen}
-        options={{
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
-            ></Icon.Button>
-          ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-      <HomeStack.Screen
-        name="Invoice"
-        component={InvoiceScreen}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -126,9 +109,51 @@ const ProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
+      
+      <ProfileStack.Screen
+        name="MyOrders"
+        component={MyOrders}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+
+
+
       <ProfileStack.Screen
         name="UpdateUserDetails"
         component={UpdateUserDetails}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+<ProfileStack.Screen
+        name="Invoice"
+        component={InvoiceScreen}
         options={{
           headerLeft: () => (
             <Icon.Button
