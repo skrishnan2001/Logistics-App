@@ -8,22 +8,35 @@ import { windowWidth } from "../utils/Dimensions";
 import { db } from "../firebaseConfig";
 
 function CardSchedule({ userId, orderId, genInvoice }) {
-  var staff_ids = [];
-  var dbRef = firebase.database().ref("/staff/ProfileDetails/");
+  const [staff_picker, setstaff_picker] = useState("Staff 1");
+  var staff = {};
+  var dbRef = db.ref("/staff/ProfileDetails/");
   dbRef.on("value", function (snapshot) {
     const data = snapshot.val();
     for (var key in data) {
-      staff_ids.push(key);
+      if (data.hasOwnProperty(key)) {
+        var val = data[key];
+        for (var key_2 in val) {
+          if (val.hasOwnProperty(key_2)) {
+            var val_2 = val[key_2];
+            var id = key;
+            staff[`${val_2["Name"]}`] = id;
+          }
+        }
+      }
     }
   });
-
-  const [staff_picker, setstaff_picker] = useState(staff_ids[0]);
   const schedule = () => {
-    db.ref(`staff/PickUp/${staff_picker}/`).push({
+    db.ref(`staff/PickUp/${staff[staff_picker]}/`).push({
       userId: userId,
       orderId: orderId,
     });
     alert("Scheduled Staff successfully for Order No:" + orderId);
+    db.ref(`admin/ScheduledOrders`).push({
+      StaffId: staff[staff_picker],
+      userId: userId,
+      orderId: orderId,
+    });
   };
   return (
     <View style={styles.card}>
@@ -60,22 +73,22 @@ function CardSchedule({ userId, orderId, genInvoice }) {
         >
           <Picker.Item
             label="Staff 1"
-            value={staff_ids[0]}
+            value="Staff 1"
             style={styles.labelPicker}
           />
           <Picker.Item
             label="Staff 2"
-            value={staff_ids[1]}
+            value="Staff 2"
             style={styles.labelPicker}
           />
           <Picker.Item
             label="Staff 3"
-            value={staff_ids[2]}
+            value="Staff 3"
             style={styles.labelPicker}
           />
           <Picker.Item
             label="Staff 4"
-            value={staff_ids[3]}
+            value="Staff 4"
             style={styles.labelPicker}
           />
         </Picker>
