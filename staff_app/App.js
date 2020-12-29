@@ -11,7 +11,10 @@ console.warn = message => {
 
 import React, { useState } from "react";
 import Providers from "./navigation";
+import Delivery from "./screens/Delivery";
+
 
 export default function App() {
+  
   return <Providers />;
 }
