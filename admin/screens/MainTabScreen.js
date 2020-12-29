@@ -9,6 +9,7 @@ import BookingScreen from "./Booking";
 import HomeScreen from "./HomeScreen";
 import Orders from "./Orders";
 import Sort from "./Sort";
+import ScheduledOrders from "./ScheduledOrders";
 
 import InvoiceScreen from "./InvoiceScreen";
 import InvoiceAdmin from "./InvoiceAdmin";
@@ -18,6 +19,7 @@ const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
 const OrderStack = createStackNavigator();
 const SortStack = createStackNavigator();
+const ScheduledOrdersStack = createStackNavigator();
 const SignInStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
@@ -192,6 +194,50 @@ const SortStackScreen = ({ navigation }) => {
   );
 };
 
+
+const ScheduledOrdersStackScreen = ({ navigation }) => {
+  return (
+    <ScheduledOrdersStack.Navigator>
+      <ScheduledOrdersStack.Screen
+        name="ScheduledOrders"
+        component={ScheduledOrders}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ScheduledOrdersStack.Screen
+        name="Invoice"
+        component={InvoiceScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </ScheduledOrdersStack.Navigator>
+  );
+};
+
 // const SignInStackScreen = ({ navigation }) => {
 //   return (
 //     <SignInStack.Navigator>
@@ -280,6 +326,7 @@ const DrawerNav = () => {
       <Drawer.Screen name="Home" component={bottomTabNav} />
       <Drawer.Screen name="Booking" component={BookingStackScreen} />
       <Drawer.Screen name="Orders" component={OrderStackScreen} />
+      <Drawer.Screen name="ScheduledOrders" component={ScheduledOrdersStackScreen} />
       <Drawer.Screen name="Sort" component={SortStackScreen} />
 
       {/* <Drawer.Screen name="SignIn" component={SignInStackScreen} /> */}

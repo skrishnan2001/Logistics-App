@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, Image, Picker } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { Button } from "react-native-paper";
-import * as firebase from "firebase";
 import FormButton from "../components/FormButton";
-import { windowWidth } from "../utils/Dimensions";
 import { db } from "../firebaseConfig";
 
 function CardSchedule({ userId, orderId, genInvoice }) {
@@ -127,8 +123,9 @@ const styles = StyleSheet.create({
     height: 200,
   },
   buttonStyle: {
-    marginHorizontal: 30,
+    marginHorizontal: '5%',
     marginVertical: 20,
+    width: '40%'
   },
 });
 
