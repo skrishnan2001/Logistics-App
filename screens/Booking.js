@@ -15,7 +15,6 @@ import FormButton from "../components/FormButton";
 import { AuthContext } from "../navigation/AuthProvider";
 import * as firebase from "firebase";
 
-
 const BookingScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
 
@@ -106,11 +105,12 @@ const BookingScreen = ({ navigation }) => {
       Priority_Booking: Priority,
       Time: d,
       zone: zone,
+      isScheduled: false,
     });
 
     var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
     var OrderID;
-    bookingRef.limitToLast(1).on('child_added', function (snapshot) {
+    bookingRef.limitToLast(1).on("child_added", function (snapshot) {
       OrderID = snapshot.key;
     });
 
@@ -173,14 +173,14 @@ const BookingScreen = ({ navigation }) => {
   };
 
   const validate = () => {
-     if (
+    if (
       pickup == "" ||
       pickup2 == "" ||
-      pickup2.includes(",")==false ||
+      pickup2.includes(",") == false ||
       pickup3 == "" ||
       delivery == "" ||
       delivery2 == "" ||
-      delivery2.includes(",")==false ||
+      delivery2.includes(",") == false ||
       delivery3 == "" ||
       phone == "" ||
       PickerSelectedVal == "" ||
@@ -200,10 +200,9 @@ const BookingScreen = ({ navigation }) => {
       }
       if (pickup2 == "") {
         setpickup2err("Pickup address field 2 required");
-      } else if(pickup2.includes(",")==false){
+      } else if (pickup2.includes(",") == false) {
         setpickup2err("Include comma(,) between city and state");
-      }
-      else {
+      } else {
         setpickup2err("");
       }
       if (pickup3 == "") {
@@ -218,9 +217,9 @@ const BookingScreen = ({ navigation }) => {
       }
       if (delivery2 == "") {
         setdeliveryerr2("Delivery address field 2 required");
-      } else if(delivery2.includes(",")==false){
+      } else if (delivery2.includes(",") == false) {
         setdeliveryerr2("Include comma(,) between city and state");
-      }else {
+      } else {
         setdeliveryerr2("");
       }
       if (delivery3 == "") {
