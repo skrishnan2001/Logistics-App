@@ -10,7 +10,7 @@ const MyOrders = ({ navigation }) => {
   var my_orders = [];
   const { user } = useContext(AuthContext);
   var userId = user.uid;
-  var dbRef = firebase.database().ref(`/staff/PickUp/${userId}/`);
+  var dbRef = firebase.database().ref(`/staff/Delivery/${userId}/`);
   dbRef.on("value", function (snapshot) {
     const data = snapshot.val();
     var i = 0;
