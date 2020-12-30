@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import * as firebase from "firebase";
-import CardSchedule from "../components/CardSchedule";
+import Cards from "../components/Cards";
 import { View, FlatList, Picker, StyleSheet, Text, Button } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 import FormInput from "../components/FormInput";
 
 const Orders = ({ navigation }) => {
@@ -169,13 +172,11 @@ const Orders = ({ navigation }) => {
         data={arrHolder}
         keyExtractor={(user) => user.id}
         renderItem={({ item }) => (
-          <View>
-            <CardSchedule
-              userId={item.userid}
-              orderId={item.orderid}
-              genInvoice={Check.bind(this, item.userid, item.orderid)}
-            />
-          </View>
+          <TouchableOpacity
+            onPress={Check.bind(this, item.userid, item.orderid)}
+          >
+            <Cards userId={item.userid} orderId={item.orderid} />
+          </TouchableOpacity>
         )}
         style={{ marginTop: 10 }}
       />
