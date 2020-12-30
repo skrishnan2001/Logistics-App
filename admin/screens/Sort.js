@@ -65,7 +65,7 @@ const Sort = ({ navigation }) => {
       db.ref(`/users/booking/${userId}/${orderId}`).update({
         isScheduled: true,
       });
-      db.ref(`staff/PickUp/${staff[staff_picker]}/`).push({
+      db.ref(`staff/Delivery/${staff[staff_picker]}/`).push({
         userId: userId,
         orderId: orderId,
       });
