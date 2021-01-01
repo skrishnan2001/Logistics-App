@@ -54,6 +54,10 @@ const LoginScreen = ({ navigation }) => {
           onPress={() => login(email, password)}
         />
 
+        <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
+          <Text style={styles.navButtonText}>Forgot Password?</Text>
+        </TouchableOpacity>
+
         <SocialButton
           buttonTitle="Sign In with Google"
           btnType="google"
@@ -62,6 +66,14 @@ const LoginScreen = ({ navigation }) => {
           onPress={() => {}}
         />
 
+        <TouchableOpacity
+          style={styles.forgotButton}
+          onPress={() => navigation.navigate("Signup")}
+        >
+          <Text style={styles.navButtonText}>
+            Don't have an acount? Create here
+          </Text>
+        </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
   );

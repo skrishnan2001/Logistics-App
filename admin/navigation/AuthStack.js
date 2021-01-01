@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/LoginScreen";
 import OnboardingScreen from "../screens/OnboardingScreen";
+import SignupScreen from "../screens/SignupScreen";
 import AsyncStorage from "@react-native-community/async-storage";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
@@ -59,6 +60,7 @@ const AuthStack = () => {
           },
         })}
       />
+      <Stack.Screen name="Signup" component={SignupScreen} />
     </Stack.Navigator>
   );
 };

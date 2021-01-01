@@ -10,44 +10,38 @@ import FormInput from "../components/FormInput";
 
 const Orders = ({ navigation }) => {
   var users = [];
-  const [refreshing, setRefreshing] = useState(false);
-  const createUsers = () =>{
-      users = [];
-      let dbRef = firebase.database().ref("/users/booking/");
-      dbRef.on("value", function (snapshot) {
-        const data = snapshot.val();
-        var i = 0;
-        for (var key in data) {
-          if (data.hasOwnProperty(key)) {
-            var val = data[key];
-            for (var key_2 in val) {
-              if (val.hasOwnProperty(key_2)) {
-                var val_2 = val[key_2];
-                let user = {
-                  id: i.toString(),
-                  userid: key,
-                  orderid: key_2,
-                  type: val_2["type"],
-                  category: val_2["PickerSelectedVal"],
-                  pc_del: val_2["pincode_delivery"],
-                  pc_pick: val_2["pincode_pickup"],
-                  prior_booking: val_2["Priority_Booking"],
-                  insurance: val_2["insurance"],
-                  time: val_2["Time"],
-                };
-                i++;
-                users.push(user);
-              }
-            }
+  var dbRef = firebase.database().ref("/users/booking/");
+  dbRef.on("value", function (snapshot) {
+    const data = snapshot.val();
+    //var i = 0;
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        var val = data[key];
+        for (var key_2 in val) {
+          if (val.hasOwnProperty(key_2)) {
+            var val_2 = val[key_2];
+            let user = {
+              id:new Date().getTime().toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString(),
+              userid: key,
+              orderid: key_2,
+              type: val_2["type"],
+              category: val_2["PickerSelectedVal"],
+              pc_del: val_2["pincode_delivery"],
+              pc_pick: val_2["pincode_pickup"],
+              prior_booking: val_2["Priority_Booking"],
+              insurance: val_2["insurance"],
+              time: val_2["Time"],
+            };
+            //i++;
+            users.push(user);
           }
         }
-      });
-  }
-  createUsers();
+      }
+    }
+  });
   const [user_id, setuserid] = useState();
   const [order_id, setorderid] = useState();
   const [arrHolder, setarrHolder] = useState(users);
-  const [inputText, setInputText] = useState("");
   // const [data_history, setdata_history] = useState(users);
   var data_history = users;
   const [PickerSelectedVal, setPickerSelectedVal] = useState("orderid");
@@ -91,11 +85,6 @@ const Orders = ({ navigation }) => {
       console.log(newData);
     }
     setarrHolder(newData);
-  };
-
-  const assign_filter = (text) =>{
-    setInputText(text);
-    filter_func(inputText);
   };
   return (
     <View
@@ -172,7 +161,7 @@ const Orders = ({ navigation }) => {
         />
       </Picker>
       <FormInput
-        onChangeText={(text) => assign_filter(text)}
+        onChangeText={(text) => filter_func(text)}
         placeholderText="Search..."
         iconType="search1"
         autoCapitalize="none"
@@ -189,17 +178,6 @@ const Orders = ({ navigation }) => {
             <Cards userId={item.userid} orderId={item.orderid} />
           </TouchableOpacity>
         )}
-        refreshing={refreshing}
-        onRefresh={()=>{
-          setarrHolder([
-            {
-              id: "1",
-              userid: "2",
-              orderid: "3",
-            }
-          ])
-        }}
-
         style={{ marginTop: 10 }}
       />
     </View>

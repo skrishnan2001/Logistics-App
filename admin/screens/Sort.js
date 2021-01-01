@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as firebase from "firebase";
 import Cards from "../components/Cards";
 import FormButton from "../components/FormButton";
-import { View, FlatList, Picker, StyleSheet, Text } from "react-native";
+import { View, FlatList, Picker, StyleSheet, Text,Alert } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormInput from "../components/FormInput";
 import { db } from "../firebaseConfig";
@@ -10,6 +10,7 @@ import { db } from "../firebaseConfig";
 const Sort = ({ navigation }) => {
   var users = [];
   const [staff_picker, setstaff_picker] = useState("Staff 1");
+  users = [];
   var dbRef = firebase.database().ref("/users/booking/");
   dbRef.on("value", function (snapshot) {
     const data = snapshot.val();
@@ -75,6 +76,8 @@ const Sort = ({ navigation }) => {
         orderId: orderId,
       });
     });
+    Alert.alert("The orders have been scheduled");
+    setarrHolder([]);
   };
   const [user_id, setuserid] = useState();
   const [order_id, setorderid] = useState();
@@ -87,11 +90,13 @@ const Sort = ({ navigation }) => {
     navigation.navigate("Invoice", { user_id: user_id, order_id: order_id });
   };
 
-  const [state, setstate] = useState();
-  const [city, setcity] = useState();
-  const [pincode, setpincode] = useState();
+  // const [state, setstate] = useState();
+  // const [city, setcity] = useState();
+  // const [pincode, setpincode] = useState();
 
   const filter_func = (text1) => {
+    console.log(text1);
+    data_history = users;
     const newData = data_history.filter((items) => {
       var order = items.state_pickup;
       var order1 = items.city_pickup;

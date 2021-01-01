@@ -7,20 +7,20 @@ import FormInput from "../components/FormInput";
 
 const ScheduledOrders = ({ navigation }) => {
     var ordersSch = [];
-    var dbRef = firebase.database().ref("/admin/ScheduledOrders/");
+    var dbRef = firebase.database().ref("admin/ScheduledOrders");
     dbRef.on("value", function (snapshot) {
         const data = snapshot.val();
-        var i = 0;
+        //var i = 0;
         for (var key in data) {
             if (data.hasOwnProperty(key)) {
                 var val = data[key];
                 let user = {
-                    id: i.toString(),
+                    id:new Date().getTime().toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString(),
                     userid: val["userId"],
                     orderid: val["orderId"],
                     staffid: val["StaffID"],
                 };
-                i++;
+                //i++;
                 ordersSch.push(user);
             }
         }
@@ -31,7 +31,7 @@ const ScheduledOrders = ({ navigation }) => {
     // const [data_history, setdata_history] = useState(users);
     var data_history = ordersSch;
     const [PickerSelectedVal, setPickerSelectedVal] = useState("orderid");
-    const [PickerSelectedVal1, setPickerSelectedVal1] = useState("ascending");
+    //const [PickerSelectedVal1, setPickerSelectedVal1] = useState("ascending");
     const Check = (user_id, order_id, item) => {
         setuserid(user_id);
         setorderid(order_id);

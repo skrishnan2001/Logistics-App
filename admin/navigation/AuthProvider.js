@@ -31,6 +31,24 @@ const AuthProvider = ({children}) => {
 
           }
         },
+        register: async (email, password) => {
+          try {
+            Firebase.auth().createUserWithEmailAndPassword(email, password)
+
+
+
+          } catch (e) {
+            console.log("error"+e);
+            Alert.alert(
+                  "Signup Authentication Error",
+                  {e},
+                  [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                  ],
+                  { cancelable: false }
+                );
+          }
+        },
         logout: async () => {
           try {
             Firebase.auth().signOut();
