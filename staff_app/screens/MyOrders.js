@@ -13,16 +13,20 @@ const MyOrders = ({ navigation }) => {
   var dbRef = firebase.database().ref(`/staff/Delivery/${userId}/`);
   dbRef.on("value", function (snapshot) {
     const data = snapshot.val();
-    var i = 0;
+
     for (var key in data) {
       if (data.hasOwnProperty(key)) {
         var val = data[key];
         let user = {
-          id: i.toString(),
+          id:
+            new Date().getTime().toString() +
+            Math.floor(
+              Math.random() * Math.floor(new Date().getTime())
+            ).toString(),
           userid: val["userId"],
           orderid: val["orderId"],
         };
-        i++;
+
         my_orders.push(user);
       }
     }
@@ -37,8 +41,7 @@ const MyOrders = ({ navigation }) => {
   const Check = (user_id, order_id, item) => {
     setuserid(user_id);
     setorderid(order_id);
-    navigation.navigate("Invoice", { user_id: user_id, 
-        order_id: order_id });
+    navigation.navigate("Invoice", { user_id: user_id, order_id: order_id });
   };
 
   const filter_func = (text) => {
