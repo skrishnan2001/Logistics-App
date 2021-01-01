@@ -18,7 +18,11 @@ const History = ({ navigation }) => {
       if (data.hasOwnProperty(key)) {
         var val = data[key];
         let user = {
-          id: i.toString(),
+          id:
+            new Date().getTime().toString() +
+            Math.floor(
+              Math.random() * Math.floor(new Date().getTime())
+            ).toString(),
           userid: userId,
           orderid: key,
           type: val["type"],
