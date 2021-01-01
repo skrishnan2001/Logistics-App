@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as firebase from "firebase";
 import Cards from "../components/Cards";
 import FormButton from "../components/FormButton";
-import { View, FlatList, Picker, StyleSheet, Text,Alert } from "react-native";
+import { View, FlatList, Picker, StyleSheet, Text, Alert } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormInput from "../components/FormInput";
 import { db } from "../firebaseConfig";
@@ -14,7 +14,6 @@ const Sort = ({ navigation }) => {
   var dbRef = firebase.database().ref("/users/booking/");
   dbRef.on("value", function (snapshot) {
     const data = snapshot.val();
-    var i = 0;
     for (var key in data) {
       if (data.hasOwnProperty(key)) {
         var val = data[key];
@@ -23,7 +22,11 @@ const Sort = ({ navigation }) => {
             var val_2 = val[key_2];
             if (!val_2["isScheduled"]) {
               let user = {
-                id: i.toString(),
+                id:
+                  new Date().getTime().toString() +
+                  Math.floor(
+                    Math.random() * Math.floor(new Date().getTime())
+                  ).toString(),
                 userid: key,
                 orderid: key_2,
                 city_pickup: val_2["city_pickup"],
@@ -34,7 +37,6 @@ const Sort = ({ navigation }) => {
                 pc_pick: val_2["pincode_pickup"],
                 time: val_2["Time"],
               };
-              i++;
               users.push(user);
             }
           }
