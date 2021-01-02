@@ -69,6 +69,8 @@ const ScheduledOrders = ({ navigation }) => {
       }}
     >
       <Text style={[styles.text, { marginTop: 20 }]}>Search Filter</Text>
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.buttonStyle}>
       <Picker
         selectedValue={PickerSelectedVal}
         style={[styles.inputsingle, { height: 50, width: 200 }]}
@@ -87,6 +89,7 @@ const ScheduledOrders = ({ navigation }) => {
           style={styles.labelPicker}
         />
       </Picker>
+      </View>
       <View style={styles.buttonStyle}>
         <Picker
           selectedValue={Shift}
@@ -113,6 +116,7 @@ const ScheduledOrders = ({ navigation }) => {
           />
         </Picker>
       </View>
+    </View>  
       <FormInput
         onChangeText={(text) => filter_func(text)}
         placeholderText="Search..."

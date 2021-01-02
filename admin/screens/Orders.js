@@ -94,10 +94,12 @@ const Orders = ({ navigation }) => {
         flex: 1,
       }}
     >
-      <Text style={[styles.text, { marginTop: 20 }]}>Search Filter</Text>
+      <Text style={[styles.text, { marginTop: 20 }]}>Search Filter          Filter by Booking time</Text>
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.buttonStyle}>
       <Picker
         selectedValue={PickerSelectedVal}
-        style={[styles.inputsingle, { height: 50, width: 200 }]}
+        style={[styles.inputsingle, { height: 50, width: 155 }]}
         onValueChange={(itemValue, itemIndex) =>
           setPickerSelectedVal(itemValue)
         }
@@ -139,9 +141,8 @@ const Orders = ({ navigation }) => {
           style={styles.labelPicker}
         />
       </Picker>
-      <Text style={[styles.text, { marginTop: 20 }]}>
-        Filter by Booking time
-      </Text>
+      </View>
+      <View style={styles.buttonStyle}>
       <Picker
         selectedValue={PickerSelectedVal1}
         style={[styles.inputsingle, { height: 50, width: 200 }]}
@@ -160,6 +161,8 @@ const Orders = ({ navigation }) => {
           style={styles.labelPicker}
         />
       </Picker>
+      </View>
+    </View>
       <FormInput
         onChangeText={(text) => filter_func(text)}
         placeholderText="Search..."
