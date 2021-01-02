@@ -7,6 +7,7 @@ import FormInput from "../components/FormInput";
 import { AuthContext } from "../navigation/AuthProvider";
 
 const MyOrders = ({ navigation }) => {
+  const [Shift, setshift_picker] = useState("Shift 1");
   var my_orders = [];
   const { user } = useContext(AuthContext);
   var userId = user.uid;
@@ -17,17 +18,19 @@ const MyOrders = ({ navigation }) => {
     for (var key in data) {
       if (data.hasOwnProperty(key)) {
         var val = data[key];
-        let user = {
-          id:
-            new Date().getTime().toString() +
-            Math.floor(
-              Math.random() * Math.floor(new Date().getTime())
-            ).toString(),
-          userid: val["userId"],
-          orderid: val["orderId"],
-        };
-
-        my_orders.push(user);
+        if (val["Shift"] == Shift) {
+          let user = {
+            id:
+              new Date().getTime().toString() +
+              Math.floor(
+                Math.random() * Math.floor(new Date().getTime())
+              ).toString(),
+            userid: val["userId"],
+            orderid: val["orderId"],
+            shift: val["Shift"],
+          };
+          my_orders.push(user);
+        }
       }
     }
     console.log(my_orders);
@@ -35,7 +38,6 @@ const MyOrders = ({ navigation }) => {
   const [user_id, setuserid] = useState();
   const [order_id, setorderid] = useState();
   const [arrHolder, setarrHolder] = useState(my_orders);
-  // const [data_history, setdata_history] = useState(users);
   var data_history = my_orders;
   const [PickerSelectedVal, setPickerSelectedVal] = useState("orderid");
   const Check = (user_id, order_id, item) => {
@@ -76,6 +78,31 @@ const MyOrders = ({ navigation }) => {
         <Picker.Item
           label="User ID"
           value="userid"
+          style={styles.labelPicker}
+        />
+      </Picker>
+
+      <Picker
+        selectedValue={Shift}
+        style={[styles.inputsingle, { height: 50, width: 100 }]}
+        onValueChange={(itemValue, itemIndex) => {
+          setshift_picker(itemValue);
+          setarrHolder([]);
+        }}
+      >
+        <Picker.Item
+          label="Shift 1"
+          value="Shift 1"
+          style={styles.labelPicker}
+        />
+        <Picker.Item
+          label="Shift 2"
+          value="Shift 2"
+          style={styles.labelPicker}
+        />
+        <Picker.Item
+          label="Shift 3"
+          value="Shift 3"
           style={styles.labelPicker}
         />
       </Picker>
