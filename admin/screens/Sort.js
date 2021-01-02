@@ -10,6 +10,7 @@ import { db } from "../firebaseConfig";
 const Sort = ({ navigation }) => {
   var users = [];
   const [staff_picker, setstaff_picker] = useState("Staff 1");
+  const [Shift, setshift_picker] = useState("Shift 1");
   users = [];
   var dbRef = firebase.database().ref("/users/booking/");
   dbRef.on("value", function (snapshot) {
@@ -71,8 +72,9 @@ const Sort = ({ navigation }) => {
       db.ref(`staff/Delivery/${staff[staff_picker]}/`).push({
         userId: userId,
         orderId: orderId,
+        Shift: Shift,
       });
-      db.ref(`admin/ScheduledOrders`).push({
+      db.ref(`admin/ScheduledOrders/${Shift}/`).push({
         StaffId: staff[staff_picker],
         userId: userId,
         orderId: orderId,
@@ -162,7 +164,7 @@ const Sort = ({ navigation }) => {
         <View style={styles.buttonStyle}>
           <Picker
             selectedValue={staff_picker}
-            style={[styles.inputsingle, { height: 50, width: 200 }]}
+            style={[styles.inputsingle, { height: 50, width: 100 }]}
             onValueChange={(itemValue, itemIndex) => setstaff_picker(itemValue)}
           >
             <Picker.Item
@@ -187,6 +189,29 @@ const Sort = ({ navigation }) => {
             />
           </Picker>
         </View>
+          <View style={styles.buttonStyle}>
+          <Picker
+            selectedValue={Shift}
+            style={[styles.inputsingle, { height: 50, width: 100 }]}
+            onValueChange={(itemValue, itemIndex) => setshift_picker(itemValue)}
+          >
+            <Picker.Item
+              label="Shift 1"
+              value="Shift 1"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Shift 2"
+              value="Shift 2"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Shift 3"
+              value="Shift 3"
+              style={styles.labelPicker}
+            />
+          </Picker>
+          </View>
         <View style={styles.buttonStyle}>
           <FormButton buttonTitle="Schedule" onPress={test} />
         </View>
@@ -235,8 +260,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttonStyle: {
-    marginHorizontal: "5%",
-    marginVertical: 20,
-    width: "40%",
+    marginHorizontal: "3.5%",
+    marginVertical: 10,
+    width: "26%",
   },
 });
