@@ -21,7 +21,7 @@ const Orders = ({ navigation }) => {
           if (val.hasOwnProperty(key_2)) {
             var val_2 = val[key_2];
             let user = {
-              id:new Date().getTime().toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString(),
+              id: new Date().getTime().toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString(),
               userid: key,
               orderid: key_2,
               type: val_2["type"],
@@ -94,75 +94,78 @@ const Orders = ({ navigation }) => {
         flex: 1,
       }}
     >
-      <Text style={[styles.text, { marginTop: 20 }]}>Search Filter          Filter by Booking time</Text>
       <View style={{ flexDirection: "row" }}>
         <View style={styles.buttonStyle}>
-      <Picker
-        selectedValue={PickerSelectedVal}
-        style={[styles.inputsingle, { height: 50, width: 155 }]}
-        onValueChange={(itemValue, itemIndex) =>
-          setPickerSelectedVal(itemValue)
-        }
-      >
-        <Picker.Item
-          label="Order ID"
-          value="orderid"
-          style={styles.labelPicker}
-        />
-        <Picker.Item
-          label="User ID"
-          value="userid"
-          style={styles.labelPicker}
-        />
-        <Picker.Item
-          label="Category"
-          value="category"
-          style={styles.labelPicker}
-        />
-        <Picker.Item label="Type" value="type" style={styles.labelPicker} />
-        <Picker.Item
-          label="Insurance"
-          value="insurance"
-          style={styles.labelPicker}
-        />
-        <Picker.Item
-          label="Priority Booking"
-          value="prior_booking"
-          style={styles.labelPicker}
-        />
-        <Picker.Item
-          label="Pincode(Delivery)"
-          value="pc_del"
-          style={styles.labelPicker}
-        />
-        <Picker.Item
-          label="Pincode(Pickup)"
-          value="pc_pick"
-          style={styles.labelPicker}
-        />
-      </Picker>
+          <Text style={[styles.text, { marginTop: 20, flexDirection: "row" }]}>Filter By</Text>
+
+          <Picker
+            selectedValue={PickerSelectedVal}
+            style={[styles.inputsingle, { height: 50, width: 155 }]}
+            onValueChange={(itemValue, itemIndex) =>
+              setPickerSelectedVal(itemValue)
+            }
+          >
+            <Picker.Item
+              label="Order ID"
+              value="orderid"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="User ID"
+              value="userid"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Category"
+              value="category"
+              style={styles.labelPicker}
+            />
+            <Picker.Item label="Type" value="type" style={styles.labelPicker} />
+            <Picker.Item
+              label="Insurance"
+              value="insurance"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Priority Booking"
+              value="prior_booking"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Pincode(Delivery)"
+              value="pc_del"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Pincode(Pickup)"
+              value="pc_pick"
+              style={styles.labelPicker}
+            />
+          </Picker>
+        </View>
+        <View style={styles.buttonStyle}>
+          <Text style={[styles.text, { marginTop: 20, flexDirection: "row" }]}> Filter by time</Text>
+
+          <Picker
+            selectedValue={PickerSelectedVal1}
+            style={[styles.inputsingle, { height: 50, width: 200 }]}
+            onValueChange={(itemValue, itemIndex) =>
+              setPickerSelectedVal1(itemValue)
+            }
+          >
+            <Picker.Item
+              label="Ascending"
+              value="ascending"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Descending"
+              value="descending"
+              style={styles.labelPicker}
+            />
+          </Picker>
+        </View>
       </View>
-      <View style={styles.buttonStyle}>
-      <Picker
-        selectedValue={PickerSelectedVal1}
-        style={[styles.inputsingle, { height: 50, width: 200 }]}
-        onValueChange={(itemValue, itemIndex) =>
-          setPickerSelectedVal1(itemValue)
-        }
-      >
-        <Picker.Item
-          label="Ascending"
-          value="ascending"
-          style={styles.labelPicker}
-        />
-        <Picker.Item
-          label="Descending"
-          value="descending"
-          style={styles.labelPicker}
-        />
-      </Picker>
-      </View>
-    </View>
       <FormInput
         onChangeText={(text) => filter_func(text)}
         placeholderText="Search..."

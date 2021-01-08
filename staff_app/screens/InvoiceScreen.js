@@ -1,4 +1,4 @@
-import React, { useContext, useState, Component } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  CheckBox,
+  Alert
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
@@ -18,10 +20,20 @@ import {
   Cols,
 } from "react-native-table-component";
 import * as firebase from "firebase";
+import { db } from "../firebaseConfig";
+import Icon from "react-native-vector-icons/Ionicons";
+import { Camera } from "expo-camera";
+import { windowHeight, windowWidth } from "../utils/Dimensions";
 
 const InvoiceScreen = ({ route, navigation }) => {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [ratio, setRatio] = useState("4:3");
+  const [camera, setcamera] = useState(null);
+  const [path, setpath] = useState("");
   const { user } = useContext(AuthContext);
-
+  const [check, setcheck] = useState(false);
+  const staff_id = user.uid;
   var phone,
     pickup,
     pickup2, //City,state and pincode for pickup address
@@ -32,7 +44,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     breadth,
     height,
     weight,
-    type,
+    typee,
     order_val,
     vehicle_type,
     insurance,
@@ -45,6 +57,8 @@ const InvoiceScreen = ({ route, navigation }) => {
   bookingRef.on("value", function (data) {
     var newBooking = data.val();
     phone = newBooking.phone;
+    console.log("-" + newBooking.phone);
+    console.log("--" + phone);
     pickup = newBooking.residence_locality_pickup;
     pickup2 =
       newBooking.city_pickup +
@@ -64,7 +78,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     breadth = newBooking.breadth;
     height = newBooking.height;
     weight = newBooking.weight;
-    type = newBooking.type;
+    typee = newBooking.type;
     order_val = newBooking.order;
     vehicle_type = newBooking.vehicle;
     time = new Date(newBooking.Time);
@@ -84,7 +98,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     if (newBooking.Priority_Booking == true) priority = "Yes";
     else priority = "No";
   });
-
+  console.log("---" + phone);
   const [curr, next] = useState({
     tableHead: ["", "Details"],
     tableTitle: [
@@ -112,7 +126,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${category}`],
       [`${length}*${breadth}*${height}`],
       [`${weight}`],
-      [`${type}`],
+      [`${typee}`],
       [`${order_val}`],
       [`${vehicle_type}`],
       [`${insurance}`],
@@ -122,6 +136,69 @@ const InvoiceScreen = ({ route, navigation }) => {
   });
 
   const state = curr;
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
+  const takePicture = () => {
+    if (camera) {
+      camera.takePictureAsync({
+        onPictureSaved: onPictureSaved,
+        skipProcessing: true,
+        base64: true,
+      });
+    }
+  };
+
+  const onPictureSaved = (photo) => {
+    console.log(photo["height"]);
+    console.log(photo["uri"]);
+    setpath(photo["uri"]);
+    console.log(photo["width"]);
+    // console.log(photo["base64"]);
+    setpath(photo["base64"]);
+  };
+  const conf_del = () => {
+    db.ref(`staff/Delivered/${staff_id}`).push({
+      staffId: staff_id,
+      orderId: order_id,
+      userId: user_id,
+      base64: path,
+    });
+    db.ref(`admin/Unverified`).push({
+      staffId: staff_id,
+      orderId: order_id,
+      userId: user_id,
+      base64: path,
+    });
+    var node;
+    var dbRef = firebase.database().ref(`staff/Undelivered/${staff_id}/`);
+    dbRef.on("value", function (snapshot) {
+      const data = snapshot.val();
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          var val = data[key];
+          if (val["userId"] == user_id && val["orderId"] == order_id) {
+            node = key;
+          }
+        }
+      }
+    });
+    console.log(node);
+    db.ref(`staff/Undelivered/${staff_id}/${node}`).remove();
+    Alert.alert("The order has been delivered");
+    navigation.navigate("MyOrders");
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -152,6 +229,56 @@ const InvoiceScreen = ({ route, navigation }) => {
           buttonTitle="Back to Orders"
           onPress={() => navigation.goBack()}
         />
+        <View style={{ flexDirection: "column", marginTop: 10, padding: 10 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 1,
+              borderColor: "white",
+            }}
+          >
+            <CheckBox value={check} onValueChange={setcheck} />
+            <Text style={[styles.text, { fontSize: 20, fontWeight: "normal" }]}>
+              {" "}
+              Delivered
+            </Text>
+          </View>
+        </View>
+        <View style={{ marginRight: 10 }}>
+          <Text style={styles.imageHead}>
+            {"Capture the Consignment Delivered:"}
+          </Text>
+          <Camera
+            style={styles.camera}
+            type={type}
+            ratio={ratio}
+            autofocus={Camera.Constants.AutoFocus.on}
+            ref={(ref) => {
+              setcamera(ref);
+            }}
+          >
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button} onPress={takePicture}>
+                <Icon
+                  name="ios-aperture"
+                  size={50}
+                  color="#FFFFFF"
+                  style={styles.cameraview}
+                />
+              </TouchableOpacity>
+            </View>
+          </Camera>
+        </View>
+        <View>
+          <Text style={styles.imageHead}>{"Consignment Image:"}</Text>
+          <Image
+            source={{
+              uri: `data:image/jpeg;base64,${path}`,
+            }}
+            style={styles.image}
+          />
+        </View>
+        <FormButton buttonTitle="Confirm delivery" onPress={() => conf_del()} />
       </View>
     </ScrollView>
   );
@@ -166,6 +293,11 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
     backgroundColor: "#fff",
   },
+  camera: {
+    flex: 1,
+    width: windowWidth/1.11,
+    height: windowHeight / 1.9,
+  },
   head: { height: 40, backgroundColor: "#f1f8ff" },
   wrapper: { flexDirection: "row" },
   title: { flex: 1, backgroundColor: "#f6f8fa" },
@@ -177,4 +309,23 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     color: "#051d5f",
   },
+  button: {
+    alignItems: "center",
+  },
+  cameraview: {
+    marginTop: "80%",
+  },
+  imageHead: {
+    marginBottom: "5%",
+    marginTop: "5%",
+    textAlign: "center",
+    color: "#c43d10",
+    fontSize: 20,
+    fontFamily: "serif",
+  },
+  image:{
+    flex: 1,
+    width: windowWidth/1.11,
+    height: windowHeight / 1.9,
+  }
 });

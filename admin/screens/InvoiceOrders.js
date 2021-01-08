@@ -6,7 +6,6 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  Alert
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
@@ -22,7 +21,7 @@ import * as firebase from "firebase";
 import { db } from "../firebaseConfig";
 import { windowHeight, windowWidth } from "../utils/Dimensions";
 
-const InvoiceScreen = ({ route, navigation }) => {
+const InvoiceOrders = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
   var path = "";
   var phone,
@@ -42,7 +41,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     time,
     shorttime,
     vehicle_type;
-  const { user_id, order_id,staff_id, screen } = route.params;
+  const { user_id, order_id,  } = route.params;
   var bookingRef = firebase
     .database()
     .ref(`/users/booking/${user_id}/${order_id}`);
@@ -123,41 +122,6 @@ const InvoiceScreen = ({ route, navigation }) => {
     ],
   });
 
-  const verify = () => {
-    db.ref(`admin/Verified`).push({
-      staffId: staff_id,
-      orderId: order_id,
-      userId: user_id,
-      base64: path,
-    });
-    var dbRef = firebase.database().ref(`admin/Unverified/`);
-    var node;
-    dbRef.on("value", function (snapshot) {
-      const data = snapshot.val();
-      for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-          var val = data[key];
-          if (val["userId"] == user_id && val["orderId"] == order_id) {
-             node = key;
-          }
-        }
-      }
-    });
-    db.ref(`admin/Unverified/${node}`).remove();
-    Alert.alert("The order has been verified");
-    navigation.navigate("Unverified");
-  };
-  var bref = firebase.database().ref(`/admin/Unverified`);
-  bref.on("value", function (snapshot) {
-    const data = snapshot.val();
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-        var val = data[key];
-        if (val["userId"] == user_id && val["orderId"] == order_id)
-          path = val["base64"];
-      }
-    }
-  });
   const state = curr;
   return (
     <ScrollView>
@@ -185,19 +149,7 @@ const InvoiceScreen = ({ route, navigation }) => {
             />
           </TableWrapper>
         </Table>
-        <View>
-          <Text style={styles.imageHead}>{"Delivery Image:"}</Text>
-          <Image
-            source={{
-              uri: `data:image/jpeg;base64,${path}`,
-            }}
-            style={styles.image}
-          />
-        </View>
-        <FormButton
-          buttonTitle={"Confirm Verification"}
-          onPress={() => verify()}
-        />
+        
         <FormButton
           buttonTitle={"Back to Orders"}
           onPress={() => navigation.goBack()}
@@ -207,7 +159,7 @@ const InvoiceScreen = ({ route, navigation }) => {
   );
 };
 
-export default InvoiceScreen;
+export default InvoiceOrders;
 
 const styles = StyleSheet.create({
   container: {
@@ -227,7 +179,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     color: "#051d5f",
   },
-  imageHead: {
+  image: {
     marginBottom: "5%",
     marginTop: "5%",
     textAlign: "center",
@@ -235,10 +187,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "serif",
   },
-  image:{
-    flex: 1,
-    width: windowWidth/1.11,
-    height:windowHeight/1.9,
-    
-  }
 });

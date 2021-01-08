@@ -69,7 +69,7 @@ const Sort = ({ navigation }) => {
       db.ref(`/users/booking/${userId}/${orderId}`).update({
         isScheduled: true,
       });
-      db.ref(`staff/Delivery/${staff[staff_picker]}/`).push({
+      db.ref(`staff/Undelivered/${staff[staff_picker]}/`).push({
         userId: userId,
         orderId: orderId,
         Shift: Shift,
@@ -260,8 +260,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttonStyle: {
-    marginHorizontal: "3.5%",
+    marginHorizontal: "2%",
     marginVertical: 10,
-    width: "26%",
+    width: "30%",
   },
 });

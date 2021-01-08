@@ -6,7 +6,6 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  Alert
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
@@ -22,7 +21,7 @@ import * as firebase from "firebase";
 import { db } from "../firebaseConfig";
 import { windowHeight, windowWidth } from "../utils/Dimensions";
 
-const InvoiceScreen = ({ route, navigation }) => {
+const InvoiceDelivered = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
   var path = "";
   var phone,
@@ -42,7 +41,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     time,
     shorttime,
     vehicle_type;
-  const { user_id, order_id,staff_id, screen } = route.params;
+  const { user_id, order_id, staff_id } = route.params;
   var bookingRef = firebase
     .database()
     .ref(`/users/booking/${user_id}/${order_id}`);
@@ -123,31 +122,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     ],
   });
 
-  const verify = () => {
-    db.ref(`admin/Verified`).push({
-      staffId: staff_id,
-      orderId: order_id,
-      userId: user_id,
-      base64: path,
-    });
-    var dbRef = firebase.database().ref(`admin/Unverified/`);
-    var node;
-    dbRef.on("value", function (snapshot) {
-      const data = snapshot.val();
-      for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-          var val = data[key];
-          if (val["userId"] == user_id && val["orderId"] == order_id) {
-             node = key;
-          }
-        }
-      }
-    });
-    db.ref(`admin/Unverified/${node}`).remove();
-    Alert.alert("The order has been verified");
-    navigation.navigate("Unverified");
-  };
-  var bref = firebase.database().ref(`/admin/Unverified`);
+  var bref = firebase.database().ref(`/staff/Delivered/${staff_id}`);
   bref.on("value", function (snapshot) {
     const data = snapshot.val();
     for (var key in data) {
@@ -195,10 +170,6 @@ const InvoiceScreen = ({ route, navigation }) => {
           />
         </View>
         <FormButton
-          buttonTitle={"Confirm Verification"}
-          onPress={() => verify()}
-        />
-        <FormButton
           buttonTitle={"Back to Orders"}
           onPress={() => navigation.goBack()}
         />
@@ -207,7 +178,7 @@ const InvoiceScreen = ({ route, navigation }) => {
   );
 };
 
-export default InvoiceScreen;
+export default InvoiceDelivered;
 
 const styles = StyleSheet.create({
   container: {
@@ -228,17 +199,15 @@ const styles = StyleSheet.create({
     color: "#051d5f",
   },
   imageHead: {
-    marginBottom: "5%",
-    marginTop: "5%",
+    marginVertical: "5%",
     textAlign: "center",
     color: "#c43d10",
     fontSize: 20,
     fontFamily: "serif",
   },
-  image:{
+  image: {
     flex: 1,
-    width: windowWidth/1.11,
-    height:windowHeight/1.9,
-    
-  }
+    width: windowWidth / 1.11,
+    height: windowHeight / 1.9,
+  },
 });

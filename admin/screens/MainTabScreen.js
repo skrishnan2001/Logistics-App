@@ -10,9 +10,12 @@ import HomeScreen from "./HomeScreen";
 import Orders from "./Orders";
 import Sort from "./Sort";
 import ScheduledOrders from "./ScheduledOrders";
-
+import Unverified from "./Unverified";
+import Verified from "./Verified";
+import InvoiceOrders from "./InvoiceOrders";
 import InvoiceScreen from "./InvoiceScreen";
 import InvoiceAdmin from "./InvoiceAdmin";
+import InvoiceVerified from"./InvoiceVerified";
 import ResetPassword from "./ResetPassword";
 
 const HomeStack = createStackNavigator();
@@ -21,6 +24,8 @@ const OrderStack = createStackNavigator();
 const SortStack = createStackNavigator();
 const ScheduledOrdersStack = createStackNavigator();
 const SignInStack = createStackNavigator();
+const UnverifiedStack =  createStackNavigator();
+const VerifiedStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
   return (
@@ -131,7 +136,7 @@ const OrderStackScreen = ({ navigation }) => {
       /> */}
       <OrderStack.Screen
         name="Invoice"
-        component={InvoiceScreen}
+        component={InvoiceOrders}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -150,6 +155,93 @@ const OrderStackScreen = ({ navigation }) => {
     </OrderStack.Navigator>
   );
 };
+
+const UnverifiedStackScreen = ({ navigation }) => {
+  return (
+    <UnverifiedStack.Navigator>
+      <UnverifiedStack.Screen
+        name="Unverified"
+        component={Unverified}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <UnverifiedStack.Screen
+        name="Invoice-Unverified"
+        component={InvoiceScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </UnverifiedStack.Navigator>
+  );
+};
+
+const VerifiedStackScreen = ({ navigation }) => {
+  return (
+    <VerifiedStack.Navigator>
+      <VerifiedStack.Screen
+        name="Verified"
+        component={Verified}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <VerifiedStack.Screen
+        name="VerifiedOrder"
+        component={InvoiceVerified}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </VerifiedStack.Navigator>
+  );
+};
+
 
 const SortStackScreen = ({ navigation }) => {
   return (
@@ -174,7 +266,7 @@ const SortStackScreen = ({ navigation }) => {
       />
       <SortStack.Screen
         name="Invoice"
-        component={InvoiceScreen}
+        component={InvoiceOrders}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -218,7 +310,7 @@ const ScheduledOrdersStackScreen = ({ navigation }) => {
       />
       <ScheduledOrdersStack.Screen
         name="Invoice"
-        component={InvoiceScreen}
+        component={InvoiceOrders}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -328,6 +420,8 @@ const DrawerNav = () => {
       <Drawer.Screen name="Orders" component={OrderStackScreen} />
       <Drawer.Screen name="ScheduledOrders" component={ScheduledOrdersStackScreen} />
       <Drawer.Screen name="Sort" component={SortStackScreen} />
+      <Drawer.Screen name="Unverified" component={UnverifiedStackScreen} />
+      <Drawer.Screen name="Verified" component={VerifiedStackScreen} />
 
       {/* <Drawer.Screen name="SignIn" component={SignInStackScreen} /> */}
     </Drawer.Navigator>

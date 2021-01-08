@@ -14,6 +14,7 @@ import RequestsScreen from "./Requests";
 import Leave from "./Leave";
 import MyOrders from "./MyOrders";
 import InvoiceScreen from "./InvoiceScreen";
+import InvoiceDelivered from "./InvoiceDelivered";
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -109,7 +110,7 @@ const ProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      
+
       <ProfileStack.Screen
         name="MyOrders"
         component={MyOrders}
@@ -128,9 +129,6 @@ const ProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-
-
-
 
       <ProfileStack.Screen
         name="UpdateUserDetails"
@@ -151,9 +149,27 @@ const ProfileStackScreen = ({ navigation }) => {
         }}
       />
 
-<ProfileStack.Screen
+      <ProfileStack.Screen
         name="Invoice"
         component={InvoiceScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Invoice-Delivered"
+        component={InvoiceDelivered}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -297,7 +313,7 @@ const DrawerNav = () => {
       }}
     >
       <Drawer.Screen name="Home" component={bottomTabNav} />
-      <Drawer.Screen name="Requests" component={RequestsStackScreen}/>
+      <Drawer.Screen name="Requests" component={RequestsStackScreen} />
       <Drawer.Screen name="Profile" component={ProfileStackScreen} />
       {/* <Drawer.Screen name="SignIn" component={SignInStackScreen} /> */}
     </Drawer.Navigator>
