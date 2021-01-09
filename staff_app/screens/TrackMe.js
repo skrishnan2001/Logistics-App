@@ -43,7 +43,7 @@ export default class TrackMe extends Component {
         this.setState({ region: region });
 
 
-        // firebase.database().ref("/staff/ProfileDetails/"+this.state.user.uid+"/location").set(this.state.region);
+        firebase.database().ref("/staff/ProfileDetails/"+this.state.user.uid+"/location").set(this.state.region);
 
       },
       error => console.log(error)
@@ -107,7 +107,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     //   }
     // });
 
-      firebase.database().ref("/staff/ProfileDetails/"+user.uid+"/location").set(locations[0].coords);
+    //  firebase.database().ref("/staff/ProfileDetails/"+user.uid+"/location").set(locations[0].coords);
      console.log("Received new locations for user = ", locations);
   }
 });
