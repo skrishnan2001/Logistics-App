@@ -20,10 +20,13 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+      "package": "com.infotix.logistics",
+      "versionCode": 1,
+ 	"config": {
+ 	      "googleMaps": {
+ 		"apiKey": "AIzaSyAJTcaTu_zV7vcVx2sp7bDNorZ2ybGR8N8" 
+ 	      }
+ 	    }
     },
     "web": {
       "favicon": "./assets/favicon.png"

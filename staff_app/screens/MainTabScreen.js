@@ -15,8 +15,10 @@ import Leave from "./Leave";
 import MyOrders from "./MyOrders";
 import InvoiceScreen from "./InvoiceScreen";
 import InvoiceDelivered from "./InvoiceDelivered";
+import TrackMe from './TrackMe';
 
 const HomeStack = createStackNavigator();
+const TrackMeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const RequestStack = createStackNavigator();
 const SignInStack = createStackNavigator();
@@ -45,6 +47,33 @@ const HomeStackScreen = ({ navigation }) => {
     </HomeStack.Navigator>
   );
 };
+
+
+const TrackMeStackScreen = ({ navigation }) => {
+  return (
+    <TrackMeStack.Navigator>
+      <TrackMeStack.Screen
+        name="TrackMe"
+        component={TrackMe}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </TrackMeStack.Navigator>
+  );
+};
+
 
 const RequestsStackScreen = ({ navigation }) => {
   return (
@@ -315,7 +344,7 @@ const DrawerNav = () => {
       <Drawer.Screen name="Home" component={bottomTabNav} />
       <Drawer.Screen name="Requests" component={RequestsStackScreen} />
       <Drawer.Screen name="Profile" component={ProfileStackScreen} />
-      {/* <Drawer.Screen name="SignIn" component={SignInStackScreen} /> */}
+      <Drawer.Screen name="TrackMe" component={TrackMeStackScreen} />
     </Drawer.Navigator>
   );
 };

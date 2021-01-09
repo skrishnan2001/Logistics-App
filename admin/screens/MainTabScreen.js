@@ -17,6 +17,10 @@ import InvoiceScreen from "./InvoiceScreen";
 import InvoiceAdmin from "./InvoiceAdmin";
 import InvoiceVerified from"./InvoiceVerified";
 import ResetPassword from "./ResetPassword";
+import AllStaffs from './AllStaffs';
+import TrackStaff from './TrackStaff';
+
+
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -26,6 +30,8 @@ const ScheduledOrdersStack = createStackNavigator();
 const SignInStack = createStackNavigator();
 const UnverifiedStack =  createStackNavigator();
 const VerifiedStack = createStackNavigator();
+const AllStaffsStack = createStackNavigator();
+
 
 const HomeStackScreen = ({ navigation }) => {
   return (
@@ -51,6 +57,53 @@ const HomeStackScreen = ({ navigation }) => {
     </HomeStack.Navigator>
   );
 };
+
+const AllStaffsStackScreen = ({ navigation }) => {
+  return (
+    <AllStaffsStack.Navigator>
+      <AllStaffsStack.Screen
+        name="AllStaffs"
+        component={AllStaffs}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+      <AllStaffsStack.Screen
+        name="TrackStaff"
+        component={TrackStaff}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+
+    </AllStaffsStack.Navigator>
+  );
+};
+
 
 const BookingStackScreen = ({ navigation }) => {
   return (
@@ -423,7 +476,7 @@ const DrawerNav = () => {
       <Drawer.Screen name="Unverified" component={UnverifiedStackScreen} />
       <Drawer.Screen name="Verified" component={VerifiedStackScreen} />
 
-      {/* <Drawer.Screen name="SignIn" component={SignInStackScreen} /> */}
+       <Drawer.Screen name="AllStaffs" component={AllStaffsStackScreen} />
     </Drawer.Navigator>
   );
 };

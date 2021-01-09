@@ -27,12 +27,12 @@ export default function UpdateUserDetails({ navigation }) {
         dbref.limitToLast(1).on("child_added", function (snapshot) {
           key = snapshot.key;
         });
-        dbref.child(`${key}`).set({
+        dbref.set({
           Name: name,
           Phone_number: phone,
         });
       } else {
-        db.ref(`/staff/ProfileDetails/${user.uid}`).push({
+        db.ref(`/staff/ProfileDetails/${user.uid}`).set({
           Name: name,
           Phone_number: phone,
         });

@@ -52,13 +52,10 @@ const Sort = ({ navigation }) => {
     for (var key in data) {
       if (data.hasOwnProperty(key)) {
         var val = data[key];
-        for (var key_2 in val) {
-          if (val.hasOwnProperty(key_2)) {
-            var val_2 = val[key_2];
-            var id = key;
-            staff[`${val_2["Name"]}`] = id;
-          }
-        }
+        var id = key;
+            staff[`${val["Name"]}`] = id;
+
+
       }
     }
   });
