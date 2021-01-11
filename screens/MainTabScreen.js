@@ -15,6 +15,8 @@ import UpdateUserDetails from "./UpdateUserDetails";
 import ResetPassword from "./ResetPassword";
 import ResetEmail from "./ResetEmail";
 import History from "./History";
+import InvoiceTrack from "./InvoiceTrack";
+import TrackStaff from "./TrackStaff";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -185,6 +187,42 @@ const ProfileStackScreen = ({ navigation }) => {
       <ProfileStack.Screen
         name="Invoice"
         component={InvoiceScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Invoice-Track"
+        component={InvoiceTrack}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Track-Staff"
+        component={TrackStaff}
         options={{
           headerLeft: () => (
             <Icon.Button

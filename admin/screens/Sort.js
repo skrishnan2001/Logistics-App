@@ -6,9 +6,6 @@ import { View, FlatList, Picker, StyleSheet, Text, Alert } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormInput from "../components/FormInput";
 import { db } from "../firebaseConfig";
-import DropDownPicker from 'react-native-dropdown-picker';
-import AllStaffs from "./AllStaffs";
-
 
 const Sort = ({ navigation }) => {
   var users = [];
@@ -24,7 +21,7 @@ const Sort = ({ navigation }) => {
         for (var key_2 in val) {
           if (val.hasOwnProperty(key_2)) {
             var val_2 = val[key_2];
-            if (!val_2["isScheduled"]) {
+            if (val_2["isScheduled"] == "Not Yet Scheduled") {
               let user = {
                 id:
                   new Date().getTime().toString() +
@@ -56,38 +53,17 @@ const Sort = ({ navigation }) => {
       if (data.hasOwnProperty(key)) {
         var val = data[key];
         var id = key;
-            staff[`${val["Name"]}`] = id;
-
-
+        staff[`${val["Name"]}`] = id;
       }
     }
   });
-
-  var staffs=[];
-  var dbRef = firebase.database().ref("/staff/ProfileDetails/");
-  dbRef.on("value", function (snapshot) {
-    const data = snapshot.val();
-    for (var key in data) {
-        var val = data[key];
-        let staff={
-          staff_id: key, 
-          label: val["Name"]
-        };
-        staffs.push(staff);
-    }
-  });
-  var shifts=[
-    {label: 'Shift 1'},
-    {label: 'Shift 2'},
-    {label: 'Shift 3'},
-  ]
-
   const test = () => {
     arrHolder.forEach((obj) => {
       var userId = obj["userid"];
       var orderId = obj["orderid"];
       db.ref(`/users/booking/${userId}/${orderId}`).update({
-        isScheduled: true,
+        isScheduled: "Undelivered",
+        StaffId: staff[staff_picker],
       });
       db.ref(`staff/Undelivered/${staff[staff_picker]}/`).push({
         userId: userId,
@@ -182,25 +158,56 @@ const Sort = ({ navigation }) => {
 
       <View style={{ flexDirection: "row" }}>
         <View style={styles.buttonStyle}>
-          
-          <DropDownPicker
-            items = {staffs}
-            placeholder="Select Staff"
-            onChangeItem = {item => setstaff_picker(item.label)}
-            containerStyle={{marginTop:10, height: 50, width: 100}}
-            labelStyle={{color: '#2e64e5'}}
-            
-          />
+          <Picker
+            selectedValue={staff_picker}
+            style={[styles.inputsingle, { height: 50, width: 100 }]}
+            onValueChange={(itemValue, itemIndex) => setstaff_picker(itemValue)}
+          >
+            <Picker.Item
+              label="Staff 1"
+              value="Staff 1"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Staff 2"
+              value="Staff 2"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Staff 3"
+              value="Staff 3"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Staff 4"
+              value="Staff 4"
+              style={styles.labelPicker}
+            />
+          </Picker>
         </View>
-          <View style={styles.buttonStyle}>
-          <DropDownPicker
-            items = {shifts}
-            placeholder="Select Shift"
-            onChangeItem = {item => setshift_picker(item.label)}
-            containerStyle={{marginTop:10, height: 50, width: 100}}
-            labelStyle={{color: '#2e64e5'}}
-          />
-          </View>
+        <View style={styles.buttonStyle}>
+          <Picker
+            selectedValue={Shift}
+            style={[styles.inputsingle, { height: 50, width: 100 }]}
+            onValueChange={(itemValue, itemIndex) => setshift_picker(itemValue)}
+          >
+            <Picker.Item
+              label="Shift 1"
+              value="Shift 1"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Shift 2"
+              value="Shift 2"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Shift 3"
+              value="Shift 3"
+              style={styles.labelPicker}
+            />
+          </Picker>
+        </View>
         <View style={styles.buttonStyle}>
           <FormButton buttonTitle="Schedule" onPress={test} />
         </View>

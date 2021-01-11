@@ -105,42 +105,42 @@ const BookingScreen = ({ navigation }) => {
       Priority_Booking: Priority,
       Time: d,
       zone: zone,
-      isScheduled: false,
+      isScheduled: "Not Yet Scheduled",
     });
 
-  //   var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
-  //   var OrderID;
-  //   bookingRef.limitToLast(1).on("child_added", function (snapshot) {
-  //     OrderID = snapshot.key;
-  //   });
+    //   var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
+    //   var OrderID;
+    //   bookingRef.limitToLast(1).on("child_added", function (snapshot) {
+    //     OrderID = snapshot.key;
+    //   });
 
-  //   var hashedID = user.uid;
-  //   db.ref(`/admin/booking/${zone}/`).push({
-  //     CustomerID: hashedID,
-  //     Order_ID: OrderID,
-  //     residence_locality_pickup: pickup,
-  //     city_pickup: str[0],
-  //     state_pickup: str[1],
-  //     pincode_pickup: pickup3,
-  //     residence_locality_delivery: delivery,
-  //     city_delivery: str1[0],
-  //     state_delivery: str1[1],
-  //     pincode_delivery: delivery3,
-  //     phone: phone,
-  //     PickerSelectedVal: PickerSelectedVal,
-  //     length: dimension,
-  //     breadth: dimension2,
-  //     height: dimension3,
-  //     weight: weight,
-  //     vehicle: vehicle_type,
-  //     type: type,
-  //     order: order,
-  //     insurance: check,
-  //     Priority_Booking: Priority,
-  //     Time: d,
-  //     zone: zone,
-  //   });
-   };
+    //   var hashedID = user.uid;
+    //   db.ref(`/admin/booking/${zone}/`).push({
+    //     CustomerID: hashedID,
+    //     Order_ID: OrderID,
+    //     residence_locality_pickup: pickup,
+    //     city_pickup: str[0],
+    //     state_pickup: str[1],
+    //     pincode_pickup: pickup3,
+    //     residence_locality_delivery: delivery,
+    //     city_delivery: str1[0],
+    //     state_delivery: str1[1],
+    //     pincode_delivery: delivery3,
+    //     phone: phone,
+    //     PickerSelectedVal: PickerSelectedVal,
+    //     length: dimension,
+    //     breadth: dimension2,
+    //     height: dimension3,
+    //     weight: weight,
+    //     vehicle: vehicle_type,
+    //     type: type,
+    //     order: order,
+    //     insurance: check,
+    //     Priority_Booking: Priority,
+    //     Time: d,
+    //     zone: zone,
+    //   });
+  };
 
   const VehiclePicker = () => {
     var volume = dimension * dimension2 * dimension3;

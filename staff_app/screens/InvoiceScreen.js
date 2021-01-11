@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   CheckBox,
-  Alert
+  Alert,
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
@@ -180,6 +180,9 @@ const InvoiceScreen = ({ route, navigation }) => {
       userId: user_id,
       base64: path,
     });
+    db.ref(`/users/booking/${user_id}/${order_id}`).update({
+      isScheduled: "Delivered",
+    });
     var node;
     var dbRef = firebase.database().ref(`staff/Undelivered/${staff_id}/`);
     dbRef.on("value", function (snapshot) {
@@ -195,6 +198,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     });
     console.log(node);
     db.ref(`staff/Undelivered/${staff_id}/${node}`).remove();
+
     Alert.alert("The order has been delivered");
     navigation.navigate("MyOrders");
   };
@@ -295,7 +299,7 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-    width: windowWidth/1.11,
+    width: windowWidth / 1.11,
     height: windowHeight / 1.9,
   },
   head: { height: 40, backgroundColor: "#f1f8ff" },
@@ -323,9 +327,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "serif",
   },
-  image:{
+  image: {
     flex: 1,
-    width: windowWidth/1.11,
+    width: windowWidth / 1.11,
     height: windowHeight / 1.9,
-  }
+  },
 });

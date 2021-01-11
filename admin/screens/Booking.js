@@ -104,7 +104,7 @@ const BookingScreen = ({ navigation }) => {
       Priority_Booking: Priority,
       Time: d,
       zone: zone,
-      isScheduled: false,
+      isScheduled: "Not Yet Scheduled",
     });
   };
 
