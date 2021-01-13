@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as firebase from "firebase";
 import Cards from "../components/Cards";
 import FormButton from "../components/FormButton";
-import { View, FlatList, Picker, StyleSheet, Text, Alert } from "react-native";
+import { View, FlatList, TextInput, StyleSheet, Text, Alert } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormInput from "../components/FormInput";
 import { db } from "../firebaseConfig";
@@ -61,19 +61,7 @@ const Sort = ({ navigation }) => {
   });
 
   var staffs=[];
-  var dbRef = firebase.database().ref("/staff/ProfileDetails/");
-  dbRef.on("value", function (snapshot) {
-    const data = snapshot.val();
-    for (var key in data) {
-        var val = data[key];
-        let staff={
-          staff_id: key, 
-          label: val["Name"]
-        };
-        staffs.push(staff);
-    }
-  });
-  console.log(staffs);
+  
   var shifts=[
     {label: 'Shift 1'},
     {label: 'Shift 2'},
@@ -101,10 +89,16 @@ const Sort = ({ navigation }) => {
     });
     Alert.alert("The orders have been scheduled");
     setarrHolder([]);
+    staffs=[];
+    setWeight("");
+    setVolume("");
   };
   const [user_id, setuserid] = useState();
   const [order_id, setorderid] = useState();
   const [arrHolder, setarrHolder] = useState(users);
+  const [volume, setVolume] = useState();
+  const [weight, setWeight] = useState();
+  var vehicle_type = "";
   // const [data_history, setdata_history] = useState(users);
   var data_history = users;
   const Check = (user_id, order_id, item) => {
@@ -113,18 +107,18 @@ const Sort = ({ navigation }) => {
     navigation.navigate("Invoice", { user_id: user_id, order_id: order_id });
   };
 
+  
+
   // const [state, setstate] = useState();
   // const [city, setcity] = useState();
   // const [pincode, setpincode] = useState();
 
   const filter_func = (text1) => {
-    console.log(text1);
     data_history = users;
     const newData = data_history.filter((items) => {
       var order = items.state_pickup;
       var order1 = items.city_pickup;
       var order2 = items.pc_pick;
-      //console.log(order.includes(text));
       return (
         order.includes(text1) ||
         order1.includes(text1) ||
@@ -133,8 +127,35 @@ const Sort = ({ navigation }) => {
     });
     setarrHolder(newData);
   };
+
+  const VehiclePicker = () => {
+    if (volume < 3 || weight < 5) {
+      vehicle_type = "two-wheeler";
+    } else if ((volume >= 3 && volume < 7) || (weight >= 5 && weight < 50)) {
+      vehicle_type = "four-wheeler";
+    } else if ((volume >= 7 && volume < 12) || (weight >= 50 && weight < 100)) {
+      vehicle_type = "mini-van";
+    } else {
+      vehicle_type = "truck";
+    }
+    console.log(vehicle_type);
+    var dbRef = firebase.database().ref("/staff/ProfileDetails/");
+    dbRef.on("value", function (snapshot) {
+      const data = snapshot.val();
+      for (var key in data) {
+          var val = data[key];
+          if(val["Vehicle_Type"]===vehicle_type){
+            let staff={
+              staff_id: key, 
+              label: val["Name"]
+            };
+            staffs.push(staff);
+          }
+      }
+    });
+    console.log(staffs);
+  };
   var count = 0;
-  // console.log(arrHolder);
   for (var j in arrHolder) {
     if (arrHolder.hasOwnProperty(j)) {
       count += 1;
@@ -178,29 +199,66 @@ const Sort = ({ navigation }) => {
         buttonTitle="Sort"
         onPress={filter_func.bind(this, state, city, pincode)}
       /> */}
-
+      <View>
       <View style={{ flexDirection: "row" }}>
-        <View style={styles.buttonStyle}>
-          <DropDownPicker
-            items = {staffs}
-            placeholder="Select Staff"
-            onChangeItem = {item => setstaff_picker(item.label)}
-            containerStyle={{marginTop:10, height: 50, width: 100}}
-            labelStyle={{color: '#2e64e5'}}
-          />
+      <View style={styles.buttonStyle}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={(text) => setVolume(text)}
+              style={styles.input}
+              placeholderText="Volume"
+              numberOfLines={1}
+              placeholderTextColor="#666"
+              autoCapitalize="none"
+              keyboardType="number-pad"
+              autoCorrect={false}
+              maxLength={6}
+            />
+          </View>
         </View>
         <View style={styles.buttonStyle}>
-          <DropDownPicker
-            items = {shifts}
-            placeholder="Select Shift"
-            onChangeItem = {item => setshift_picker(item.label)}
-            containerStyle={{marginTop:10, height: 50, width: 100}}
-            labelStyle={{color: '#2e64e5'}}
-            itemStyle={{borderColor: 'black', borderWidth:1,}}
-          />
-        </View>        
+          <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={(text) => setWeight(text)}
+              style={styles.input}
+              placeholderText="Weight"
+              numberOfLines={1}
+              placeholderTextColor="#666"
+              autoCapitalize="none"
+              keyboardType="number-pad"
+              autoCorrect={false}
+              maxLength={6}
+            />
+          </View>
+        </View>
         <View style={styles.buttonStyle}>
-          <FormButton buttonTitle="Schedule" onPress={test} />
+            <FormButton buttonTitle="Filter" onPress={VehiclePicker} />
+        </View>
+
+      </View>
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.buttonStyle}>
+            <DropDownPicker
+              items = {staffs}
+              placeholder="Select Staff"
+              onChangeItem = {item => setstaff_picker(item.label)}
+              containerStyle={{marginTop:10, height: 50, width: 100}}
+              labelStyle={{color: '#2e64e5'}}
+            />
+          </View>
+          <View style={styles.buttonStyle}>
+            <DropDownPicker
+              items = {shifts}
+              placeholder="Select Shift"
+              onChangeItem = {item => setshift_picker(item.label)}
+              containerStyle={{marginTop:10, height: 50, width: 100}}
+              labelStyle={{color: '#2e64e5'}}
+              itemStyle={{borderColor: 'black', borderWidth:1,}}
+            />
+          </View>        
+          <View style={styles.buttonStyle}>
+            <FormButton buttonTitle="Schedule" onPress={test} />
+          </View>
         </View>
       </View>
 
@@ -250,5 +308,24 @@ const styles = StyleSheet.create({
     marginHorizontal: "2%",
     marginVertical: 10,
     width: "30%",
+  },
+  inputContainer: {
+    marginTop: 5,
+    marginBottom: 10,
+    borderColor: '#ccc',
+    borderRadius: 3,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff'
+  },
+  input: {
+    padding: 10,
+    flex: 1,
+    fontSize: 16,
+
+    color: '#333',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
