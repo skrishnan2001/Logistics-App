@@ -82,7 +82,8 @@ export default class AllStaffs extends React.Component {
         <View style={{
             flex: 1,
             width: '90%',
-            alignSelf: 'center'
+            alignSelf: 'center',
+            marginTop:20
           }}>
           <FlatList
             data={this.state.allstaffs}

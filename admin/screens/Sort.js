@@ -60,12 +60,12 @@ const Sort = ({ navigation }) => {
     }
   });
 
-  var staffs=[];
-  
-  var shifts=[
-    {label: 'Shift 1'},
-    {label: 'Shift 2'},
-    {label: 'Shift 3'},
+  var staffs = [];
+
+  var shifts = [
+    { label: 'Shift 1' },
+    { label: 'Shift 2' },
+    { label: 'Shift 3' },
   ];
 
   const test = () => {
@@ -89,7 +89,7 @@ const Sort = ({ navigation }) => {
     });
     Alert.alert("The orders have been scheduled");
     setarrHolder([]);
-    staffs=[];
+    staffs = [];
     setWeight("");
     setVolume("");
   };
@@ -107,7 +107,7 @@ const Sort = ({ navigation }) => {
     navigation.navigate("Invoice", { user_id: user_id, order_id: order_id });
   };
 
-  
+
 
   // const [state, setstate] = useState();
   // const [city, setcity] = useState();
@@ -143,14 +143,14 @@ const Sort = ({ navigation }) => {
     dbRef.on("value", function (snapshot) {
       const data = snapshot.val();
       for (var key in data) {
-          var val = data[key];
-          if(val["Vehicle_Type"]===vehicle_type){
-            let staff={
-              staff_id: key, 
-              label: val["Name"]
-            };
-            staffs.push(staff);
-          }
+        var val = data[key];
+        if (val["Vehicle_Type"] === vehicle_type) {
+          let staff = {
+            staff_id: key,
+            label: val["Name"]
+          };
+          staffs.push(staff);
+        }
       }
     });
     console.log(staffs);
@@ -200,62 +200,62 @@ const Sort = ({ navigation }) => {
         onPress={filter_func.bind(this, state, city, pincode)}
       /> */}
       <View>
-      <View style={{ flexDirection: "row" }}>
-      <View style={styles.buttonStyle}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              onChangeText={(text) => setVolume(text)}
-              style={styles.input}
-              placeholderText="Volume"
-              numberOfLines={1}
-              placeholderTextColor="#666"
-              autoCapitalize="none"
-              keyboardType="number-pad"
-              autoCorrect={false}
-              maxLength={6}
-            />
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.buttonStyle}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                onChangeText={(text) => setVolume(text)}
+                style={styles.input}
+                placeholderText="Volume"
+                numberOfLines={1}
+                placeholderTextColor="#666"
+                autoCapitalize="none"
+                keyboardType="number-pad"
+                autoCorrect={false}
+                maxLength={6}
+              />
+            </View>
           </View>
-        </View>
-        <View style={styles.buttonStyle}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              onChangeText={(text) => setWeight(text)}
-              style={styles.input}
-              placeholderText="Weight"
-              numberOfLines={1}
-              placeholderTextColor="#666"
-              autoCapitalize="none"
-              keyboardType="number-pad"
-              autoCorrect={false}
-              maxLength={6}
-            />
+          <View style={styles.buttonStyle}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                onChangeText={(text) => setWeight(text)}
+                style={styles.input}
+                placeholderText="Weight"
+                numberOfLines={1}
+                placeholderTextColor="#666"
+                autoCapitalize="none"
+                keyboardType="number-pad"
+                autoCorrect={false}
+                maxLength={6}
+              />
+            </View>
           </View>
-        </View>
-        <View style={styles.buttonStyle}>
+          <View style={styles.buttonStyle}>
             <FormButton buttonTitle="Filter" onPress={VehiclePicker} />
-        </View>
+          </View>
 
-      </View>
+        </View>
         <View style={{ flexDirection: "row" }}>
           <View style={styles.buttonStyle}>
             <DropDownPicker
-              items = {staffs}
+              items={staffs}
               placeholder="Select Staff"
-              onChangeItem = {item => setstaff_picker(item.label)}
-              containerStyle={{marginTop:10, height: 50, width: 100}}
-              labelStyle={{color: '#2e64e5'}}
+              onChangeItem={item => setstaff_picker(item.label)}
+              containerStyle={{ marginTop: 10, height: 50, width: 100 }}
+              labelStyle={{ color: '#2e64e5' }}
             />
           </View>
           <View style={styles.buttonStyle}>
             <DropDownPicker
-              items = {shifts}
+              items={shifts}
               placeholder="Select Shift"
-              onChangeItem = {item => setshift_picker(item.label)}
-              containerStyle={{marginTop:10, height: 50, width: 100}}
-              labelStyle={{color: '#2e64e5'}}
-              itemStyle={{borderColor: 'black', borderWidth:1,}}
+              onChangeItem={item => setshift_picker(item.label)}
+              containerStyle={{ marginTop: 10, height: 50, width: 100 }}
+              labelStyle={{ color: '#2e64e5' }}
+              itemStyle={{ borderColor: 'black', borderWidth: 1, }}
             />
-          </View>        
+          </View>
           <View style={styles.buttonStyle}>
             <FormButton buttonTitle="Schedule" onPress={test} />
           </View>
