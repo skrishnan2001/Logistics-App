@@ -2,10 +2,14 @@ import React, { useContext, useState, Component } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
-  Image,
   StyleSheet,
   ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  PermissionsAndroid,
+  Platform,
+  Alert,
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
@@ -18,10 +22,13 @@ import {
   Cols,
 } from "react-native-table-component";
 import * as firebase from "firebase";
+import * as Print from "expo-print";
+import * as MediaLibrary from "expo-media-library";
+import * as Sharing from "expo-sharing";
 
 const InvoiceScreen = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
-
+  var pdf_obj;
   var phone,
     pickup,
     pickup2, //City,state and pincode for pickup address
@@ -120,7 +127,25 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${shorttime}`],
     ],
   });
-
+  const pdf_gen = () => {
+    pdf_obj = {
+      pickup: pickup,
+      pickup2: pickup2,
+      delivery: delivery,
+      delivery2: delivery2,
+      phone: phone,
+      category: category,
+      volume: `${length}*${breadth}*${height}`,
+      weight: weight,
+      type: type,
+      order_val: order_val,
+      vehicle_type: vehicle_type,
+      insurance: insurance,
+      priority: priority,
+      time: shorttime,
+    };
+    console.log(pdf_obj);
+  };
   const state = curr;
   return (
     <ScrollView>
@@ -151,6 +176,13 @@ const InvoiceScreen = ({ route, navigation }) => {
         <FormButton
           buttonTitle="Back to Orders"
           onPress={() => navigation.navigate("History")}
+        />
+        <FormButton
+          buttonTitle="Print Invoice as PDF"
+          onPress={() => {
+            pdf_gen();
+            navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
+          }}
         />
       </View>
     </ScrollView>

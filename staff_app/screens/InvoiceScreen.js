@@ -34,6 +34,7 @@ const InvoiceScreen = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
   const [check, setcheck] = useState(false);
   const staff_id = user.uid;
+  var pdf_obj;
   var phone,
     pickup,
     pickup2, //City,state and pincode for pickup address
@@ -134,7 +135,25 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${shorttime}`],
     ],
   });
-
+  const pdf_gen = () => {
+    pdf_obj = {
+      pickup: pickup,
+      pickup2: pickup2,
+      delivery: delivery,
+      delivery2: delivery2,
+      phone: phone,
+      category: category,
+      volume: `${length}*${breadth}*${height}`,
+      weight: weight,
+      type: type,
+      order_val: order_val,
+      vehicle_type: vehicle_type,
+      insurance: insurance,
+      priority: priority,
+      time: shorttime,
+    };
+    console.log(pdf_obj);
+  };
   const state = curr;
   useEffect(() => {
     (async () => {
@@ -282,6 +301,13 @@ const InvoiceScreen = ({ route, navigation }) => {
             style={styles.image}
           />
         </View>
+        <FormButton
+          buttonTitle="Print Invoice as PDF"
+          onPress={() => {
+            pdf_gen();
+            navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
+          }}
+        />
         <FormButton buttonTitle="Confirm delivery" onPress={() => conf_del()} />
       </View>
     </ScrollView>

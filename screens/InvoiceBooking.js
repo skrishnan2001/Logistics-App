@@ -119,7 +119,25 @@ const InvoiceBooking = ({ navigation }) => {
       [`${shorttime}`],
     ],
   });
-
+  const pdf_gen = () => {
+    pdf_obj = {
+      pickup: pickup,
+      pickup2: pickup2,
+      delivery: delivery,
+      delivery2: delivery2,
+      phone: phone,
+      category: category,
+      volume: `${length}*${breadth}*${height}`,
+      weight: weight,
+      type: type,
+      order_val: order_val,
+      vehicle_type: vehicle_type,
+      insurance: insurance,
+      priority: priority,
+      time: shorttime,
+    };
+    console.log(pdf_obj);
+  };
   const state = curr;
   return (
     <ScrollView>
@@ -150,6 +168,13 @@ const InvoiceBooking = ({ navigation }) => {
         <FormButton
           buttonTitle="Redirect to Fresh-Booking"
           onPress={() => navigation.navigate("Booking")}
+        />
+        <FormButton
+          buttonTitle="Print Invoice as PDF"
+          onPress={() => {
+            pdf_gen();
+            navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
+          }}
         />
       </View>
     </ScrollView>

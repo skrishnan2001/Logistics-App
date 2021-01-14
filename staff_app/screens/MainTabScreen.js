@@ -15,7 +15,8 @@ import Leave from "./Leave";
 import MyOrders from "./MyOrders";
 import InvoiceScreen from "./InvoiceScreen";
 import InvoiceDelivered from "./InvoiceDelivered";
-import TrackMe from './TrackMe';
+import TrackMe from "./TrackMe";
+import InvoicePDF from "./InvoicePDF";
 
 const HomeStack = createStackNavigator();
 const TrackMeStack = createStackNavigator();
@@ -48,7 +49,6 @@ const HomeStackScreen = ({ navigation }) => {
   );
 };
 
-
 const TrackMeStackScreen = ({ navigation }) => {
   return (
     <TrackMeStack.Navigator>
@@ -73,7 +73,6 @@ const TrackMeStackScreen = ({ navigation }) => {
     </TrackMeStack.Navigator>
   );
 };
-
 
 const RequestsStackScreen = ({ navigation }) => {
   return (
@@ -235,6 +234,24 @@ const ProfileStackScreen = ({ navigation }) => {
       <ProfileStack.Screen
         name="Reset-Email"
         component={ResetEmail}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
         options={{
           headerLeft: () => (
             <Icon.Button
