@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import * as firebase from "firebase";
 import Cards from "../components/Cards";
 import { View, FlatList, Picker, StyleSheet, Text, Button } from "react-native";
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormInput from "../components/FormInput";
 
 const Orders = ({ navigation }) => {
@@ -21,7 +18,11 @@ const Orders = ({ navigation }) => {
           if (val.hasOwnProperty(key_2)) {
             var val_2 = val[key_2];
             let user = {
-              id: new Date().getTime().toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString(),
+              id:
+                new Date().getTime().toString() +
+                Math.floor(
+                  Math.random() * Math.floor(new Date().getTime())
+                ).toString(),
               userid: key,
               orderid: key_2,
               type: val_2["type"],
@@ -96,7 +97,9 @@ const Orders = ({ navigation }) => {
     >
       <View style={{ flexDirection: "row" }}>
         <View style={styles.buttonStyle}>
-          <Text style={[styles.text, { marginTop: 20, flexDirection: "row" }]}>Filter By</Text>
+          <Text style={[styles.text, { marginTop: 20, flexDirection: "row" }]}>
+            Filter By
+          </Text>
 
           <Picker
             selectedValue={PickerSelectedVal}
@@ -144,7 +147,10 @@ const Orders = ({ navigation }) => {
           </Picker>
         </View>
         <View style={styles.buttonStyle}>
-          <Text style={[styles.text, { marginTop: 20, flexDirection: "row" }]}> Filter by time</Text>
+          <Text style={[styles.text, { marginTop: 20, flexDirection: "row" }]}>
+            {" "}
+            Filter by time
+          </Text>
 
           <Picker
             selectedValue={PickerSelectedVal1}
@@ -178,11 +184,11 @@ const Orders = ({ navigation }) => {
         data={arrHolder}
         keyExtractor={(user) => user.id}
         renderItem={({ item }) => (
-          <TouchableOpacity
+          <TouchableWithoutFeedback
             onPress={Check.bind(this, item.userid, item.orderid)}
           >
             <Cards userId={item.userid} orderId={item.orderid} />
-          </TouchableOpacity>
+          </TouchableWithoutFeedback>
         )}
         style={{ marginTop: 10 }}
       />

@@ -24,6 +24,7 @@ import { windowHeight, windowWidth } from "../utils/Dimensions";
 const InvoiceVerified = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
   var path = "";
+  var pdf_obj;
   var phone,
     pickup,
     pickup2, //City,state and pincode for pickup address
@@ -41,7 +42,7 @@ const InvoiceVerified = ({ route, navigation }) => {
     time,
     shorttime,
     vehicle_type;
-  const { user_id, order_id,  } = route.params;
+  const { user_id, order_id } = route.params;
   var bookingRef = firebase
     .database()
     .ref(`/users/booking/${user_id}/${order_id}`);
@@ -122,7 +123,6 @@ const InvoiceVerified = ({ route, navigation }) => {
     ],
   });
 
-  
   var bref = firebase.database().ref(`/admin/Verified`);
   bref.on("value", function (snapshot) {
     const data = snapshot.val();
@@ -134,6 +134,25 @@ const InvoiceVerified = ({ route, navigation }) => {
       }
     }
   });
+  const pdf_gen = () => {
+    pdf_obj = {
+      pickup: pickup,
+      pickup2: pickup2,
+      delivery: delivery,
+      delivery2: delivery2,
+      phone: phone,
+      category: category,
+      volume: `${length}*${breadth}*${height}`,
+      weight: weight,
+      type: type,
+      order_val: order_val,
+      vehicle_type: vehicle_type,
+      insurance: insurance,
+      priority: priority,
+      time: shorttime,
+    };
+    console.log(pdf_obj);
+  };
   const state = curr;
   return (
     <ScrollView>
@@ -171,6 +190,13 @@ const InvoiceVerified = ({ route, navigation }) => {
           />
         </View>
         <FormButton
+          buttonTitle="Print Invoice as PDF"
+          onPress={() => {
+            pdf_gen();
+            navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
+          }}
+        />
+        <FormButton
           buttonTitle={"Back to Orders"}
           onPress={() => navigation.goBack()}
         />
@@ -206,10 +232,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "serif",
   },
-  image:{
+  image: {
     flex: 1,
-    width: windowWidth/1.11,
-    height:windowHeight/1.9,
-    
-  }
+    width: windowWidth / 1.11,
+    height: windowHeight / 1.9,
+  },
 });

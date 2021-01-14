@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import BookingScreen from "./Booking";
 import HomeScreen from "./HomeScreen";
 import Orders from "./Orders";
@@ -18,10 +18,11 @@ import InvoiceScreen from "./InvoiceScreen";
 import InvoiceAdmin from "./InvoiceAdmin";
 import InvoiceVerified from "./InvoiceVerified";
 import ResetPassword from "./ResetPassword";
-import AllStaffs from './AllStaffs';
-import TrackStaff from './TrackStaff';
-import StaffProfile from './StaffProfiles';
+import AllStaffs from "./AllStaffs";
+import TrackStaff from "./TrackStaff";
+import StaffProfile from "./StaffProfiles";
 import StaffProfileTable from "./StaffProfileTable";
+import InvoicePDF from "./InvoicePDF";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -33,7 +34,6 @@ const UnverifiedStack = createStackNavigator();
 const VerifiedStack = createStackNavigator();
 const AllStaffsStack = createStackNavigator();
 const StaffProfileStack = createStackNavigator();
-
 
 const HomeStackScreen = ({ navigation }) => {
   return (
@@ -151,7 +151,6 @@ const StaffProfileStackScreen = ({ navigation }) => {
   );
 };
 
-
 const BookingStackScreen = ({ navigation }) => {
   return (
     <BookingStack.Navigator>
@@ -176,6 +175,24 @@ const BookingStackScreen = ({ navigation }) => {
       <BookingStack.Screen
         name="Invoice-admin"
         component={InvoiceAdmin}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <BookingStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -252,6 +269,24 @@ const OrderStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
+      <OrderStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
     </OrderStack.Navigator>
   );
 };
@@ -280,6 +315,24 @@ const UnverifiedStackScreen = ({ navigation }) => {
       <UnverifiedStack.Screen
         name="Invoice-Unverified"
         component={InvoiceScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <UnverifiedStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -338,10 +391,27 @@ const VerifiedStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
+      <VerifiedStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
     </VerifiedStack.Navigator>
   );
 };
-
 
 const SortStackScreen = ({ navigation }) => {
   return (
@@ -367,6 +437,24 @@ const SortStackScreen = ({ navigation }) => {
       <SortStack.Screen
         name="Invoice"
         component={InvoiceOrders}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <SortStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -521,36 +609,37 @@ const TopNav = () => {
         inactiveTintColor: "white",
         indicatorStyle: {
           height: null,
-          top: '10%',
-          bottom: '10%',
-          width: '45%',
-          left: '2.5%',
+          top: "10%",
+          bottom: "10%",
+          width: "45%",
+          left: "2.5%",
           marginVertical: 0,
           borderRadius: 10,
           backgroundColor: "orange",
         },
         style: {
-          width: '100%',
+          width: "100%",
           borderColor: "blue",
           backgroundColor: "dodgerblue",
           elevation: 5, // shadow on Android
-          shadowOpacity: .10, // shadow on iOS,
-          shadowRadius: 4, // shadow blur on 
-          marginTop: '10%',
-          height:'9%',
-          justifyContent:'center'
-
+          shadowOpacity: 0.1, // shadow on iOS,
+          shadowRadius: 4, // shadow blur on
+          marginTop: "10%",
+          height: "9%",
+          justifyContent: "center",
         },
       }}
-      swipeEnabled={true}>
-      <TopTab.Screen name="Staff Location"
+      swipeEnabled={true}
+    >
+      <TopTab.Screen
+        name="Staff Location"
         component={AllStaffsStackScreen}
-        options={{
-        }} />
+        options={{}}
+      />
       <TopTab.Screen name="Profile" component={StaffProfileStackScreen} />
     </TopTab.Navigator>
   );
-}
+};
 
 const Drawer = createDrawerNavigator();
 
@@ -570,8 +659,11 @@ const DrawerNav = () => {
       <Drawer.Screen name="Home" component={bottomTabNav} />
       <Drawer.Screen name="Booking" component={BookingStackScreen} />
       <Drawer.Screen name="Orders" component={OrderStackScreen} />
-      <Drawer.Screen name="ScheduledOrders" component={ScheduledOrdersStackScreen} />
       <Drawer.Screen name="Sort" component={SortStackScreen} />
+      <Drawer.Screen
+        name="ScheduledOrders"
+        component={ScheduledOrdersStackScreen}
+      />
       <Drawer.Screen name="Unverified" component={UnverifiedStackScreen} />
       <Drawer.Screen name="Verified" component={VerifiedStackScreen} />
 

@@ -6,7 +6,7 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  Alert
+  Alert,
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
@@ -25,6 +25,7 @@ import { windowHeight, windowWidth } from "../utils/Dimensions";
 const InvoiceScreen = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
   var path = "";
+  var pdf_obj;
   var phone,
     pickup,
     pickup2, //City,state and pincode for pickup address
@@ -42,7 +43,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     time,
     shorttime,
     vehicle_type;
-  const { user_id, order_id,staff_id, screen } = route.params;
+  const { user_id, order_id, staff_id, screen } = route.params;
   var bookingRef = firebase
     .database()
     .ref(`/users/booking/${user_id}/${order_id}`);
@@ -138,7 +139,7 @@ const InvoiceScreen = ({ route, navigation }) => {
         if (data.hasOwnProperty(key)) {
           var val = data[key];
           if (val["userId"] == user_id && val["orderId"] == order_id) {
-             node = key;
+            node = key;
           }
         }
       }
@@ -158,6 +159,25 @@ const InvoiceScreen = ({ route, navigation }) => {
       }
     }
   });
+  const pdf_gen = () => {
+    pdf_obj = {
+      pickup: pickup,
+      pickup2: pickup2,
+      delivery: delivery,
+      delivery2: delivery2,
+      phone: phone,
+      category: category,
+      volume: `${length}*${breadth}*${height}`,
+      weight: weight,
+      type: type,
+      order_val: order_val,
+      vehicle_type: vehicle_type,
+      insurance: insurance,
+      priority: priority,
+      time: shorttime,
+    };
+    console.log(pdf_obj);
+  };
   const state = curr;
   return (
     <ScrollView>
@@ -199,6 +219,13 @@ const InvoiceScreen = ({ route, navigation }) => {
           onPress={() => verify()}
         />
         <FormButton
+          buttonTitle="Print Invoice as PDF"
+          onPress={() => {
+            pdf_gen();
+            navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
+          }}
+        />
+        <FormButton
           buttonTitle={"Back to Orders"}
           onPress={() => navigation.goBack()}
         />
@@ -235,10 +262,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "serif",
   },
-  image:{
+  image: {
     flex: 1,
-    width: windowWidth/1.11,
-    height:windowHeight/1.9,
-    
-  }
+    width: windowWidth / 1.11,
+    height: windowHeight / 1.9,
+  },
 });
