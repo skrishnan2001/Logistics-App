@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "LogisticsCustomer",
+    "name": "Admin",
     "slug": "LogisticsCustomer",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -27,6 +27,7 @@
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }

@@ -17,6 +17,7 @@ import InvoiceScreen from "./InvoiceScreen";
 import InvoiceDelivered from "./InvoiceDelivered";
 import TrackMe from "./TrackMe";
 import InvoicePDF from "./InvoicePDF";
+import Appraisal from "./Appraisal";
 
 const HomeStack = createStackNavigator();
 const TrackMeStack = createStackNavigator();
@@ -98,6 +99,24 @@ const RequestsStackScreen = ({ navigation }) => {
       <RequestStack.Screen
         name="Leave"
         component={Leave}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <RequestStack.Screen
+        name="Appraisal"
+        component={Appraisal}
         options={{
           headerLeft: () => (
             <Icon.Button

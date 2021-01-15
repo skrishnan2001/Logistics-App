@@ -28,12 +28,11 @@ const RequestsScreen = ({ navigation }) => {
 
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => {
-                {};
-              }}
+              onPress={() => navigation.navigate("Appraisal")}
             >
               <Text style={styles.textStyle}>Appraisal</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => {}}
