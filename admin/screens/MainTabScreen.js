@@ -9,6 +9,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import BookingScreen from "./Booking";
 import HomeScreen from "./HomeScreen";
 import Orders from "./Orders";
+import FilterScreen from "./FilterScreen";
 import Sort from "./Sort";
 import ScheduledOrders from "./ScheduledOrders";
 import Unverified from "./Unverified";
@@ -416,6 +417,24 @@ const VerifiedStackScreen = ({ navigation }) => {
 const SortStackScreen = ({ navigation }) => {
   return (
     <SortStack.Navigator>
+      <SortStack.Screen
+        name="Filter"
+        component={FilterScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
       <SortStack.Screen
         name="Sort"
         component={Sort}

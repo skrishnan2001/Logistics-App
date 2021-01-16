@@ -82,7 +82,7 @@ const BookingScreen = ({ navigation }) => {
   var str = pickup2.split(",");
   var str1 = delivery2.split(",");
   const addItems = (d) => {
-    db.ref(`/admin/booking/`).push({
+    db.ref(`/users/booking/${user.uid}`).push({
       residence_locality_pickup: pickup,
       city_pickup: str[0],
       state_pickup: str[1],
