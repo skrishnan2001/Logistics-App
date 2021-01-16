@@ -93,7 +93,7 @@ const Sort = ({ route, navigation }) => {
       }}
     >
       <View style={styles.buttonStyle}>
-            <FormButton buttonTitle="Filter" onPress={() => navigation.navigate("Filter")} />
+            <FormButton buttonTitle="Back" onPress={() => navigation.navigate("Filter")} />
       </View>
       <Text style={[styles.text, { marginTop: 20 }]}>Orders To Be Scheduled</Text>
 

@@ -11,9 +11,6 @@ console.warn = message => {
 
 import React, { useState } from "react";
 import Providers from "./navigation";
-import Sort from "./screens/Sort";
-import * as firebase from "firebase";
-import FilterScreen from "./screens/FilterScreen";
 
 
 export default function App() {

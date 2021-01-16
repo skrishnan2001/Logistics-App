@@ -128,7 +128,7 @@ var users = [];
               <TextInput
                 onChangeText={(text) => volume=text}
                 style={styles.input}
-                placeholderText="Volume"
+                placeholder="Volume"
                 numberOfLines={1}
                 placeholderTextColor="#666"
                 autoCapitalize="none"
@@ -143,7 +143,7 @@ var users = [];
               <TextInput
                 onChangeText={(text) => weight=text}
                 style={styles.input}
-                placeholderText="Weight"
+                placeholder="Weight"
                 numberOfLines={1}
                 placeholderTextColor="#666"
                 autoCapitalize="none"
@@ -179,8 +179,8 @@ const styles = StyleSheet.create({
       width: "30%",
     },
     inputContainer: {
-      marginTop: 5,
-      marginBottom: 10,
+      marginTop: 12.5,
+      //marginBottom: 10,
       borderColor: '#ccc',
       borderRadius: 3,
       borderWidth: 1,
