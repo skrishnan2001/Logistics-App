@@ -36,6 +36,8 @@ const Sort = ({ route, navigation }) => {
     { label: 'Shift 3' },
   ];
 
+  const [arrHolder, setarrHolder] = useState(route.params.arrHolder);
+
   const test = () => {
     arrHolder.forEach((obj) => {
       var userId = obj["userid"];
@@ -56,11 +58,12 @@ const Sort = ({ route, navigation }) => {
       });
     });
     Alert.alert("The orders have been scheduled");
-    arrHolder=[];
+    setarrHolder([]);
+    staffs=[];
+    count = 0;
   };
   const [user_id, setuserid] = useState();
   const [order_id, setorderid] = useState();
-  var arrHolder = route.params.arrHolder;
   
   const Check = (user_id, order_id, item) => {
     setuserid(user_id);
@@ -80,7 +83,7 @@ const Sort = ({ route, navigation }) => {
     if (arrHolder.hasOwnProperty(j)) {
       count += 1;
     }
-  }
+  };
   return (
     <View
       style={{
@@ -89,6 +92,9 @@ const Sort = ({ route, navigation }) => {
         flex: 1,
       }}
     >
+      <View style={styles.buttonStyle}>
+            <FormButton buttonTitle="Filter" onPress={() => navigation.navigate("Filter")} />
+      </View>
       <Text style={[styles.text, { marginTop: 20 }]}>Orders To Be Scheduled</Text>
 
       
