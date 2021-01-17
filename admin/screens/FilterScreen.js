@@ -6,6 +6,39 @@ import FormInput from "../components/FormInput";
 
 function FilterScreen({ navigation }) {
   var users=[];
+  var dbRef = firebase.database().ref("/users/booking/");
+    dbRef.on("value", function (snapshot) {
+      const data = snapshot.val();
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          var val = data[key];
+          for (var key_2 in val) {
+            if (val.hasOwnProperty(key_2)) {
+              var val_2 = val[key_2];
+              if (val_2["isScheduled"] == "Not Yet Scheduled") {
+                let user = {
+                  id:
+                    new Date().getTime().toString() +
+                    Math.floor(
+                      Math.random() * Math.floor(new Date().getTime())
+                    ).toString(),
+                  userid: key,
+                  orderid: key_2,
+                  city_pickup: val_2["city_pickup"],
+                  state_pickup: val_2["state_pickup"],
+                  city_delivery: val_2["city_delivery"],
+                  state_delivery: val_2["state_delivery"],
+                  pc_del: val_2["pincode_delivery"],
+                  pc_pick: val_2["pincode_pickup"],
+                  time: val_2["Time"],
+                };
+                users.push(user);
+              }
+            }
+          }
+        }
+      }
+    });
   var arrHolder = [];
   var volume="";
   var weight="";
