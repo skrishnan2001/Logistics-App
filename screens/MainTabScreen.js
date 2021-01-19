@@ -18,11 +18,13 @@ import History from "./History";
 import InvoiceTrack from "./InvoiceTrack";
 import TrackStaff from "./TrackStaff";
 import InvoicePDF from "./InvoicePDF";
+import NotifyScreen from "./NotifyScreen";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const SignInStack = createStackNavigator();
+const NotifyStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
   return (
@@ -260,7 +262,30 @@ const ProfileStackScreen = ({ navigation }) => {
     </ProfileStack.Navigator>
   );
 };
-
+const NotifyStackScreen = ({ navigation }) => {
+  return (
+    <NotifyStack.Navigator>
+      <NotifyStack.Screen
+        name="NotificationScreen"
+        component={NotifyScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </NotifyStack.Navigator>
+  );
+};
 // const SignInStackScreen = ({ navigation }) => {
 //   return (
 //     <SignInStack.Navigator>
@@ -349,6 +374,7 @@ const DrawerNav = () => {
       <Drawer.Screen name="Home" component={bottomTabNav} />
       <Drawer.Screen name="Booking" component={BookingStackScreen} />
       <Drawer.Screen name="Profile" component={ProfileStackScreen} />
+      <Drawer.Screen name="NotificationScreen" component={NotifyStackScreen} />
       {/* <Drawer.Screen name="SignIn" component={SignInStackScreen} /> */}
     </Drawer.Navigator>
   );
