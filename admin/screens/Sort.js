@@ -56,6 +56,14 @@ const Sort = ({ route, navigation }) => {
         userId: userId,
         orderId: orderId,
       });
+      db.ref(`staff/ProfileDetails/${staff_picker}/notifications`).push({
+        title: "Order Scheduled",
+        body : `Order ${orderId} has been scheduled`
+      });
+      db.ref(`users/booking/${userId}/notifications`).push({
+        title: "Order Scheduled",
+        body : `Order ${orderId} has been scheduled`
+      });
     });
     Alert.alert("The orders have been scheduled");
     setarrHolder([]);
@@ -93,11 +101,11 @@ const Sort = ({ route, navigation }) => {
       }}
     >
       <View style={styles.buttonStyle}>
-            <FormButton buttonTitle="Back" onPress={() => navigation.navigate("Filter")} />
+            <FormButton buttonTitle="Back" onPress={() => navigation.goBack()} />
       </View>
       <Text style={[styles.text, { marginTop: 20 }]}>Orders To Be Scheduled</Text>
 
-      
+       
       {/* <FormButton
         buttonTitle="Sort"
         onPress={filter_func.bind(this, state, city, pincode)}

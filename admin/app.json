@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Admin",
-    "slug": "LogisticsCustomer",
+    "name": "LogisticsAdmin",
+    "slug": "LogisticsAdmin",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.png",
+    "icon": "./assets/delivery_truck.png",
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",
@@ -28,6 +28,6 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "description": ""
+    "description": "Logistics Admin App"
   }
 }

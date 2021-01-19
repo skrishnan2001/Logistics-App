@@ -114,7 +114,7 @@ const InvoiceOrders = ({ route, navigation }) => {
       [`${delivery2}`],
       [`${phone}`],
       [`${category}`],
-      [`${length}${breadth}${height}`],
+      [`${length}*${breadth}*${height}`],
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],

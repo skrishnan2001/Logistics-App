@@ -24,6 +24,7 @@ import TrackStaff from "./TrackStaff";
 import StaffProfile from "./StaffProfiles";
 import StaffProfileTable from "./StaffProfileTable";
 import InvoicePDF from "./InvoicePDF";
+import Notifications from "./notifications";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -35,6 +36,7 @@ const UnverifiedStack = createStackNavigator();
 const VerifiedStack = createStackNavigator();
 const AllStaffsStack = createStackNavigator();
 const StaffProfileStack = createStackNavigator();
+const NotificationStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
   return (
@@ -536,6 +538,31 @@ const ScheduledOrdersStackScreen = ({ navigation }) => {
   );
 };
 
+const NotificationsStackScreen = ({ navigation }) => {
+  return (
+    <NotificationStack.Navigator>
+      <NotificationStack.Screen
+        name="Notifications"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </NotificationStack.Navigator>
+  );
+};
+
 // const SignInStackScreen = ({ navigation }) => {
 //   return (
 //     <SignInStack.Navigator>
@@ -676,6 +703,7 @@ const DrawerNav = () => {
       }}
     >
       <Drawer.Screen name="Home" component={bottomTabNav} />
+      <Drawer.Screen name="Notifications" component ={NotificationsStackScreen}/>
       <Drawer.Screen name="Booking" component={BookingStackScreen} />
       <Drawer.Screen name="Orders" component={OrderStackScreen} />
       <Drawer.Screen name="Sort" component={SortStackScreen} />

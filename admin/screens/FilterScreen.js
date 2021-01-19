@@ -40,8 +40,8 @@ function FilterScreen({ navigation }) {
       }
     });
   var arrHolder = [];
-  var volume="";
-  var weight="";
+  var volume;
+  var weight;
   var searchtext="";
   var vehicle_type = "";
   
