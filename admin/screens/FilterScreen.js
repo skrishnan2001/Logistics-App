@@ -3,8 +3,16 @@ import * as firebase from "firebase";
 import FormButton from "../components/FormButton";
 import { View, TextInput, StyleSheet, Text, } from "react-native";
 import FormInput from "../components/FormInput";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 function FilterScreen({ navigation }) {
+  var vehicles = [
+    { label: '2-Wheeler', value: "two-wheeler" },
+    { label: '4-Wheeler', value: "four-wheeler" },
+    { label: 'Mini-Van', value: "mini-van" },
+    { label: 'Truck', value: "truck" },
+  ];
+  let controller;
   var users=[];
   var dbRef = firebase.database().ref("/users/booking/");
     dbRef.on("value", function (snapshot) {
@@ -40,8 +48,12 @@ function FilterScreen({ navigation }) {
       }
     });
   var arrHolder = [];
-  var volume;
-  var weight;
+  var volume="";
+  var weight="";
+  var volume_1="";
+  var volume_2="";
+  var weight_1="";
+  var weight_2="";
   var searchtext="";
   var vehicle_type = "";
   
@@ -72,6 +84,10 @@ function FilterScreen({ navigation }) {
                   pc_del: val_2["pincode_delivery"],
                   pc_pick: val_2["pincode_pickup"],
                   time: val_2["Time"],
+                  length: val_2["length"],
+                  breadth: val_2["breadth"],
+                  height: val_2["height"],
+                  weight: val_2["weight"],
                 };
                 users.push(user);
               }
@@ -87,42 +103,39 @@ function FilterScreen({ navigation }) {
         var order = items.state_pickup;
         var order1 = items.city_pickup;
         var order2 = items.pc_pick;
+        let vol = items.length*items.breadth*items.height;
+        let wt = items.weight;
+        let v=0,w=0;
+        if(vol>= volume_1 && vol<=volume_2){
+          v=1;
+        }
+        if(wt>= weight_1 && wt<=weight_2){
+          w=1;
+        }
         return (
-          order.includes(text1) ||
+          (order.includes(text1) ||
           order1.includes(text1) ||
-          order2.includes(text1)
+          order2.includes(text1)) &&
+          v && w     
         );
       });
       arrHolder=newData;
   };
   
     const VehiclePicker = () => {
-      if (volume < 3 || weight < 5) {
-        vehicle_type = "two-wheeler";
-      } else if ((volume >= 3 && volume < 7) || (weight >= 5 && weight < 50)) {
-        vehicle_type = "four-wheeler";
-      } else if ((volume >= 7 && volume < 12) || (weight >= 50 && weight < 100)) {
-        vehicle_type = "mini-van";
-      } else {
-        vehicle_type = "truck";
-      }
+      
       console.log(vehicle_type);
       console.log(weight,volume,searchtext);
       userlist();
       filter_func(searchtext);
+      console.log("Volume:",volume_1,volume_2);
+      console.log("Weight:",weight_1,weight_2);
       console.log("users:", users);
       console.log("arrholder:",arrHolder);
       navigation.navigate("Sort", {vehicle_type: vehicle_type, arrHolder: arrHolder})
     };
-  
 
   
-
-
-
-
- 
-
   return (
     <View
       style={{
@@ -156,19 +169,14 @@ function FilterScreen({ navigation }) {
         autoCorrect={false}
         maxLength={6}
       />
-
-      {/* <FormButton
-        buttonTitle="Sort"
-        onPress={filter_func.bind(this, state, city, pincode)}
-      /> */}
       <View>
         <View style={{ flexDirection: "row" }}>
           <View style={styles.buttonStyle}>
             <View style={styles.inputContainer}>
               <TextInput
-                onChangeText={(text) => volume=text}
+                onChangeText={(text) => volume_1=text}
                 style={styles.input}
-                placeholder="Volume"
+                placeholder="Volume(from)"
                 numberOfLines={1}
                 placeholderTextColor="#666"
                 autoCapitalize="none"
@@ -181,9 +189,29 @@ function FilterScreen({ navigation }) {
           <View style={styles.buttonStyle}>
             <View style={styles.inputContainer}>
               <TextInput
-                onChangeText={(text) => weight=text}
+                onChangeText={(text) => volume_2=text}
                 style={styles.input}
-                placeholder="Weight"
+                placeholder="Volume (to)"
+                numberOfLines={1}
+                placeholderTextColor="#666"
+                autoCapitalize="none"
+                keyboardType="number-pad"
+                autoCorrect={false}
+                maxLength={6}
+              />
+            </View>
+          </View>
+
+        </View>  
+      </View>
+      <View>
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.buttonStyle}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                onChangeText={(text) => weight_1=text}
+                style={styles.input}
+                placeholder="Weight(from)"
                 numberOfLines={1}
                 placeholderTextColor="#666"
                 autoCapitalize="none"
@@ -194,10 +222,36 @@ function FilterScreen({ navigation }) {
             </View>
           </View>
           <View style={styles.buttonStyle}>
-            <FormButton buttonTitle="Filter" onPress={VehiclePicker} />
+            <View style={styles.inputContainer}>
+              <TextInput
+                onChangeText={(text) => weight_2=text}
+                style={styles.input}
+                placeholder="Weight. (to)"
+                numberOfLines={1}
+                placeholderTextColor="#666"
+                autoCapitalize="none"
+                keyboardType="number-pad"
+                autoCorrect={false}
+                maxLength={6}
+              />
+            </View>
           </View>
-
-        </View>  
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.buttonStyle}>
+              <DropDownPicker
+                items={vehicles}
+                controller={instance => controller = instance}
+                placeholder="Select Vehicle"
+                onChangeItem={item => vehicle_type=item.value}
+                containerStyle={{ marginTop: 10, height: 50, width: 100 }}
+                labelStyle={{ color: '#2e64e5' }}
+              />
+            </View>
+            <View style={styles.buttonStyle}>
+              <FormButton buttonTitle="Filter" onPress={VehiclePicker} />
+            </View>
+          </View>
       </View>
     </View>
   );
@@ -206,8 +260,6 @@ function FilterScreen({ navigation }) {
 export default FilterScreen;
 
 const styles = StyleSheet.create({
-    
-    
     text: {
       color: "#051d5f",
       fontSize: 20,
@@ -216,7 +268,7 @@ const styles = StyleSheet.create({
     buttonStyle: {
       marginHorizontal: "2%",
       marginVertical: 10,
-      width: "30%",
+      width: "40%",
     },
     inputContainer: {
       marginTop: 12.5,
