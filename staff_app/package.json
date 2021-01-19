@@ -44,7 +44,8 @@
     "react-native-table-component": "^1.2.1",
     "react-native-ui-xg": "0.0.6",
     "react-native-vector-icons": "^7.1.0",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "tailwind-rn": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

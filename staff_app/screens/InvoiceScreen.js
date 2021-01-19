@@ -186,6 +186,8 @@ const InvoiceScreen = ({ route, navigation }) => {
     // console.log(photo["base64"]);
     setpath(photo["base64"]);
   };
+
+
   const conf_del = () => {
     db.ref(`staff/Delivered/${staff_id}`).push({
       staffId: staff_id,
@@ -201,6 +203,14 @@ const InvoiceScreen = ({ route, navigation }) => {
     });
     db.ref(`/users/booking/${user_id}/${order_id}`).update({
       isScheduled: "Delivered",
+    });
+    db.ref(`/users/booking/${user_id}/notifications`).push({
+      title: "ORDER DELIVERED",
+      body: `Order ${order_id} has been delivered`,
+    });
+    db.ref(`/admin/notifications`).push({
+      title: "ORDER DELIVERED",
+      body: `Order ${order_id} has been delivered`,
     });
     var node;
     var dbRef = firebase.database().ref(`staff/Undelivered/${staff_id}/`);

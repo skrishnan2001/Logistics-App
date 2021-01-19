@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sample_app",
-    "slug": "sample_app",
+    "name": "staff_app",
+    "slug": "staff_app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,14 +22,15 @@
     "android": {
       "package": "com.infotix.logistics",
       "versionCode": 1,
- 	"config": {
- 	      "googleMaps": {
- 		"apiKey": "AIzaSyAJTcaTu_zV7vcVx2sp7bDNorZ2ybGR8N8" 
- 	      }
- 	    }
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAJTcaTu_zV7vcVx2sp7bDNorZ2ybGR8N8"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }
