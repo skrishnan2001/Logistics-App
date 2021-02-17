@@ -20,9 +20,12 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./app/assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+      "package": "com.Infotix.LogisticsAdmin",
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDKMKRZAH0apE6cefuhJFAl4noFO9GcNhU"
+        }
       }
     },
     "web": {
