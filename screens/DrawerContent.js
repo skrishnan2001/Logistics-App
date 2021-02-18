@@ -158,8 +158,8 @@ const styles = StyleSheet.create({
         //borderColor: '#f4f4f4',
         //borderWidth: 0.3,
         backgroundColor:"#d7d4bc",
-        borderRadius:15,
-        marginHorizontal:10
+        //borderRadius:15,
+        //marginHorizontal:10
     },
     preference: {
       flexDirection: 'row',
