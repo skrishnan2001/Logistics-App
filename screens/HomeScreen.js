@@ -15,6 +15,9 @@ export default class HomeScreen extends Component {
       interval: null,
       dataSource: [
         {
+          url: 'https://i.pinimg.com/originals/a8/2a/d6/a82ad67f7e6e555f5bdad9dae5071e3e.jpg',
+        },
+        {
           url: 'https://cdn.vox-cdn.com/thumbor/dXnH-ySPU85VXbzb9YOQE3Ac9sw=/0x0:4243x3079/1400x933/filters:focal(1783x1201:2461x1879):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65022936/TuSimple_Self_Drving_Truck_4_copy.0.jpg',
         }, {
           url: 'https://assets.newatlas.com/dims4/default/53aa086/2147483647/strip/true/crop/3318x2212+427+187/resize/1200x800!/quality/90/?url=http%3A%2F%2Fnewatlas-brightspot.s3.amazonaws.com%2F3d%2F98%2Ff8a71d50446582ac0b00e35a0153%2F764152-191108vw08-0064.jpg',

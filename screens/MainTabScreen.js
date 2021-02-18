@@ -20,6 +20,8 @@ import TrackStaff from "./TrackStaff";
 import InvoicePDF from "./InvoicePDF";
 import NotifyScreen from "./NotifyScreen";
 
+import { DrawerContent } from './DrawerContent';
+
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -687,6 +689,7 @@ const Drawer = createDrawerNavigator();
 const DrawerNav = () => {
   return (
     <Drawer.Navigator
+      drawerContent={props => <DrawerContent {...props} />}
       initialRouteName="Home"
       drawerStyle={{
         backgroundColor: "#88c7eb",
