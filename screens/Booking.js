@@ -76,7 +76,7 @@ const BookingScreen = ({ navigation }) => {
   const yourDate = new Date()
   const NewDate = moment(yourDate, 'DD-MM-YYYY')
   const [fromdate, setfromdate] = useState(NewDate);
-  const [shift,setshift] = useState("Shift 1");
+  const [shift, setshift] = useState("Shift 1");
 
   //const [condition, setcondition] = useState(1);
 
@@ -126,7 +126,7 @@ const BookingScreen = ({ navigation }) => {
       pincode_delivery: delivery3,
       phone: phone,
       pickupdate: fromdate,
-      pickup_shift:shift,
+      pickup_shift: shift,
       PickerSelectedVal: PickerSelectedVal,
       length: dimension,
       breadth: dimension2,
@@ -208,10 +208,10 @@ const BookingScreen = ({ navigation }) => {
   };
 
   const insurance = () => {
-    if(insurancedetail==""){
+    if (insurancedetail == "") {
       setinsurancedetail("Terms and Condition \n1.\n2.\n3.")
     }
-    else{
+    else {
       setinsurancedetail("");
     }
   };
@@ -229,7 +229,7 @@ const BookingScreen = ({ navigation }) => {
   if(PickerSelectedVal=="Break"){
           setcondition(1);
   }*/
-  
+
 
   const validate = () => {
     VehiclePicker();
@@ -249,24 +249,22 @@ const BookingScreen = ({ navigation }) => {
       phone == "" ||
 
       PickerSelectedVal == "" ||
-      (PickerSelectedVal =="Bulk" && (dimension != "" || dimension2 != "" || dimension3 != "" || weight != "" || weight !=""
-       || type != "" || order != "" )) ||
-      (PickerSelectedVal =="Break-Bulk" && ((vehicle_type=="four-wheeler" && vehicle=="two-wheeler") || 
-                                            (vehicle_type=="mini-van" && (vehicle=="four-wheeler" || vehicle=="two-wheeler")) ||
-                                            (vehicle_type=="truck" && (vehicle=="mini-van" || vehicle=="four-wheeler" || vehicle=="two-wheeler"))
-                                            ||
-                                            (dimension == "" || dimension2 == "" || dimension3 == "" || weight == "" || weight > 1500 ||
-                                        weight <= 0 || type == "" || order == "" ))
-                                         )                                            )
-                                            
-    {
-      if(vehicle_type=="four-wheeler"){
+      (PickerSelectedVal == "Bulk" && (dimension != "" || dimension2 != "" || dimension3 != "" || weight != "" || weight != ""
+        || type != "" || order != "")) ||
+      (PickerSelectedVal == "Break-Bulk" && ((vehicle_type == "four-wheeler" && vehicle == "two-wheeler") ||
+        (vehicle_type == "mini-van" && (vehicle == "four-wheeler" || vehicle == "two-wheeler")) ||
+        (vehicle_type == "truck" && (vehicle == "mini-van" || vehicle == "four-wheeler" || vehicle == "two-wheeler"))
+        ||
+        (dimension == "" || dimension2 == "" || dimension3 == "" || weight == "" || weight > 1500 ||
+          weight <= 0 || type == "" || order == ""))
+      )) {
+      if (vehicle_type == "four-wheeler") {
         setvehicleerr("Can select either Four-wheeler/Mini-van/Truck");
       }
-      if(vehicle_type=="mini-van"){
+      if (vehicle_type == "mini-van") {
         setvehicleerr("Can select either Mini-van/Truck");
       }
-      if(vehicle_type=="truck"){
+      if (vehicle_type == "truck") {
         setvehicleerr("Can select only Truck");
       }
       if (pickup == "") {
@@ -402,28 +400,29 @@ const BookingScreen = ({ navigation }) => {
             <View
               style={{ flexDirection: "column", marginTop: 10, padding: 10 }}
             >
-            <View
-              style={{
-                flexDirection: "row",
-                marginVertical: 5,
-                marginLeft: -15,
-                //borderColor: "white",
-              }}
-            >
-              <CheckBox value={Priority} onValueChange={setPriority} />
-              <Text
-                style={[styles.text, { fontSize: 20, fontWeight: "bold" }]}
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginVertical: 5,
+                  marginLeft: -15,
+                  //borderColor: "white",
+                }}
               >
-                {""}
+                <CheckBox value={Priority} onValueChange={setPriority} />
+                <Text
+                  style={[styles.text, { fontSize: 20, fontWeight: "normal", color: "green" }]}
+                >
+                  {""}
                 Priority Booking
               </Text>
+              </View>
             </View>
-          </View>
             <Text style={styles.text}>Pickup Address</Text>
             <FormInput
               labelValue={street1}
               multiline={true}
               onChangeText={(text) => setstreet1(text)}
+              iconType="enviromento"
               placeholderText="Door number,Appartment name,..."
               autoCorrect={false}
             />
@@ -434,6 +433,7 @@ const BookingScreen = ({ navigation }) => {
               labelValue={pickup}
               multiline={true}
               onChangeText={(text) => setpickup(text)}
+              iconType="enviromento"
               placeholderText="Residence,locality..."
               autoCorrect={false}
             />
@@ -444,6 +444,7 @@ const BookingScreen = ({ navigation }) => {
             <FormInput
               labelValue={land1}
               onChangeText={(text) => setland1(text)}
+              iconType="enviromento"
               placeholderText="Nearby Landmark..."
               autoCorrect={false}
             />
@@ -455,6 +456,7 @@ const BookingScreen = ({ navigation }) => {
               labelValue={pickup2}
               onChangeText={(text) => setpickup2(text)}
               placeholderText="City,State..."
+              iconType="enviromento"
               autoCorrect={false}
             />
             <View>
@@ -465,6 +467,7 @@ const BookingScreen = ({ navigation }) => {
               labelValue={pickup3}
               onChangeText={(text) => setpickup3(text)}
               placeholderText="Pincode..."
+              iconType="enviromento"
               keyboardType="number-pad"
               maxLength={6}
             />
@@ -480,6 +483,7 @@ const BookingScreen = ({ navigation }) => {
               multiline={true}
               onChangeText={(text) => setstreet2(text)}
               placeholderText="Door number,Appartment name,..."
+              iconType="enviroment"
               autoCorrect={false}
             />
             <View>
@@ -490,6 +494,7 @@ const BookingScreen = ({ navigation }) => {
               multiline={true}
               onChangeText={(text) => setdelivery(text)}
               placeholderText="Residence,locality..."
+              iconType="enviroment"
               autoCorrect={false}
             />
             <View>
@@ -499,6 +504,7 @@ const BookingScreen = ({ navigation }) => {
               labelValue={land2}
               onChangeText={(text) => setland2(text)}
               placeholderText="Nearby Landmark..."
+              iconType="enviroment"
               autoCorrect={false}
             />
             <View>
@@ -509,6 +515,7 @@ const BookingScreen = ({ navigation }) => {
               labelValue={delivery2}
               onChangeText={(text) => setdelivery2(text)}
               placeholderText="City,State..."
+              iconType="enviroment"
               autoCorrect={false}
             />
             <View>
@@ -519,6 +526,7 @@ const BookingScreen = ({ navigation }) => {
               labelValue={delivery3}
               onChangeText={(text) => setdelivery3(text)}
               placeholderText="Pincode..."
+              iconType="enviroment"
               autoCorrect={false}
               keyboardType="number-pad"
               maxLength={6}
@@ -533,6 +541,7 @@ const BookingScreen = ({ navigation }) => {
               onChangeText={(text) => setphone(text)}
               placeholderText="+91-"
               autoCorrect={false}
+              iconType="mobile1"
               keyboardType="number-pad"
               maxLength={10}
             />
@@ -542,39 +551,39 @@ const BookingScreen = ({ navigation }) => {
 
             <Text style={[styles.text, { marginTop: 20 }]}>Choose Pickup Date</Text>
             <DatePicker
-                            style={styles.datePickerStyle}
-                            date={fromdate} // Initial date from state
-                            mode="date" // The enum of date, datetime and time
-                            placeholder="select date"
-                            format="DD-MM-YYYY"
-                            minDate={new Date(Date.now())}
-                            maxDate={new Date(Date.now() + (24 * 60 * 60 * 1000 * 7 * 4 * 3))}
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            customStyles={{
-                                dateIcon: {
-                                    //display: 'none',
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 0,
-                                },
-                                dateInput: {
-                                    marginLeft: 36,
-                                    borderWidth: 0
-                                },
-                            }}
-                            onDateChange={(date) => {
-                                setfromdate(date);
-                            }}
-                        />
+              style={styles.datePickerStyle}
+              date={fromdate} // Initial date from state
+              mode="date" // The enum of date, datetime and time
+              placeholder="select date"
+              format="DD-MM-YYYY"
+              minDate={new Date(Date.now())}
+              maxDate={new Date(Date.now() + (24 * 60 * 60 * 1000 * 7 * 4 * 3))}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  //display: 'none',
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0,
+                },
+                dateInput: {
+                  marginLeft: 36,
+                  borderWidth: 0
+                },
+              }}
+              onDateChange={(date) => {
+                setfromdate(date);
+              }}
+            />
             <Text style={[styles.text, { marginTop: 30 }]}>Select Pickup Time</Text>
             <Picker
               selectedValue={shift}
               style={[styles.inputsingle]}
               onValueChange={(itemValue, itemIndex) =>
                 setshift(itemValue)
-                        
+
               }
             >
               <Picker.Item label="8:00 A.M to 12:00 P.M" value="Shift 1" />
@@ -585,157 +594,163 @@ const BookingScreen = ({ navigation }) => {
             <Text style={[styles.text, { marginTop: 20 }]}>
               Select Category
             </Text>
-          
+
             <Picker
               selectedValue={PickerSelectedVal}
               style={[styles.inputsingle]}
               onValueChange={(itemValue, itemIndex) =>
                 setPickerSelectedVal(itemValue)
-                        
+
               }
             >
               <Picker.Item label="Break-Bulk" value="Break-Bulk" />
               <Picker.Item label="Bulk" value="Bulk" />
             </Picker>
-            
-            
+
+
             <View style={{ width: "75%" }}>
               <Text style={styles.validation}>{PickerSelectedValerr}</Text>
             </View>
 
             <View>
-              {PickerSelectedVal=="Break-Bulk"?<View><Text style={[styles.text, { textDecorationLine: "underline" }]}>{}
+              {PickerSelectedVal == "Break-Bulk" ? <View><Text style={[styles.text, { textDecorationLine: "underline" }]}>{ }
         Consignment Details{" "}
-      </Text>
-      <Text
-        style={[styles.text, { marginTop: 20, fontWeight: "normal" }]}
-      >
-        1. Dimensions
-      </Text>
-
-      <FormInput
-        labelValue={dimension}
-        onChangeText={(text) => setdimension(text)}
-        placeholderText="Length (in metres)..."
-        autoCorrect={false}
-        keyboardType="number-pad"
-        maxLength={5}
-      />
-      <View>
-        <Text style={styles.validation}>{dimensionerr}</Text>
-      </View>
-
-      <FormInput
-        labelValue={dimension2}
-        onChangeText={(text) => setdimension2(text)}
-        placeholderText="Breadth (in metres)..."
-        autoCorrect={false}
-        keyboardType="number-pad"
-        maxLength={5}
-      />
-      <View>
-        <Text style={styles.validation}>{dimensionerr2}</Text>
-      </View>
-
-      <FormInput
-        labelValue={dimension3}
-        onChangeText={(text) => setdimension3(text)}
-        placeholderText="Height (in metres)..."
-        autoCorrect={false}
-        keyboardType="number-pad"
-        maxLength={5}
-      />
-      <View>
-        <Text style={styles.validation}>{dimensionerr3}</Text>
-      </View>
-
-      <Text
-        style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}
-      >
-        2. Weight
+              </Text>
+                <Text
+                  style={[styles.text, { marginTop: 20, fontWeight: "normal" }]}
+                >
+                  1. Dimensions
       </Text>
 
-      <FormInput
-        labelValue={weight}
-        onChangeText={(text) => setweight(text)}
-        placeholderText="Weight (in Kgs)..."
-        autoCorrect={false}
-        keyboardType="number-pad"
-        maxLength={4}
-      />
-      <View>
-        <Text style={styles.validation}>{weighterr}</Text>
-      </View>
+                <FormInput
+                  labelValue={dimension}
+                  onChangeText={(text) => setdimension(text)}
+                  placeholderText="Length (in metres)..."
+                  autoCorrect={false}
+                  keyboardType="number-pad"
+                  iconType="arrowsalt"
+                  maxLength={5}
+                />
+                <View>
+                  <Text style={styles.validation}>{dimensionerr}</Text>
+                </View>
 
-      <Text
-        style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}
-      >
-        3. Type
+                <FormInput
+                  labelValue={dimension2}
+                  onChangeText={(text) => setdimension2(text)}
+                  placeholderText="Breadth (in metres)..."
+                  autoCorrect={false}
+                  iconType="arrowsalt"
+                  keyboardType="number-pad"
+                  maxLength={5}
+                />
+                <View>
+                  <Text style={styles.validation}>{dimensionerr2}</Text>
+                </View>
+
+                <FormInput
+                  labelValue={dimension3}
+                  onChangeText={(text) => setdimension3(text)}
+                  placeholderText="Height (in metres)..."
+                  autoCorrect={false}
+                  iconType="arrowsalt"
+                  keyboardType="number-pad"
+                  maxLength={5}
+                />
+                <View>
+                  <Text style={styles.validation}>{dimensionerr3}</Text>
+                </View>
+
+                <Text
+                  style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}
+                >
+                  2. Weight
       </Text>
 
-      <FormInput
-        labelValue={type}
-        onChangeText={(text) => settype(text)}
-        placeholderText="Electronic etc.."
-        autoCorrect={false}
-      />
-      <View>
-        <Text style={styles.validation}>{typeerr}</Text>
-      </View>
+                <FormInput
+                  labelValue={weight}
+                  onChangeText={(text) => setweight(text)}
+                  placeholderText="Weight (in Kgs)..."
+                  autoCorrect={false}
+                  iconType="codepen-circle"
+                  keyboardType="number-pad"
+                  maxLength={4}
+                />
+                <View>
+                  <Text style={styles.validation}>{weighterr}</Text>
+                </View>
 
-      <Text
-        style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}
-      >
-        Order Value
+                <Text
+                  style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}
+                >
+                  3. Type
       </Text>
 
-      <FormInput
-        labelValue={order}
-        onChangeText={(text) => setorder(text)}
-        placeholderText="Qty..."
-        keyboardType="number-pad"
-        autoCorrect={false}
-      />
+                <FormInput
+                  labelValue={type}
+                  onChangeText={(text) => settype(text)}
+                  placeholderText="Electronic etc.."
+                  iconType="form"
+                  autoCorrect={false}
+                />
+                <View>
+                  <Text style={styles.validation}>{typeerr}</Text>
+                </View>
 
-      <View>
-        <Text style={styles.validation}>{ordererr}</Text>
-      </View>
-      <Text style={[styles.text, { marginTop: 20 }]}>Select Vehicle type</Text>
-            <Picker
-              selectedValue={vehicle}
-              style={[styles.inputsingle]}
-              onValueChange={(itemValue, itemIndex) =>
-                setvehicle(itemValue)
-                        
-              }
-            >
-              <Picker.Item label="Two-wheeler" value="two-wheeler" />
-              <Picker.Item label="Four-wheeler" value="four-wheeler" />
-              <Picker.Item label="Mini-van" value="mini-van" />
-              <Picker.Item label="Truck" value="truck" />
-            </Picker>
-            <View>
-              <Text style={styles.validation}>{vehicleerr}</Text>
+                <Text
+                  style={[styles.text, { marginTop: 10, fontWeight: "normal" }]}
+                >
+                  Order Value
+      </Text>
+
+                <FormInput
+                  labelValue={order}
+                  onChangeText={(text) => setorder(text)}
+                  placeholderText="Qty..."
+                  keyboardType="number-pad"
+                  iconType="tagso"
+                  autoCorrect={false}
+                />
+
+                <View>
+                  <Text style={styles.validation}>{ordererr}</Text>
+                </View>
+                <Text style={[styles.text, { marginTop: 20 }]}>Select Vehicle type</Text>
+                <Picker
+                  selectedValue={vehicle}
+                  style={[styles.inputsingle]}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setvehicle(itemValue)
+
+                  }
+                >
+                  <Picker.Item label="Two-wheeler" value="two-wheeler" />
+                  <Picker.Item label="Four-wheeler" value="four-wheeler" />
+                  <Picker.Item label="Mini-van" value="mini-van" />
+                  <Picker.Item label="Truck" value="truck" />
+                </Picker>
+                <View>
+                  <Text style={styles.validation}>{vehicleerr}</Text>
+                </View>
+              </View> : <View>
+                  <Text style={[styles.text, { marginTop: 20 }]}>Select Vehicle type</Text>
+                  <Picker
+                    selectedValue={vehicle}
+                    style={[styles.inputsingle]}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setvehicle(itemValue)
+                    }
+                  >
+                    <Picker.Item label="Two-wheeler" value="two-wheeler" />
+                    <Picker.Item label="Four-wheeler" value="four-wheeler" />
+                    <Picker.Item label="Mini-van" value="mini-van" />
+                    <Picker.Item label="Truck" value="truck" />
+                  </Picker>
+                  <View>
+                    <Text style={styles.validation}>{vehicleerr}</Text>
+                  </View>
+                </View>}
             </View>
-      </View>:<View>
-            <Text style={[styles.text, { marginTop: 20 }]}>Select Vehicle type</Text>
-            <Picker
-              selectedValue={vehicle}
-              style={[styles.inputsingle]}
-              onValueChange={(itemValue, itemIndex) =>
-                setvehicle(itemValue)       
-              }
-            >
-              <Picker.Item label="Two-wheeler" value="two-wheeler" />
-              <Picker.Item label="Four-wheeler" value="four-wheeler" />
-              <Picker.Item label="Mini-van" value="mini-van" />
-              <Picker.Item label="Truck" value="truck" />
-            </Picker>
-            <View>
-              <Text style={styles.validation}>{vehicleerr}</Text>
-            </View>
-          </View>}
-      </View>
 
             <View
               style={{ flexDirection: "column", marginTop: 10, padding: 10 }}
@@ -750,21 +765,21 @@ const BookingScreen = ({ navigation }) => {
               >
                 <CheckBox value={check} onValueChange={setcheck} />
                 <Text
-                  style={[styles.text, { fontSize: 17, fontWeight: "bold", marginTop:5}]} 
+                  style={[styles.text, { fontSize: 17, fontWeight: "bold", marginTop: 5 }]}
                 >
-                  {""}Check here to indicate that you have read and agreed to the terms of the 
-                  
+                  {""}Check here to indicate that you have read and agreed to the terms of the
+
                 </Text>
-                </View>
-                <Text
-                  style={[styles.text, { fontSize: 17, fontWeight: "bold", marginTop:0, color: "crimson", marginLeft:20}]} onPress={insurance}
-                >
-                  Insurance Agreement
+              </View>
+              <Text
+                style={[styles.text, { fontSize: 17, fontWeight: "bold", marginTop: 0, color: "crimson", marginLeft: 20 }]} onPress={insurance}
+              >
+                Insurance Agreement
                 </Text>
-                <View>
-                  <Text style={styles.insurance}>{insurancedetail}</Text>
-                </View>
-              
+              <View>
+                <Text style={styles.insurance}>{insurancedetail}</Text>
+              </View>
+
             </View>
 
             <FormButton buttonTitle="Confirm Booking" onPress={validate} />
@@ -843,7 +858,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     marginBottom: 10,
-    marginTop:-5
+    marginTop: -5
   },
   insurance: {
     color: "black",
@@ -851,7 +866,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     marginBottom: -10,
-    marginTop:1,
+    marginTop: 1,
     marginLeft: 18
   },
   buttonStyle: {
@@ -868,5 +883,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     padding: 5
-},
+  },
 });
