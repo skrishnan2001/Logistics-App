@@ -6,6 +6,7 @@ import OnboardingScreen from "../screens/OnboardingScreen";
 import SignupScreen from "../screens/SignupScreen";
 import AsyncStorage from "@react-native-community/async-storage";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import PhoneLogin from "../screens/PhoneLogin";
 
 const Stack = createStackNavigator();
 
@@ -61,6 +62,11 @@ const AuthStack = () => {
         })}
       />
       <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen
+        name="Phone-Login"
+        component={PhoneLogin}
+        options={{ header: () => null }}
+      />
     </Stack.Navigator>
   );
 };
