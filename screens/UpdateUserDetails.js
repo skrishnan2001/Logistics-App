@@ -69,6 +69,7 @@ export default function UpdateUserDetails({ navigation }) {
             labelValue={name}
             onChangeText={(text) => setName(text)}
             placeholderText="Name..."
+            iconType="user"
             autoCorrect={false}
           />
 
@@ -77,6 +78,7 @@ export default function UpdateUserDetails({ navigation }) {
             onChangeText={(text) => setPhone(text)}
             placeholderText="Mobile number"
             autoCorrect={false}
+            iconType="mobile1"
             keyboardType="number-pad"
             maxLength={10}
           />
@@ -84,6 +86,7 @@ export default function UpdateUserDetails({ navigation }) {
             labelValue={username}
             onChangeText={(text) => setusername(text)}
             placeholderText="User Name..."
+            iconType="user"
             autoCorrect={false}
           />
           <FormButton
