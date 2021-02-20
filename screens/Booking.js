@@ -405,15 +405,16 @@ const BookingScreen = ({ navigation }) => {
             <View
               style={{
                 flexDirection: "row",
-                marginTop: 1,
-                borderColor: "white",
+                marginVertical: 5,
+                marginLeft: -15,
+                //borderColor: "white",
               }}
             >
               <CheckBox value={Priority} onValueChange={setPriority} />
               <Text
-                style={[styles.text, { fontSize: 20, fontWeight: "normal" }]}
+                style={[styles.text, { fontSize: 20, fontWeight: "bold" }]}
               >
-                {" "}
+                {""}
                 Priority Booking
               </Text>
             </View>
@@ -567,7 +568,7 @@ const BookingScreen = ({ navigation }) => {
                                 setfromdate(date);
                             }}
                         />
-            <Text style={[styles.text, { marginTop: 20 }]}>Select Time for Pickup</Text>
+            <Text style={[styles.text, { marginTop: 30 }]}>Select Pickup Time</Text>
             <Picker
               selectedValue={shift}
               style={[styles.inputsingle]}
@@ -742,7 +743,7 @@ const BookingScreen = ({ navigation }) => {
               <View
                 style={{
                   flexDirection: "row",
-                  marginTop: -10,
+                  marginTop: -5,
                   marginLeft: -10,
                   borderColor: "white",
                 }}
@@ -751,7 +752,7 @@ const BookingScreen = ({ navigation }) => {
                 <Text
                   style={[styles.text, { fontSize: 17, fontWeight: "bold", marginTop:5}]} 
                 >
-                  {" "}Check here to indicate that you have read and agreed to the terms of the 
+                  {""}Check here to indicate that you have read and agreed to the terms of the 
                   
                 </Text>
                 </View>

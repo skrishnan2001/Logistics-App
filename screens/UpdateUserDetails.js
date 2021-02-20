@@ -17,6 +17,7 @@ export default function UpdateUserDetails({ navigation }) {
   const { user } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [username, setusername] = useState("");
 
   const addItems = () => {
     var ref = db.ref(`/users/ProfileDetails/`);
@@ -30,11 +31,13 @@ export default function UpdateUserDetails({ navigation }) {
         dbref.child(`${key}`).set({
           Name: name,
           Phone_number: phone,
+          User_name: username,
         });
       } else {
         db.ref(`/users/ProfileDetails/${user.uid}`).push({
           Name: name,
           Phone_number: phone,
+          User_name: username,
         });
       }
     });
@@ -77,7 +80,12 @@ export default function UpdateUserDetails({ navigation }) {
             keyboardType="number-pad"
             maxLength={10}
           />
-
+          <FormInput
+            labelValue={username}
+            onChangeText={(text) => setusername(text)}
+            placeholderText="User Name..."
+            autoCorrect={false}
+          />
           <FormButton
             buttonTitle="Update"
             style={styles.buttonContainer}

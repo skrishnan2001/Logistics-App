@@ -53,10 +53,16 @@ const LoginScreen = ({ navigation }) => {
           buttonTitle="Sign In"
           onPress={() => login(email, password)}
         />
-
-        <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
-          <Text style={styles.navButtonText}>Forgot Password?</Text>
+        <TouchableOpacity
+          style={styles.forgotButton}
+          onPress={() => navigation.navigate("Phone-Login")}
+        >
+          <Text style={styles.navButtonText}>Sign in with OTP</Text>
         </TouchableOpacity>
+
+        {/* <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
+          <Text style={styles.navButtonText}>Forgot Password?</Text>
+        </TouchableOpacity> */}
 
         <SocialButton
           buttonTitle="Sign In with Google"
@@ -74,6 +80,7 @@ const LoginScreen = ({ navigation }) => {
             Don't have an acount? Create here
           </Text>
         </TouchableOpacity>
+        
       </View>
     </TouchableWithoutFeedback>
   );
@@ -103,6 +110,7 @@ const styles = StyleSheet.create({
     width: 150,
     marginTop: 40,
     resizeMode: "cover",
+    borderRadius:50
   },
   text: {
     // fontFamily: 'Kufam-SemiBoldItalic',
@@ -114,7 +122,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   forgotButton: {
-    marginVertical: 35,
+    marginVertical: 20,
   },
   navButtonText: {
     fontSize: 18,
