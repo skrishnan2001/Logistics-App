@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     width: 150,
     marginTop: 40,
     resizeMode: "cover",
-    borderRadius:50
+    //borderRadius:5
   },
   text: {
     // fontFamily: 'Kufam-SemiBoldItalic',

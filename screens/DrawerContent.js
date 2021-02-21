@@ -44,7 +44,7 @@ export function DrawerContent(props) {
             <View style={{ flexDirection: "row", marginTop: 15 }}>
               <Avatar.Image
                 source={{
-                  uri: image,
+                  uri: `data:image/jpeg;base64,${image}`,
                 }}
                 size={50}
               />
@@ -158,12 +158,12 @@ const styles = StyleSheet.create({
     //borderColor: '#f4f4f4',
     //borderWidth: 0.3,
     backgroundColor: "#d1d1d1",
-    borderRadius:15,
-    marginHorizontal:10,
-    justifyContent:'center',
-    textAlign:'center',
-    shadowColor: '#999',
-    shadowOffset: {width: 0, height: 1},
+    borderRadius: 15,
+    marginHorizontal: 10,
+    justifyContent: "center",
+    textAlign: "center",
+    shadowColor: "#999",
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 3,

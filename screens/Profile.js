@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/FontAwesome";
 import {
   StyleSheet,
   Text,
@@ -49,12 +49,12 @@ const ProfileScreen = ({ navigation }) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImage(result.base64);
+      console.log("-----");
     }
     var key;
     var ref = db.ref(`/users/ProfileDetails/${user.uid}`);
@@ -63,7 +63,7 @@ const ProfileScreen = ({ navigation }) => {
         key = snapshot.key;
       });
       ref.child(`${key}`).update({
-        Img_uri: result.uri,
+        Img_uri: result.base64,
       });
     });
   };
@@ -77,18 +77,21 @@ const ProfileScreen = ({ navigation }) => {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.header}>
-        <View style={[styles.bodyContent,{marginBottom:0}]}>
-        <TouchableOpacity
-          style={styles.buttonContainer1}
-          onPress={() => {
-            pickImage();
-          }}
-        >
-          <Icon size={24} color="black" name="camera" />
-        </TouchableOpacity> 
+          <View style={[styles.bodyContent, { marginBottom: 0 }]}>
+            <TouchableOpacity
+              style={styles.buttonContainer1}
+              onPress={() => {
+                pickImage();
+              }}
+            >
+              <Icon size={24} color="black" name="camera" />
+            </TouchableOpacity>
+          </View>
         </View>
-        </View>
-        <Image style={styles.avatar} source={{ uri: image }} />
+        <Image
+          style={styles.avatar}
+          source={{ uri: `data:image/jpeg;base64,${image}` }}
+        />
         <View style={styles.body}>
           <View style={styles.bodyContent}>
             <Text style={styles.name}>{user.uid}</Text>
@@ -96,13 +99,17 @@ const ProfileScreen = ({ navigation }) => {
               style={styles.buttonContainer}
               onPress={() => navigation.navigate("UpdateUserDetails")}
             >
-              <Text style={{color:"white",fontWeight:"bold"}}>Update / Set Details</Text>
+              <Text style={{ color: "white", fontWeight: "bold" }}>
+                Update / Set Details
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => navigation.navigate("History")}
             >
-              <Text style={{color:"white",fontWeight:"bold"}}>Booking History</Text>
+              <Text style={{ color: "white", fontWeight: "bold" }}>
+                Booking History
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonContainer}
@@ -110,13 +117,17 @@ const ProfileScreen = ({ navigation }) => {
                 navigation.navigate("Reset-Email");
               }}
             >
-              <Text style={{color:"white",fontWeight:"bold"}}>Reset Email</Text>
+              <Text style={{ color: "white", fontWeight: "bold" }}>
+                Reset Email
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => navigation.navigate("Reset-Password")}
             >
-              <Text style={{color:"white",fontWeight:"bold"}}>Reset Password</Text>
+              <Text style={{ color: "white", fontWeight: "bold" }}>
+                Reset Password
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

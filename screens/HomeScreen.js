@@ -1,10 +1,8 @@
 import React, { useContext, Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import FormButton from "../components/FormButton";
-import { AuthContext } from "../navigation/AuthProvider";
-import * as firebase from "firebase";
 import ImageSliderz from "react-native-image-slideshow";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -51,18 +49,28 @@ export default class HomeScreen extends Component {
           height={250}
           onPositionChanged={position => this.setState({ position })} />
 
-        <TouchableOpacity style={[styles.card,{marginTop:60}]} onPress={()=>this.props.navigation.navigate("History") }>
+        <TouchableOpacity style={[styles.card, { marginTop: 60 }]} onPress={() => this.props.navigation.navigate("History")}>
           <View style={styles.detailsContainer}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', color: "#051d5f",textAlign:'center' }}>My Orders</Text>
+            <View style={styles.iconStyle}>
+              <AntDesign name="tags" size={25} color="#666" />
+            </View>
+            <View style={styles.detailsContainer1}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', color: "#051d5f", textAlign: 'center' }}>My Orders</Text>
+            </View>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.card} onPress={()=>this.props.navigation.navigate("Booking")} >
-        <View style={styles.detailsContainer}>
-                <Text style={{fontSize:18,fontWeight:'bold',textAlign:'center',color: "#051d5f"}}>Book Now</Text>
+        <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate("Booking")} >
+          <View style={styles.detailsContainer}>
+            <View style={styles.iconStyle}>
+              <AntDesign name="creditcard" size={25} color="#666" />
             </View>
+            <View style={styles.detailsContainer1}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: "#051d5f" }}>Book Now</Text>
+            </View>
+          </View>
         </TouchableOpacity>
-        
+
       </View>
     );
   }
@@ -81,12 +89,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#d1d1d1',
     marginVertical: 10,
     overflow: "hidden",
-    marginHorizontal:10,
-    height:70,
-    justifyContent:'center',
-    textAlign:'center',
+    marginHorizontal: 10,
+    height: 70,
+    justifyContent: 'center',
+    textAlign: 'center',
     shadowColor: '#999',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
@@ -94,10 +102,29 @@ const styles = StyleSheet.create({
   detailsContainer: {
     marginTop: 5,
     padding: 10,
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+  },
+  detailsContainer1: {
+    //marginTop: 5,
+    padding: 10,
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
   },
   text: {
-    fontSize: 20,
+    fontSize: 30,
     color: "#333333",
-    textAlign:'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  iconStyle: {
+    padding: 10,
+    height: '100%',
+    alignItems: 'center',
+    borderRightColor: '#ccc',
+    borderRightWidth: 1,
+    width: 50,
   },
 });

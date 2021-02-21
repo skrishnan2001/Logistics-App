@@ -18,6 +18,7 @@ import * as Sharing from "expo-sharing";
 
 const InvoicePDF = ({ route, navigation }) => {
   const [filePath, setFilePath] = useState("");
+  const [message, setMessage] = useState("");
   const { pdf_det } = route.params;
   console.log("--", pdf_det);
   const products = [
@@ -169,7 +170,7 @@ const InvoicePDF = ({ route, navigation }) => {
         if (permission.granted) {
           await MediaLibrary.createAssetAsync(uri);
           setFilePath(uri);
-
+          setMessage("The invoice has been saved in your mobile's file manager");
           Alert.alert(
             "PDF saved",
             "File saved in " + uri,
@@ -215,7 +216,7 @@ const InvoicePDF = ({ route, navigation }) => {
             <Text style={styles.textStyle}>Click Here</Text>
           </View>
         </TouchableOpacity>
-        <Text style={styles.textStyle}>{filePath}</Text>
+        <Text style={styles.textStyle}>{message}</Text>
       </View>
     </SafeAreaView>
   );

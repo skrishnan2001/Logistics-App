@@ -48,9 +48,19 @@ const History = ({ navigation }) => {
   const Check = (user_id, order_id, item) => {
     setuserid(user_id);
     setorderid(order_id);
-    if (status == "Delivered" || status == "Not Yet Scheduled")
-      navigation.navigate("Invoice", { user_id: user_id, order_id: order_id });
-    else if (status == "Undelivered") {
+    if (status == "Delivered")
+      navigation.navigate("Invoice", {
+        user_id: user_id,
+        order_id: order_id,
+        isDelivered: true,
+      });
+    else if (status == "Not Yet Scheduled") {
+      navigation.navigate("Invoice", {
+        user_id: user_id,
+        order_id: order_id,
+        isDelivered: false,
+      });
+    } else if (status == "Undelivered") {
       navigation.navigate("Invoice-Track", {
         user_id: user_id,
         order_id: order_id,

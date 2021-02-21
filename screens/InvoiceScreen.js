@@ -45,7 +45,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     insurance,
     priority,
     shorttime;
-  const { user_id, order_id } = route.params;
+  const { user_id, order_id, isDelivered } = route.params;
   var bookingRef = firebase
     .database()
     .ref(`/users/booking/${user_id}/${order_id}`);
@@ -184,6 +184,14 @@ const InvoiceScreen = ({ route, navigation }) => {
             navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
           }}
         />
+        {isDelivered ? (
+          <FormButton
+            buttonTitle="Feedback"
+            onPress={() => {
+              navigation.navigate("Feedback", { order_id: order_id });
+            }}
+          />
+        ) : null}
       </View>
     </ScrollView>
   );

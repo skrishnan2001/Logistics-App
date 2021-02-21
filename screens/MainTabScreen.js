@@ -19,8 +19,8 @@ import InvoiceTrack from "./InvoiceTrack";
 import TrackStaff from "./TrackStaff";
 import InvoicePDF from "./InvoicePDF";
 import NotifyScreen from "./NotifyScreen";
-
-import { DrawerContent } from './DrawerContent';
+import Feedback from "./Feedback";
+import { DrawerContent } from "./DrawerContent";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -122,7 +122,6 @@ const HomeStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-
 
       <HomeStack.Screen
         name="History"
@@ -254,9 +253,6 @@ const HomeStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-
-
-
     </HomeStack.Navigator>
   );
 };
@@ -587,6 +583,32 @@ const ProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
+      <ProfileStack.Screen
+        name="Feedback"
+        component={Feedback}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
     </ProfileStack.Navigator>
   );
 };
@@ -689,7 +711,7 @@ const Drawer = createDrawerNavigator();
 const DrawerNav = () => {
   return (
     <Drawer.Navigator
-      drawerContent={props => <DrawerContent {...props} />}
+      drawerContent={(props) => <DrawerContent {...props} />}
       initialRouteName="Home"
       drawerStyle={{
         backgroundColor: "#88c7eb",
