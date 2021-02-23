@@ -57,8 +57,15 @@ const SignupScreen = ({ navigation }) => {
 
         <FormButton
           buttonTitle="Sign Up"
-          onPress={()=>register(email, password)}
+          onPress={() => register(email, password)}
         />
+
+        <TouchableOpacity
+          style={[styles.forgotButton, { marginTop: 20 }]}
+          onPress={() => navigation.navigate("Phone-Login")}
+        >
+          <Text style={styles.navButtonText}>Sign Up with mobile</Text>
+        </TouchableOpacity>
 
         <View style={styles.textPrivate}>
           <Text style={styles.color_textPrivate}>
@@ -80,7 +87,7 @@ const SignupScreen = ({ navigation }) => {
           btnType="google"
           color="#de4d41"
           backgroundColor="#f5e7ea"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
         <TouchableOpacity

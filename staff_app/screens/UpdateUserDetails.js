@@ -78,6 +78,7 @@ export default function UpdateUserDetails({ navigation }) {
               labelValue={name}
               onChangeText={(text) => setName(text)}
               placeholderText="Name..."
+              iconType="user"
               autoCorrect={false}
             />
 
@@ -85,6 +86,7 @@ export default function UpdateUserDetails({ navigation }) {
               labelValue={phone}
               onChangeText={(text) => setPhone(text)}
               placeholderText="Mobile number..."
+              iconType="mobile1"
               autoCorrect={false}
               keyboardType="number-pad"
               maxLength={10}
@@ -94,6 +96,7 @@ export default function UpdateUserDetails({ navigation }) {
               labelValue={vehicle}
               onChangeText={(text) => setVehicle(text)}
               placeholderText="Vehicle Type..."
+              iconType="car"
               autoCorrect={false}
             />
 
@@ -101,6 +104,7 @@ export default function UpdateUserDetails({ navigation }) {
               labelValue={vehicleNo}
               onChangeText={(text) => setVehicleNo(text)}
               placeholderText="Vehicle number..."
+              iconType="car"
               autoCorrect={false}
             />
 
@@ -110,6 +114,7 @@ export default function UpdateUserDetails({ navigation }) {
               placeholderText="Aadhaar number..."
               autoCorrect={false}
               keyboardType="number-pad"
+              iconType="idcard"
               maxLength={12}
             />
 

@@ -1,10 +1,61 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { AuthContext } from "../navigation/AuthProvider";
+import * as ImagePicker from "expo-image-picker";
+import { db } from "../firebaseConfig";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const ProfileScreen = ({ navigation }) => {
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const [image, setImage] = useState(
+    "https://bootdey.com/img/Content/avatar/avatar6.png"
+  );
+
+  const fetch_img = () => {
+    var ref = db.ref(`/staff/ProfileDetails/${user.uid}`);
+    ref.once("value").then(function (snapshot) {
+      const data = snapshot.val();
+      setImage(data["Img_uri"])
+      });
+  };
+  fetch_img();
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.base64);
+      console.log("-----");
+    }
+    var key;
+    var ref = db.ref(`/staff/ProfileDetails/${user.uid}`);
+    ref.once("value").then(function (snapshot) {
+      // ref.limitToLast(1).on("child_added", function (snapshot) {
+      //   key = snapshot.key;
+      // });
+      ref.update({
+        Img_uri: result.base64,
+      });
+    });
+  };
 
   const handleSubmit2 = () => {
     setVisible2(false);
@@ -14,10 +65,21 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.header}></View>
+        <View style={styles.header}>
+        <View style={[styles.bodyContent, { marginBottom: 0 }]}>
+            <TouchableOpacity
+              style={styles.buttonContainer1}
+              onPress={() => {
+                pickImage();
+              }}
+            >
+              <Icon size={24} color="black" name="camera" />
+            </TouchableOpacity>
+          </View>
+        </View>
         <Image
           style={styles.avatar}
-          source={{ uri: "https://bootdey.com/img/Content/avatar/avatar6.png" }}
+          source={{ uri: `data:image/jpeg;base64,${image}` }}
         />
         <View style={styles.body}>
           <View style={styles.bodyContent}>
@@ -60,7 +122,7 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   header: {
     backgroundColor: "#00BFFF",
-    height: 200,
+    height: 180,
   },
   avatar: {
     width: 130,
@@ -71,7 +133,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: "center",
     position: "absolute",
-    marginTop: 130,
+    marginTop: 120,
   },
   name: {
     fontSize: 22,
@@ -106,5 +168,17 @@ const styles = StyleSheet.create({
   textStyle:{
     fontWeight:'bold',
     color: "white",
-}
+},
+buttonContainer1: {
+  marginTop: 37,
+  height: 50,
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  //marginBottom: 20,
+  width: 50,
+  borderRadius: 100,
+  backgroundColor: "white",
+},
+
 });

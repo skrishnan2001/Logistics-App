@@ -19,6 +19,7 @@ import TrackMe from "./TrackMe";
 import InvoicePDF from "./InvoicePDF";
 import Appraisal from "./Appraisal";
 import Notifications from "./Notifications";
+import { DrawerContent } from "./DrawerContent";
 
 const HomeStack = createStackNavigator();
 const TrackMeStack = createStackNavigator();
@@ -41,12 +42,148 @@ const HomeStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
           headerTintColor: "#35126e",
         }}
       />
+      <HomeStack.Screen
+        name="MyOrders"
+        component={MyOrders}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+      <HomeStack.Screen
+        name="Invoice"
+        component={InvoiceScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <HomeStack.Screen
+        name="Invoice-Delivered"
+        component={InvoiceDelivered}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+
+
+      <HomeStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+
+      {/* <HomeStack.Screen
+        name="Notifications"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      /> */}
     </HomeStack.Navigator>
   );
 };
@@ -64,6 +201,14 @@ const TrackMeStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -116,6 +261,14 @@ const RequestsStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -134,6 +287,14 @@ const RequestsStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -150,6 +311,14 @@ const RequestsStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -177,13 +346,20 @@ const ProfileStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
           headerTintColor: "#35126e",
         }}
       />
-
       <ProfileStack.Screen
         name="MyOrders"
         component={MyOrders}
@@ -196,23 +372,12 @@ const ProfileStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-
-      <ProfileStack.Screen
-        name="UpdateUserDetails"
-        component={UpdateUserDetails}
-        options={{
-          headerLeft: () => (
+          headerRight: () => (
             <Icon.Button
-              name="ios-menu"
+              name="ios-notifications"
               size={25}
               backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
+              onPress={() => navigation.navigate("Notifications")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -221,7 +386,6 @@ const ProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-
       <ProfileStack.Screen
         name="Invoice"
         component={InvoiceScreen}
@@ -232,6 +396,14 @@ const ProfileStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -252,40 +424,12 @@ const ProfileStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-      <ProfileStack.Screen
-        name="Reset-Password"
-        component={ResetPassword}
-        options={{
-          headerLeft: () => (
+          headerRight: () => (
             <Icon.Button
-              name="ios-menu"
+              name="ios-notifications"
               size={25}
               backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
-            ></Icon.Button>
-          ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-      <ProfileStack.Screen
-        name="Reset-Email"
-        component={ResetEmail}
-        options={{
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
+              onPress={() => navigation.navigate("Notifications")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -306,12 +450,99 @@ const ProfileStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
           headerTintColor: "#35126e",
         }}
       />
+      <ProfileStack.Screen
+        name="UpdateUserDetails"
+        component={UpdateUserDetails}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Reset-Password"
+        component={ResetPassword}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Reset-Email"
+        component={ResetEmail}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      
     </ProfileStack.Navigator>
   );
 };
@@ -393,6 +624,7 @@ const Drawer = createDrawerNavigator();
 const DrawerNav = () => {
   return (
     <Drawer.Navigator
+      drawerContent={(props) => <DrawerContent {...props} />}
       initialRouteName="Home"
       drawerStyle={{
         backgroundColor: "#88c7eb",

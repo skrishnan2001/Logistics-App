@@ -49,6 +49,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     order_val,
     vehicle_type,
     insurance,
+    dimension,
     priority,
     shorttime;
   const { user_id, order_id } = route.params;
@@ -78,6 +79,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     length = newBooking.length;
     breadth = newBooking.breadth;
     height = newBooking.height;
+    dimension=length+" * "+breadth+" * "+height;
     weight = newBooking.weight;
     typee = newBooking.type;
     order_val = newBooking.order;
@@ -98,6 +100,12 @@ const InvoiceScreen = ({ route, navigation }) => {
 
     if (newBooking.Priority_Booking == true) priority = "Yes";
     else priority = "No";
+    if (category == "Bulk") {
+      dimension = "Not Applicable";
+      weight = "Not Applicable";
+      typee = "Not Applicable";
+      order_val = "Not Applicable";
+    }
   });
   console.log("---" + phone);
   const [curr, next] = useState({
@@ -125,7 +133,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${delivery2}`],
       [`${phone}`],
       [`${category}`],
-      [`${length}*${breadth}*${height}`],
+      [`${dimension}`],
       [`${weight}`],
       [`${typee}`],
       [`${order_val}`],

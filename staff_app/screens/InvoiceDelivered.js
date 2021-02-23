@@ -34,6 +34,7 @@ const InvoiceDelivered = ({ route, navigation }) => {
     length,
     breadth,
     height,
+    dimension,
     weight,
     type,
     order_val,
@@ -67,6 +68,7 @@ const InvoiceDelivered = ({ route, navigation }) => {
     length = newBooking.length;
     breadth = newBooking.breadth;
     height = newBooking.height;
+    dimension = length+" * "+breadth+" * "+height;
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
@@ -88,6 +90,13 @@ const InvoiceDelivered = ({ route, navigation }) => {
 
     if (newBooking.Priority_Booking == true) priority = "Yes";
     else priority = "No";
+    if(category == "Bulk")
+    {
+      dimension = "Not Applicable";
+      weight = "Not Applicable";
+      type = "Not Applicable";
+      order_val = "Not Applicable";
+    }
   });
   const [curr, next] = useState({
     tableHead: ["", "Details"],
@@ -113,7 +122,7 @@ const InvoiceDelivered = ({ route, navigation }) => {
       [`${delivery2}`],
       [`${phone}`],
       [`${category}`],
-      [`${length}${breadth}${height}`],
+      [`${dimension}`],
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],
