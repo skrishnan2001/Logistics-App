@@ -25,6 +25,9 @@ import StaffProfile from "./StaffProfiles";
 import StaffProfileTable from "./StaffProfileTable";
 import InvoicePDF from "./InvoicePDF";
 import Notifications from "./notifications";
+import LeaveRequests from "./LeaveRequests";
+
+import {DrawerContent} from "./DrawerContent";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -36,7 +39,8 @@ const UnverifiedStack = createStackNavigator();
 const VerifiedStack = createStackNavigator();
 const AllStaffsStack = createStackNavigator();
 const StaffProfileStack = createStackNavigator();
-const NotificationStack = createStackNavigator();
+//const NotificationStack = createStackNavigator();
+const LeaveReqStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
   return (
@@ -44,6 +48,32 @@ const HomeStackScreen = ({ navigation }) => {
       <HomeStack.Screen
         name="Home"
         component={HomeScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <HomeStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -79,6 +109,32 @@ const AllStaffsStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <AllStaffsStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -97,6 +153,14 @@ const AllStaffsStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -125,6 +189,32 @@ const StaffProfileStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <StaffProfileStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -142,6 +232,14 @@ const StaffProfileStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -169,6 +267,32 @@ const BookingStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <BookingStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -185,6 +309,14 @@ const BookingStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -205,6 +337,14 @@ const BookingStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -221,6 +361,32 @@ const OrderStackScreen = ({ navigation }) => {
       <OrderStack.Screen
         name="Orders"
         component={Orders}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <OrderStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -266,6 +432,14 @@ const OrderStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -282,6 +456,14 @@ const OrderStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -309,6 +491,32 @@ const UnverifiedStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <UnverifiedStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -327,6 +535,14 @@ const UnverifiedStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -343,6 +559,14 @@ const UnverifiedStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -370,6 +594,32 @@ const VerifiedStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <VerifiedStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -388,6 +638,14 @@ const VerifiedStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -404,6 +662,14 @@ const VerifiedStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -431,6 +697,32 @@ const SortStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <SortStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -447,6 +739,14 @@ const SortStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -467,6 +767,14 @@ const SortStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -483,6 +791,14 @@ const SortStackScreen = ({ navigation }) => {
               size={25}
               backgroundColor="#88c7eb"
               onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
             ></Icon.Button>
           ),
           headerStyle: {
@@ -510,6 +826,32 @@ const ScheduledOrdersStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <ScheduledOrdersStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -528,6 +870,14 @@ const ScheduledOrdersStackScreen = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             ></Icon.Button>
           ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
           headerStyle: {
             backgroundColor: "#88c7eb",
           },
@@ -538,11 +888,70 @@ const ScheduledOrdersStackScreen = ({ navigation }) => {
   );
 };
 
-const NotificationsStackScreen = ({ navigation }) => {
+/*const NotificationsStackScreen = ({ navigation }) => {
   return (
     <NotificationStack.Navigator>
       <NotificationStack.Screen
         name="Notifications"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </NotificationStack.Navigator>
+  );
+};*/
+
+const LeaveStackScreen = ({ navigation }) => {
+  return (
+    <LeaveReqStack.Navigator>
+      <LeaveReqStack.Screen
+        name="LeaveReq"
+        component={LeaveRequests}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <LeaveReqStack.Screen
+        name="NotificationScreen"
         component={Notifications}
         options={{
           headerLeft: () => (
@@ -559,7 +968,7 @@ const NotificationsStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-    </NotificationStack.Navigator>
+    </LeaveReqStack.Navigator>
   );
 };
 
@@ -692,6 +1101,7 @@ const Drawer = createDrawerNavigator();
 const DrawerNav = () => {
   return (
     <Drawer.Navigator
+      drawerContent={(props) => <DrawerContent {...props} />}
       initialRouteName="Home"
       drawerStyle={{
         backgroundColor: "#88c7eb",
@@ -703,7 +1113,7 @@ const DrawerNav = () => {
       }}
     >
       <Drawer.Screen name="Home" component={bottomTabNav} />
-      <Drawer.Screen name="Notifications" component ={NotificationsStackScreen}/>
+      <Drawer.Screen name="LeaveReq" component={LeaveStackScreen} />
       <Drawer.Screen name="Booking" component={BookingStackScreen} />
       <Drawer.Screen name="Orders" component={OrderStackScreen} />
       <Drawer.Screen name="Sort" component={SortStackScreen} />
