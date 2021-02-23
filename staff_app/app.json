@@ -4,7 +4,7 @@
     "slug": "staff_app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/delivery_truck.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -20,11 +20,11 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.infotix.logistics",
+      "package": "com.Infotix.LogisticsStaff",
       "versionCode": 1,
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyAJTcaTu_zV7vcVx2sp7bDNorZ2ybGR8N8"
+          "apiKey": "AIzaSyAl15M3EVjjYyJgswxGfbuf1po1CAZ9xX4"
         }
       }
     },
