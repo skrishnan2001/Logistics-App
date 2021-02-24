@@ -31,6 +31,7 @@ const LeaveRequests = () => {
             console.log(keys[index]); //the key under admin/leaves
             var obj = {};
             obj["key"] = keys[index];
+			obj["id"] = new Date().getTime().toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString(),
             obj = { ...obj, ...temp[key] };
             // x.push(temp[key]);
             x.push(obj);
@@ -64,7 +65,7 @@ const LeaveRequests = () => {
           renderItem={renderRow}
           refreshing={isLoading}
           onRefresh={getData}
-          keyExtractor={(item) => item.period}
+          keyExtractor={(item) => item.id}
         />
       </View>
     );
