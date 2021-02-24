@@ -38,9 +38,15 @@ const getData = () => {
                 var x = [];
                 for (var index = 0; index < keys.length; index++) {
                   var key = keys[index];
-
-                  x.push(temp[key]);
+				  var obj = {};
+				  obj["id"] =  new Date().getTime().toString() +
+          Math.floor(
+            Math.random() * Math.floor(new Date().getTime())
+          ).toString(),
+                  //x.push(temp[key]);
                   // x[index]['propID'] = key;
+				  obj = {...obj,...temp[key]};
+				  x.push(obj);
                   console.log(x[index]);
                 }
 
@@ -73,7 +79,7 @@ var count = 0;
           renderItem={renderRow}
           refreshing={isLoading}
           onRefresh={getData}
-          keyExtractor = {(item)=> item.body}
+          keyExtractor = {(item)=> item.id}
         />
       </View>
     )
