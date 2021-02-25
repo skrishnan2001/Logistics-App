@@ -17,51 +17,45 @@ import {
   Col,
 } from "react-native-table-component";
 import * as firebase from "firebase";
-import { db } from "../firebaseConfig";
-import { windowHeight, windowWidth } from "../utils/Dimensions";
 
-const StaffProfileTable = ({ route, navigation }) => {
+const CustomerProfileTable = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
-  var path = "";
-  var phone,
-    StaffName,
-    vehicleNum,
-    vehicle_type,
-    AadharNo;
-  const { user_id  } = route.params;
-  var bookingRef = firebase
-    .database()
-    .ref(`/staff/ProfileDetails/${user_id}`);
-    bookingRef.on("value", function (data) {
-    var newBooking = data.val();
-    StaffName = newBooking.Name;
-    phone = newBooking.Phone_number;
-    vehicleNum = newBooking.VehicleNum
-    vehicle_type = newBooking.Vehicle_Type
-    AadharNo=newBooking.aadharNo
-  });
+//   var path = "";
+//   var phone,
+//     CustName,
+//     vehicleNum,
+//     vehicle_type,
+//     AadharNo;
+  const { user_id,custName,phoneNo,userName } = route.params;
+//   var bookingRef = firebase
+//     .database()
+//     .ref(`/users/ProfileDetails/${user_id}`);
+//     bookingRef.on("value", function (data) {
+//     var newBooking = data.val();
+//     CustName = newBooking.Name;
+//     phone = newBooking.Phone_number;
+//     vehicleNum = newBooking.VehicleNum
+//     vehicle_type = newBooking.Vehicle_Type
+//     AadharNo=newBooking.aadharNo
+//   });
   const [curr, next] = useState({
     tableHead: ["", "Details"],
     tableTitle: [
       "Name",
       "Phone No.",
-      "Vehicle Number",
-      "Vehicle Type",
-      "Aadhaar Number"
+      "User Name",
     ],
     tableData: [
-      [`${StaffName}`],
-      [`${phone}`],
-      [`${vehicleNum}`],
-      [`${vehicle_type}`],
-      [`${AadharNo}`]
+      [`${custName}`],
+      [`${phoneNo}`],
+      [`${userName}`],
     ],
   });
 
   const state = curr;
   return (
       <View style={styles.container}>
-        <Text style={styles.top}>Staff Profile</Text>
+        <Text style={styles.top}>Customer Profile</Text>
         <Table borderStyle={{ borderWidth: 2 }}>
           <Row
             data={state.tableHead}
@@ -89,14 +83,14 @@ const StaffProfileTable = ({ route, navigation }) => {
           onPress={() => navigation.goBack()}
         /> */}
         <FormButton
-          buttonTitle={"Track Staff"}
-          onPress={()=> navigation.navigate("TrackStaff", { user: user_id })}
+          buttonTitle={"Back"}
+          onPress={()=> navigation.goBack()}
         />
       </View>
   );
 };
 
-export default StaffProfileTable ;
+export default CustomerProfileTable ;
 
 const styles = StyleSheet.create({
   container: {

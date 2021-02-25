@@ -4,7 +4,6 @@ import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
 import Firebase from '../firebaseConfig';
 import StaffCard from '../components/StaffCard';
 import FormButton from '../components/FormButton';
-import TrackStaff from './TrackStaff';
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -21,48 +20,47 @@ export default class AllStaffs extends React.Component {
   renderRow = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={()=> this.props.navigation.navigate('TrackStaff', {user: item})}
+        onPress={() => this.props.navigation.navigate('TrackStaff', { user: item })}
       >
-                  <StaffCard
-                     itemData={item}
+        <StaffCard
+          itemData={item}
 
-                 />
+        />
 
-                 </TouchableOpacity>
+      </TouchableOpacity>
     )
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // this.getData();
   }
 
   getData = () => {
 
 
-    this.setState({isLoading:true});
+    this.setState({ isLoading: true });
 
     var staffs = [];
 
     Firebase.database().ref('/staff/ProfileDetails').on('value', (data) => {
 
-        if (data.val()) {
-            var keys = Object.keys(data.val());
-            var temp = data.val();
+      if (data.val()) {
+        var keys = Object.keys(data.val());
+        var temp = data.val();
 
-            for(var i=0;i<keys.length;i++)
-            {
-                temp[keys[i]]['uid'] = keys[i];
-                staffs.push(temp[keys[i]]);
-            }
-
-
-
+        for (var i = 0; i < keys.length; i++) {
+          temp[keys[i]]['uid'] = keys[i];
+          staffs.push(temp[keys[i]]);
         }
 
 
-});
 
-  this.setState({allstaffs:staffs,isLoading:false});
+      }
+
+
+    });
+
+    this.setState({ allstaffs: staffs, isLoading: false });
 
 
 
@@ -75,16 +73,15 @@ export default class AllStaffs extends React.Component {
 
 
 
-    console.log("state :: "+this.state.allstaffs);
-    if(this.state.allstaffs!=null && this.state.allstaffs.length!=0)
-    {
+    console.log("state :: " + this.state.allstaffs);
+    if (this.state.allstaffs != null && this.state.allstaffs.length != 0) {
       return (
         <View style={{
-            flex: 1,
-            width: '90%',
-            alignSelf: 'center',
-            marginTop:20
-          }}>
+          flex: 1,
+          width: '90%',
+          alignSelf: 'center',
+          marginTop: 20
+        }}>
           <FlatList
             data={this.state.allstaffs}
             renderItem={this.renderRow}
@@ -100,25 +97,25 @@ export default class AllStaffs extends React.Component {
 
 
       return (
-             <View style={{
-               backgroundColor: '#f9fafd',
-               flex: 1,
-               justifyContent: 'center',
-               alignItems: 'center',
-               padding: 20
-             }}>
-               <Text style={{
-                 fontSize: 20,
-                 color: '#333333'
-               }}>Kindly refresh to see the contents</Text>
-                <View style={{padding:16}}>
-                          <FormButton
-                           buttonTitle="REFRESH"
-                           onPress={() => {this.getData()}}
-                          />
-                          </View>
-             </View>
-           );
+        <View style={{
+          backgroundColor: '#f9fafd',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 20
+        }}>
+          <Text style={{
+            fontSize: 20,
+            color: '#333333'
+          }}>Kindly refresh to see the contents</Text>
+          <View style={{ padding: 16 }}>
+            <FormButton
+              buttonTitle="REFRESH"
+              onPress={() => { this.getData() }}
+            />
+          </View>
+        </View>
+      );
     }
   }
 }

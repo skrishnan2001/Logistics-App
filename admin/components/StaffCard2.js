@@ -6,7 +6,7 @@ function StaffCard2({ staffName,staffNum,staffId }) {
     <View style={styles.card}>
       <View style={styles.detailsContainer}>
         <Text style={{ fontSize: 18, fontWeight: "bold", color: "#051d5f" }}>
-          STAFF NAME
+          NAME
         </Text>
         <Text style={{ fontSize: 15, color: "#2f4f4f" }}>{staffName}</Text>
         <Text
@@ -17,7 +17,7 @@ function StaffCard2({ staffName,staffNum,staffId }) {
             marginTop: 10,
           }}
         >
-          STAFF PHONE NUMBER
+          PHONE NUMBER
         </Text>
         <Text style={{ fontSize: 15, color: "#2f4f4f" }}>{staffNum}</Text>
         <Text
@@ -28,7 +28,7 @@ function StaffCard2({ staffName,staffNum,staffId }) {
             marginTop: 10,
           }}
         >
-          STAFF ID
+          UNIQUE ID
         </Text>
         <Text style={{ fontSize: 15, color: "#2f4f4f" }}>{staffId}</Text>
       </View>

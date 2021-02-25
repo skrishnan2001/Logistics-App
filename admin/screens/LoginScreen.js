@@ -54,16 +54,23 @@ const LoginScreen = ({ navigation }) => {
           onPress={() => login(email, password)}
         />
 
-        <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
-          <Text style={styles.navButtonText}>Forgot Password?</Text>
+        <TouchableOpacity
+          style={styles.forgotButton}
+          onPress={() => navigation.navigate("Phone-Login")}
+        >
+          <Text style={styles.navButtonText}>Sign in with OTP</Text>
         </TouchableOpacity>
+
+        {/* <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
+          <Text style={styles.navButtonText}>Forgot Password?</Text>
+        </TouchableOpacity> */}
 
         <SocialButton
           buttonTitle="Sign In with Google"
           btnType="google"
           color="#de4d41"
           backgroundColor="#f5e7ea"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
         <TouchableOpacity

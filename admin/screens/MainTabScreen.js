@@ -22,12 +22,14 @@ import ResetPassword from "./ResetPassword";
 import AllStaffs from "./AllStaffs";
 import TrackStaff from "./TrackStaff";
 import StaffProfile from "./StaffProfiles";
+import CustomerProfile from "./CustomerProfiles";
+import CustomerProfileTable from "./CustomerProfileTable";
 import StaffProfileTable from "./StaffProfileTable";
 import InvoicePDF from "./InvoicePDF";
 import Notifications from "./notifications";
 import LeaveRequests from "./LeaveRequests";
 
-import {DrawerContent} from "./DrawerContent";
+import { DrawerContent } from "./DrawerContent";
 
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
@@ -38,6 +40,7 @@ const SignInStack = createStackNavigator();
 const UnverifiedStack = createStackNavigator();
 const VerifiedStack = createStackNavigator();
 const AllStaffsStack = createStackNavigator();
+const AllCustomerStack = createStackNavigator();
 const StaffProfileStack = createStackNavigator();
 //const NotificationStack = createStackNavigator();
 const LeaveReqStack = createStackNavigator();
@@ -203,7 +206,7 @@ const StaffProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      <StaffProfileStack.Screen
+      {/* <StaffProfileStack.Screen
         name="NotificationScreen"
         component={Notifications}
         options={{
@@ -220,7 +223,7 @@ const StaffProfileStackScreen = ({ navigation }) => {
           },
           headerTintColor: "#35126e",
         }}
-      />
+      /> */}
       <StaffProfileStack.Screen
         name="StaffProfileTable"
         component={StaffProfileTable}
@@ -248,9 +251,100 @@ const StaffProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
+      <StaffProfileStack.Screen
+        name="TrackStaff"
+        component={TrackStaff}
+        options={{
+          headerShown: false,
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
     </StaffProfileStack.Navigator>
   );
 };
+
+
+
+const AllCustomerStackScreen = ({ navigation }) => {
+  return (
+    <AllCustomerStack.Navigator>
+      <AllCustomerStack.Screen
+        name="CustomerProfiles"
+        component={CustomerProfile}
+        options={{
+          headerShown: false,
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <AllCustomerStack.Screen
+        name="CustomerProfileTable"
+        component={CustomerProfileTable}
+        options={{
+          headerShown: false,
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </AllCustomerStack.Navigator>
+  );
+};
+
 
 const BookingStackScreen = ({ navigation }) => {
   return (
@@ -1087,11 +1181,11 @@ const TopNav = () => {
       swipeEnabled={true}
     >
       <TopTab.Screen
-        name="Staff Location"
-        component={AllStaffsStackScreen}
+        name="Customer Profile"
+        component={AllCustomerStackScreen}
         options={{}}
       />
-      <TopTab.Screen name="Profile" component={StaffProfileStackScreen} />
+      <TopTab.Screen name="Staff Profile" component={StaffProfileStackScreen} />
     </TopTab.Navigator>
   );
 };
