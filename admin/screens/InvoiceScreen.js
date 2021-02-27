@@ -35,6 +35,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     length,
     breadth,
     height,
+    dimension,
     weight,
     type,
     order_val,
@@ -50,14 +51,14 @@ const InvoiceScreen = ({ route, navigation }) => {
   bookingRef.on("value", function (data) {
     var newBooking = data.val();
     phone = newBooking.phone;
-    pickup = newBooking.residence_locality_pickup;
+    pickup = newBooking.street_pickup+", "+newBooking.residence_locality_pickup;
     pickup2 =
       newBooking.city_pickup +
       ", " +
       newBooking.state_pickup +
       ", " +
       newBooking.pincode_pickup;
-    delivery = newBooking.residence_locality_delivery;
+    delivery = newBooking.street_delivery+", "+newBooking.residence_locality_delivery;
     delivery2 =
       newBooking.city_delivery +
       "," +
@@ -68,6 +69,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     length = newBooking.length;
     breadth = newBooking.breadth;
     height = newBooking.height;
+    dimension=length+" * "+breadth+" * "+height;
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
@@ -89,6 +91,13 @@ const InvoiceScreen = ({ route, navigation }) => {
 
     if (newBooking.Priority_Booking == true) priority = "Yes";
     else priority = "No";
+
+    if (category == "Bulk") {
+      dimension = "Not Applicable";
+      weight = "Not Applicable";
+      type = "Not Applicable";
+      order_val = "Not Applicable";
+    }
   });
   const [curr, next] = useState({
     tableHead: ["", "Details"],
@@ -114,7 +123,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       [`${delivery2}`],
       [`${phone}`],
       [`${category}`],
-      [`${length}${breadth}${height}`],
+      [`${dimension}`],
       [`${weight}`],
       [`${type}`],
       [`${order_val}`],
@@ -167,7 +176,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       delivery2: delivery2,
       phone: phone,
       category: category,
-      volume: `${length}*${breadth}*${height}`,
+      volume: dimension,
       weight: weight,
       type: type,
       order_val: order_val,
@@ -247,7 +256,7 @@ const styles = StyleSheet.create({
   wrapper: { flexDirection: "row" },
   title: { flex: 1, backgroundColor: "#f6f8fa" },
   row: { height: 60 },
-  text: { textAlign: "center" },
+  text: { textAlign: "left",marginLeft:10 },
   top: {
     textAlign: "center",
     fontSize: 20,

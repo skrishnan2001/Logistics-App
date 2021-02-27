@@ -286,8 +286,6 @@ const StaffProfileStackScreen = ({ navigation }) => {
   );
 };
 
-
-
 const AllCustomerStackScreen = ({ navigation }) => {
   return (
     <AllCustomerStack.Navigator>
@@ -348,7 +346,6 @@ const AllCustomerStackScreen = ({ navigation }) => {
     </AllCustomerStack.Navigator>
   );
 };
-
 
 const BookingStackScreen = ({ navigation }) => {
   return (
@@ -581,6 +578,7 @@ const UnverifiedStackScreen = ({ navigation }) => {
         name="Unverified"
         component={Unverified}
         options={{
+          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -625,6 +623,7 @@ const UnverifiedStackScreen = ({ navigation }) => {
         name="Invoice-Unverified"
         component={InvoiceScreen}
         options={{
+          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -651,6 +650,7 @@ const UnverifiedStackScreen = ({ navigation }) => {
         name="Invoice-PDF"
         component={InvoicePDF}
         options={{
+          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -684,6 +684,7 @@ const VerifiedStackScreen = ({ navigation }) => {
         name="Verified"
         component={Verified}
         options={{
+          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -728,6 +729,7 @@ const VerifiedStackScreen = ({ navigation }) => {
         name="VerifiedOrder"
         component={InvoiceVerified}
         options={{
+          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -754,6 +756,7 @@ const VerifiedStackScreen = ({ navigation }) => {
         name="Invoice-PDF"
         component={InvoicePDF}
         options={{
+          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -1344,7 +1347,53 @@ const SortNav = () => {
     </SortTab.Navigator>
   );
 };
-
+const DeliveredTab = createMaterialTopTabNavigator();
+const DeliveredNav = () => {
+  return (
+    <DeliveredTab.Navigator
+      tabBarOptions={{
+        activeTintColor: "grey",
+        labelStyle: {
+          textTransform: "uppercase",
+          fontWeight: "bold",
+        },
+        inactiveTintColor: "white",
+        indicatorStyle: {
+          height: null,
+          top: "10%",
+          bottom: "10%",
+          width: "45%",
+          left: "2.5%",
+          marginVertical: 0,
+          borderRadius: 10,
+          backgroundColor: "orange",
+        },
+        style: {
+          width: "100%",
+          borderColor: "blue",
+          backgroundColor: "dodgerblue",
+          elevation: 5, // shadow on Android
+          shadowOpacity: 0.1, // shadow on iOS,
+          shadowRadius: 4, // shadow blur on
+          marginTop: "10%",
+          height: "9%",
+          justifyContent: "center",
+        },
+      }}
+      swipeEnabled={true}
+    >
+      <DeliveredTab.Screen
+        name="Verified"
+        component={VerifiedStackScreen}
+        options={{}}
+      />
+      <DeliveredTab.Screen
+        name="Unverified"
+        component={UnverifiedStackScreen}
+      />
+    </DeliveredTab.Navigator>
+  );
+};
 const TopTab = createMaterialTopTabNavigator();
 const TopNav = () => {
   return (
@@ -1408,15 +1457,14 @@ const DrawerNav = () => {
     >
       <Drawer.Screen name="Home" component={bottomTabNav} />
       <Drawer.Screen name="LeaveReq" component={LeaveStackScreen} />
-      <Drawer.Screen name="Booking" component={BookingStackScreen} />
+      <Drawer.Screen name="Bookings" component={BookingStackScreen} />
       <Drawer.Screen name="Orders" component={OrderStackScreen} />
       <Drawer.Screen name="Sort" component={SortNav} />
       <Drawer.Screen
         name="ScheduledOrders"
         component={ScheduledOrdersStackScreen}
       />
-      <Drawer.Screen name="Unverified" component={UnverifiedStackScreen} />
-      <Drawer.Screen name="Verified" component={VerifiedStackScreen} />
+      <Drawer.Screen name="Delivered" component={DeliveredNav} />
       <Drawer.Screen name="Request" component={RequestStackScreen} />
       <Drawer.Screen name="AllStaffs" component={TopNav} />
     </Drawer.Navigator>

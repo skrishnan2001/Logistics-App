@@ -61,7 +61,7 @@ export function DrawerContent(props) {
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-outline" color={color} size={size} />
+                <Icon name="calendar-account" color={color} size={size} />
               )}
               label="Leave Requests"
               onPress={() => {
@@ -79,7 +79,7 @@ export function DrawerContent(props) {
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-outline" color={color} size={size} />
+                <Icon name="clipboard-list" color={color} size={size} />
               )}
               label="Orders"
               onPress={() => {
@@ -88,45 +88,36 @@ export function DrawerContent(props) {
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-outline" color={color} size={size} />
+                <Icon name="sort" color={color} size={size} />
               )}
-              label="Sort"
+              label="Sort/Schedule"
               onPress={() => {
                 props.navigation.navigate("Sort");
               }}
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-outline" color={color} size={size} />
+                <Icon name="clipboard-list-outline" color={color} size={size} />
               )}
-              label="ScheduledOrders"
+              label="Scheduled Orders"
               onPress={() => {
                 props.navigation.navigate("ScheduledOrders");
               }}
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-outline" color={color} size={size} />
+                <Icon name="playlist-check" color={color} size={size} />
               )}
-              label="Unverified"
+              label="Delivered Orders"
               onPress={() => {
-                props.navigation.navigate("Unverified");
+                props.navigation.navigate("Delivered");
               }}
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-outline" color={color} size={size} />
+                <Icon name="account-cash" color={color} size={size} />
               )}
-              label="Verified"
-              onPress={() => {
-                props.navigation.navigate("Verified");
-              }}
-            />
-            <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="account-outline" color={color} size={size} />
-              )}
-              label="Request"
+              label="Staff Requests"
               onPress={() => {
                 props.navigation.navigate("Request");
               }}
@@ -135,7 +126,7 @@ export function DrawerContent(props) {
               icon={({ color, size }) => (
                 <Icon name="account-outline" color={color} size={size} />
               )}
-              label="AllStaffs"
+              label="User Profiles"
               onPress={() => {
                 props.navigation.navigate("AllStaffs");
               }}
