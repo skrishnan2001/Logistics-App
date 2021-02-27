@@ -19,6 +19,7 @@ import TrackMe from "./TrackMe";
 import InvoicePDF from "./InvoicePDF";
 import Appraisal from "./Appraisal";
 import Notifications from "./Notifications";
+import Reschedule from "./Reschedule";
 import { DrawerContent } from "./DrawerContent";
 
 const HomeStack = createStackNavigator();
@@ -304,6 +305,32 @@ const RequestsStackScreen = ({ navigation }) => {
       <RequestStack.Screen
         name="Appraisal"
         component={Appraisal}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <RequestStack.Screen
+        name="Reschedule"
+        component={Reschedule}
         options={{
           headerLeft: () => (
             <Icon.Button

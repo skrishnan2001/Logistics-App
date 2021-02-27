@@ -126,6 +126,15 @@ export function DrawerContent(props) {
               icon={({ color, size }) => (
                 <Icon name="account-outline" color={color} size={size} />
               )}
+              label="Request"
+              onPress={() => {
+                props.navigation.navigate("Request");
+              }}
+            />
+            <DrawerItem
+              icon={({ color, size }) => (
+                <Icon name="account-outline" color={color} size={size} />
+              )}
               label="AllStaffs"
               onPress={() => {
                 props.navigation.navigate("AllStaffs");

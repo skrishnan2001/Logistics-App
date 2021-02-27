@@ -35,7 +35,7 @@ const RequestsScreen = ({ navigation }) => {
 
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => {}}
+              onPress={() => navigation.navigate("Reschedule")}
             >
               <Text style={styles.textStyle}>Reschedule</Text>
             </TouchableOpacity>
