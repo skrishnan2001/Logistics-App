@@ -18,7 +18,6 @@ const RequestsScreen = ({ navigation }) => {
         
         <View style={styles.body}>
           <View style={styles.bodyContent}>
-            <Text style={styles.name}>{user.uid}</Text>
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => navigation.navigate("Leave")}
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
   bodyContent: {
     flex: 1,
     alignItems: "center",
-    padding: 30,
+    padding: 80,
   },
   name: {
     fontSize: 25,
