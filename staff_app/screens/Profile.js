@@ -83,7 +83,7 @@ const ProfileScreen = ({ navigation }) => {
         />
         <View style={styles.body}>
           <View style={styles.bodyContent}>
-            <Text style={styles.name}>{user.uid}</Text>
+            <Text style={styles.name}>Profile Details</Text>
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => navigation.navigate("MyOrders")}
