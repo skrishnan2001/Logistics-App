@@ -81,7 +81,7 @@ export default function PhoneLogin() {
           }
         }}
       />
-      <Text style={{ marginTop: 20 }}>Enter Verification code</Text>
+      <Text style={{ marginTop: 50 }}>Enter Verification code</Text>
       <TextInput
         style={{ marginVertical: 10, fontSize: 17 }}
         editable={!!verificationId}

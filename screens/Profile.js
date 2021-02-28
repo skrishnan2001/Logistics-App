@@ -94,7 +94,7 @@ const ProfileScreen = ({ navigation }) => {
         />
         <View style={styles.body}>
           <View style={styles.bodyContent}>
-            <Text style={styles.name}>{user.uid}</Text>
+            <Text style={styles.name}>Personal Details</Text>
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => navigation.navigate("UpdateUserDetails")}
@@ -153,11 +153,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     marginTop: 120,
   },
-  name: {
-    fontSize: 22,
-    color: "#FFFFFF",
-    fontWeight: "600",
-  },
+  // name: {
+  //   fontSize: 20,
+  //   color: "#FFFFFF",
+  //   fontWeight: "600",
+  // },
   body: {
     marginTop: 40,
   },
@@ -167,9 +167,10 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   name: {
-    fontSize: 28,
+    fontSize: 25,
     color: "#696969",
     fontWeight: "600",
+    marginVertical:10
   },
 
   buttonContainer: {

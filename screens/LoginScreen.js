@@ -80,6 +80,7 @@ const LoginScreen = ({ navigation }) => {
             Don't have an acount? Create here
           </Text>
         </TouchableOpacity>
+        
       </View>
     </TouchableWithoutFeedback>
   );
