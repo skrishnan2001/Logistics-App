@@ -9,8 +9,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import BookingScreen from "./Booking";
 import HomeScreen from "./HomeScreen";
 import Orders from "./Orders";
-import BreakBulkFilter from "./BreakBulkFilter";
-import BulkFilter from "./BulkFilter";
+import FilterScreen from "./FilterScreen";
 import Sort from "./Sort";
 import ScheduledOrders from "./ScheduledOrders";
 import Unverified from "./Unverified";
@@ -36,8 +35,7 @@ import { DrawerContent } from "./DrawerContent";
 const HomeStack = createStackNavigator();
 const BookingStack = createStackNavigator();
 const OrderStack = createStackNavigator();
-const BreakBulkSortStack = createStackNavigator();
-const BulkSortStack = createStackNavigator();
+const SortStack = createStackNavigator();
 const ScheduledOrdersStack = createStackNavigator();
 const SignInStack = createStackNavigator();
 const UnverifiedStack = createStackNavigator();
@@ -97,86 +95,6 @@ const HomeStackScreen = ({ navigation }) => {
         }}
       />
     </HomeStack.Navigator>
-  );
-};
-
-const AllStaffsStackScreen = ({ navigation }) => {
-  return (
-    <AllStaffsStack.Navigator>
-      <AllStaffsStack.Screen
-        name="AllStaffs"
-        component={AllStaffs}
-        options={{
-          headerShown: false,
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
-            ></Icon.Button>
-          ),
-          headerRight: () => (
-            <Icon.Button
-              name="ios-notifications"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.navigate("NotificationScreen")}
-            ></Icon.Button>
-          ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-      <AllStaffsStack.Screen
-        name="NotificationScreen"
-        component={Notifications}
-        options={{
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
-            ></Icon.Button>
-          ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-
-      <AllStaffsStack.Screen
-        name="TrackStaff"
-        component={TrackStaff}
-        options={{
-          headerShown: false,
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
-            ></Icon.Button>
-          ),
-          headerRight: () => (
-            <Icon.Button
-              name="ios-notifications"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.navigate("NotificationScreen")}
-            ></Icon.Button>
-          ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-    </AllStaffsStack.Navigator>
   );
 };
 
@@ -783,14 +701,13 @@ const VerifiedStackScreen = ({ navigation }) => {
   );
 };
 
-const BreakBulkSortStackScreen = ({ navigation }) => {
+const SortStackScreen = ({ navigation }) => {
   return (
-    <BreakBulkSortStack.Navigator>
-      <BreakBulkSortStack.Screen
+    <SortStack.Navigator>
+      <SortStack.Screen
         name="Filter"
-        component={BreakBulkFilter}
+        component={FilterScreen}
         options={{
-          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -813,11 +730,10 @@ const BreakBulkSortStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      <BreakBulkSortStack.Screen
+      <SortStack.Screen
         name="Sort"
         component={Sort}
         options={{
-          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -840,11 +756,10 @@ const BreakBulkSortStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      <BreakBulkSortStack.Screen
+      <SortStack.Screen
         name="Invoice"
         component={InvoiceOrders}
         options={{
-          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -867,11 +782,10 @@ const BreakBulkSortStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      <BreakBulkSortStack.Screen
+      <SortStack.Screen
         name="Invoice-PDF"
         component={InvoicePDF}
         options={{
-          headerShown: false,
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -894,122 +808,7 @@ const BreakBulkSortStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-    </BreakBulkSortStack.Navigator>
-  );
-};
-
-const BulkSortStackScreen = ({ navigation }) => {
-  return (
-    <BulkSortStack.Navigator>
-      <BulkSortStack.Screen
-        name="Filter"
-        component={BulkFilter}
-        options={{
-          headerShown: false,
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
-            ></Icon.Button>
-          ),
-          headerRight: () => (
-            <Icon.Button
-              name="ios-notifications"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.navigate("NotificationScreen")}
-            ></Icon.Button>
-          ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-      <BulkSortStack.Screen
-        name="Sort"
-        component={Sort}
-        options={{
-          headerShown: false,
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
-            ></Icon.Button>
-          ),
-          headerRight: () => (
-            <Icon.Button
-              name="ios-notifications"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.navigate("NotificationScreen")}
-            ></Icon.Button>
-          ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-      <BulkSortStack.Screen
-        name="Invoice"
-        component={InvoiceOrders}
-        options={{
-          headerShown: false,
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
-            ></Icon.Button>
-          ),
-          headerRight: () => (
-            <Icon.Button
-              name="ios-notifications"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.navigate("NotificationScreen")}
-            ></Icon.Button>
-          ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-      <BulkSortStack.Screen
-        name="Invoice-PDF"
-        component={InvoicePDF}
-        options={{
-          headerShown: false,
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.openDrawer()}
-            ></Icon.Button>
-          ),
-          headerRight: () => (
-            <Icon.Button
-              name="ios-notifications"
-              size={25}
-              backgroundColor="#88c7eb"
-              onPress={() => navigation.navigate("NotificationScreen")}
-            ></Icon.Button>
-          ),
-          headerStyle: {
-            backgroundColor: "#88c7eb",
-          },
-          headerTintColor: "#35126e",
-        }}
-      />
-    </BulkSortStack.Navigator>
+    </SortStack.Navigator>
   );
 };
 
@@ -1303,50 +1102,6 @@ const bottomTabNav = () => {
   );
 };
 
-const SortTab = createMaterialTopTabNavigator();
-const SortNav = () => {
-  return (
-    <SortTab.Navigator
-      tabBarOptions={{
-        activeTintColor: "grey",
-        labelStyle: {
-          textTransform: "uppercase",
-          fontWeight: "bold",
-        },
-        inactiveTintColor: "white",
-        indicatorStyle: {
-          height: null,
-          top: "10%",
-          bottom: "10%",
-          width: "45%",
-          left: "2.5%",
-          marginVertical: 0,
-          borderRadius: 10,
-          backgroundColor: "orange",
-        },
-        style: {
-          width: "100%",
-          borderColor: "blue",
-          backgroundColor: "dodgerblue",
-          elevation: 5, // shadow on Android
-          shadowOpacity: 0.1, // shadow on iOS,
-          shadowRadius: 4, // shadow blur on
-          marginTop: "10%",
-          height: "9%",
-          justifyContent: "center",
-        },
-      }}
-      swipeEnabled={true}
-    >
-      <SortTab.Screen
-        name="Break Bulk"
-        component={BreakBulkSortStackScreen}
-        options={{}}
-      />
-      <SortTab.Screen name="Bulk" component={BulkSortStackScreen} />
-    </SortTab.Navigator>
-  );
-};
 const DeliveredTab = createMaterialTopTabNavigator();
 const DeliveredNav = () => {
   return (
@@ -1394,6 +1149,7 @@ const DeliveredNav = () => {
     </DeliveredTab.Navigator>
   );
 };
+
 const TopTab = createMaterialTopTabNavigator();
 const TopNav = () => {
   return (
@@ -1459,7 +1215,7 @@ const DrawerNav = () => {
       <Drawer.Screen name="LeaveReq" component={LeaveStackScreen} />
       <Drawer.Screen name="Bookings" component={BookingStackScreen} />
       <Drawer.Screen name="Orders" component={OrderStackScreen} />
-      <Drawer.Screen name="Sort" component={SortNav} />
+      <Drawer.Screen name="Sort" component={SortStackScreen} />
       <Drawer.Screen
         name="ScheduledOrders"
         component={ScheduledOrdersStackScreen}
