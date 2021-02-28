@@ -131,6 +131,7 @@ function FilterScreen({ navigation }) {
         backgroundColor: "#f8f4f4",
         padding: 20,
         flex: 1,
+        margin:5
       }}
     >
       <Text style={[styles.text, { marginTop: 20 }]}>Search Filter</Text>
@@ -166,7 +167,7 @@ function FilterScreen({ navigation }) {
                 items={orders}
                 placeholder="Select order"
                 onChangeItem={item => order_type=item.value}
-                containerStyle={{ marginTop: 10, height: 50, width: 100 }}
+                containerStyle={{ marginTop: 10, height: 50, width: 160 }}
                 labelStyle={{ color: '#2e64e5' }}
               />
           </View>
@@ -176,14 +177,15 @@ function FilterScreen({ navigation }) {
                 items={vehicles}
                 placeholder="Select Vehicle"
                 onChangeItem={item => vehicle_type=item.value}
-                containerStyle={{ marginTop: 10, height: 50, width: 100 }}
+                containerStyle={{ marginTop: 10, height: 50, width: 160 }}
                 labelStyle={{ color: '#2e64e5' }}
               />
           </View>
           <View style={styles.buttonStyle}>
-            <FormButton buttonTitle="Filter" onPress={VehiclePicker} />
+            
           </View>
         </View>
+        <FormButton buttonTitle="Filter" onPress={VehiclePicker} />
       </View>
     </View>
   );
@@ -198,9 +200,10 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
     },
     buttonStyle: {
-      marginHorizontal: "2%",
+      marginRight:45,
       marginVertical: 10,
       width: "40%",
+      alignContent:"center"
     },
     inputContainer: {
       marginTop: 12.5,
