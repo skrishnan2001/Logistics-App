@@ -18,6 +18,7 @@ const RequestsScreen = ({ navigation }) => {
         
         <View style={styles.body}>
           <View style={styles.bodyContent}>
+          <Text style={styles.name}>Make a request</Text>
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => navigation.navigate("Leave")}
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   body: {
-    marginTop: 40,
+    marginTop: 0,
   },
   bodyContent: {
     flex: 1,
@@ -67,6 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "#696969",
     fontWeight: "600",
+    marginBottom:10
   },
 
   buttonContainer: {

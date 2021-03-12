@@ -20,13 +20,18 @@ import InvoicePDF from "./InvoicePDF";
 import Appraisal from "./Appraisal";
 import Notifications from "./Notifications";
 import Reschedule from "./Reschedule";
+import BarcodeInvoice from "./BarcodeInvoice";
 import { DrawerContent } from "./DrawerContent";
+import BarCodeScreen from "./BarCodeScreen";
+import BarcodeValue from "./BarcodeValue";
+import Capture from "./Capture";
 
 const HomeStack = createStackNavigator();
 const TrackMeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const RequestStack = createStackNavigator();
 const NotificationsStack = createStackNavigator();
+const BarcodeStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
   return (
@@ -136,9 +141,6 @@ const HomeStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-
-
-
       <HomeStack.Screen
         name="Invoice-PDF"
         component={InvoicePDF}
@@ -165,8 +167,6 @@ const HomeStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-
-
       {/* <HomeStack.Screen
         name="Notifications"
         component={Notifications}
@@ -186,6 +186,145 @@ const HomeStackScreen = ({ navigation }) => {
         }}
       /> */}
     </HomeStack.Navigator>
+  );
+};
+
+const BarcodeStackScreen = ({ navigation }) => {
+  return (
+    <BarcodeStack.Navigator>
+      <BarcodeStack.Screen
+        name="Barcode"
+        component={BarCodeScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+      <BarcodeStack.Screen
+        name="Retrieved-Order"
+        component={BarcodeValue}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <BarcodeStack.Screen
+        name="Capture-Order"
+        component={Capture}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+      <BarcodeStack.Screen
+        name="Barcode-Invoice"
+        component={BarcodeInvoice}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <BarcodeStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </BarcodeStack.Navigator>
   );
 };
 
@@ -569,7 +708,6 @@ const ProfileStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      
     </ProfileStack.Navigator>
   );
 };
@@ -666,7 +804,11 @@ const DrawerNav = () => {
       <Drawer.Screen name="Requests" component={RequestsStackScreen} />
       <Drawer.Screen name="Profile" component={ProfileStackScreen} />
       <Drawer.Screen name="TrackMe" component={TrackMeStackScreen} />
-      <Drawer.Screen name="Notifications" component={NotificationsStackScreen} />
+      <Drawer.Screen name="Barcode" component={BarcodeStackScreen} />
+      <Drawer.Screen
+        name="Notifications"
+        component={NotificationsStackScreen}
+      />
     </Drawer.Navigator>
   );
 };

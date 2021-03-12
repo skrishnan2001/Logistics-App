@@ -1,4 +1,4 @@
-import React, { useContext, useState, Component } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,9 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  CheckBox,
+  Button,
+  Alert,
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import FormButton from "../components/FormButton";
@@ -15,16 +18,17 @@ import {
   Row,
   Rows,
   Col,
-  Cols,
 } from "react-native-table-component";
 import * as firebase from "firebase";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { db } from "../firebaseConfig";
+import Icon from "react-native-vector-icons/FontAwesome";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 import { windowHeight, windowWidth } from "../utils/Dimensions";
-
-const InvoiceDelivered = ({ route, navigation }) => {
+const BarcodeInvoice = ({ route, navigation }) => {
+  const [image, setImage] = useState(null);
   const { user } = useContext(AuthContext);
-  var path = "";
+  const staff_id = user.uid;
   var pdf_obj;
   var phone,
     pickup,
@@ -35,22 +39,23 @@ const InvoiceDelivered = ({ route, navigation }) => {
     length,
     breadth,
     height,
-    dimension,
     weight,
-    type,
+    typee,
     order_val,
+    vehicle_type,
     insurance,
+    dimension,
     priority,
-    time,
-    shorttime,
-    vehicle_type;
-  const { user_id, order_id, staff_id } = route.params;
+    shorttime;
+  const { user_id, order_id } = route.params;
   var bookingRef = firebase
     .database()
     .ref(`/users/booking/${user_id}/${order_id}`);
   bookingRef.on("value", function (data) {
     var newBooking = data.val();
     phone = newBooking.phone;
+    console.log("-" + newBooking.phone);
+    console.log("--" + phone);
     pickup = newBooking.street_pickup + ", " + newBooking.residence_locality_pickup;
     pickup2 =
       newBooking.city_pickup +
@@ -59,7 +64,6 @@ const InvoiceDelivered = ({ route, navigation }) => {
       ", " +
       newBooking.pincode_pickup;
     delivery = newBooking.street_delivery + ", " + newBooking.residence_locality_delivery;
-
     delivery2 =
       newBooking.city_delivery +
       "," +
@@ -72,7 +76,7 @@ const InvoiceDelivered = ({ route, navigation }) => {
     height = newBooking.height;
     dimension = length + " * " + breadth + " * " + height;
     weight = newBooking.weight;
-    type = newBooking.type;
+    typee = newBooking.type;
     order_val = newBooking.order;
     vehicle_type = newBooking.vehicle;
     time = new Date(newBooking.Time);
@@ -86,7 +90,7 @@ const InvoiceDelivered = ({ route, navigation }) => {
       time.getHours() +
       ":" +
       time.getMinutes();
-
+    barcode = newBooking.isBarcodeScanned;
     if (newBooking.insurance == true) insurance = "Yes";
     else insurance = "No";
 
@@ -95,10 +99,11 @@ const InvoiceDelivered = ({ route, navigation }) => {
     if (category == "Bulk") {
       dimension = "Not Applicable";
       weight = "Not Applicable";
-      type = "Not Applicable";
+      typee = "Not Applicable";
       order_val = "Not Applicable";
     }
   });
+  console.log("---" + phone);
   const [curr, next] = useState({
     tableHead: ["", "Details"],
     tableTitle: [
@@ -112,6 +117,7 @@ const InvoiceDelivered = ({ route, navigation }) => {
       "Weight",
       "Type",
       "Order Value",
+      "Vehicle",
       "Insurance",
       "Prior-Booking",
       "Booking-Time",
@@ -125,24 +131,13 @@ const InvoiceDelivered = ({ route, navigation }) => {
       [`${category}`],
       [`${dimension}`],
       [`${weight}`],
-      [`${type}`],
+      [`${typee}`],
       [`${order_val}`],
+      [`${vehicle_type}`],
       [`${insurance}`],
       [`${priority}`],
       [`${shorttime}`],
     ],
-  });
-
-  var bref = firebase.database().ref(`/staff/Delivered/${staff_id}`);
-  bref.on("value", function (snapshot) {
-    const data = snapshot.val();
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-        var val = data[key];
-        if (val["userId"] == user_id && val["orderId"] == order_id)
-          path = val["base64"];
-      }
-    }
   });
   const pdf_gen = () => {
     pdf_obj = {
@@ -154,7 +149,7 @@ const InvoiceDelivered = ({ route, navigation }) => {
       category: category,
       volume: `${length}*${breadth}*${height}`,
       weight: weight,
-      type: type,
+      type: typee,
       order_val: order_val,
       vehicle_type: vehicle_type,
       insurance: insurance,
@@ -164,6 +159,76 @@ const InvoiceDelivered = ({ route, navigation }) => {
     console.log(pdf_obj);
   };
   const state = curr;
+  const checkPerm = async () => {
+    if (Platform.OS !== "web") {
+      const { status } = await Permissions.getAsync(Permissions.CAMERA);
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
+    }
+  };
+  const pickImage = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.base64);
+    }
+  };
+  const clickImage = () => {
+    checkPerm();
+    pickImage();
+  };
+  const conf_del = () => {
+    db.ref(`staff/Delivered/${staff_id}`).push({
+      staffId: staff_id,
+      orderId: order_id,
+      userId: user_id,
+      base64: image,
+    });
+    db.ref(`admin/Unverified`).push({
+      staffId: staff_id,
+      orderId: order_id,
+      userId: user_id,
+      base64: image,
+    });
+    db.ref(`/users/booking/${user_id}/${order_id}`).update({
+      isScheduled: "Delivered",
+    });
+    db.ref(`/users/booking/${user_id}/notifications`).push({
+      title: "ORDER DELIVERED",
+      body: `Order ${order_id} has been delivered`,
+    });
+    db.ref(`/admin/notifications`).push({
+      title: "ORDER DELIVERED",
+      body: `Order ${order_id} has been delivered`,
+    });
+    var node;
+    var dbRef = firebase.database().ref(`staff/Undelivered/${staff_id}/`);
+    dbRef.on("value", function (snapshot) {
+      const data = snapshot.val();
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          var val = data[key];
+          if (val["userId"] == user_id && val["orderId"] == order_id) {
+            node = key;
+          }
+        }
+      }
+    });
+    console.log(node);
+    db.ref(`staff/Undelivered/${staff_id}/${node}`).remove();
+
+    Alert.alert("The order has been delivered");
+    navigation.goBack();
+  };
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -190,22 +255,25 @@ const InvoiceDelivered = ({ route, navigation }) => {
             />
           </TableWrapper>
         </Table>
-        <View>
-          <Text style={styles.imageHead}>{"Delivery Image:"}</Text>
-          <Image
-            source={{
-              uri: `data:image/jpeg;base64,${path}`,
-            }}
-            style={styles.image}
-          />
+        {/* <FormButton buttonTitle="Back" onPress={() => navigation.goBack()} /> */}
+        {/* <FormButton buttonTitle="Capture consignment" onPress={clickImage} /> */}
+        <View style={[styles.bodyContent, { marginBottom: 0 }]}>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={
+              clickImage
+            }
+          >
+            <Icon size={45} color="black" name="camera" style={{ marginHorizontal: 10, fontWeight: 'bold' }} />
+            <Text style={styles.name}>Capture</Text>
+          </TouchableOpacity>
         </View>
-        {/* <FormButton
-          buttonTitle="Print Invoice as PDF"
-          onPress={() => {
-            pdf_gen();
-            navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
-          }}
-        /> */}
+        {image && (
+          <Image
+            source={{ uri: `data:image/jpeg;base64,${image}` }}
+            style={{ width: windowWidth / 1.11, height: windowHeight / 1.9 }}
+          />
+        )}
 
         <View style={[styles.bodyContent, { marginBottom: 0 }]}>
           <TouchableOpacity
@@ -220,16 +288,20 @@ const InvoiceDelivered = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <FormButton
-          buttonTitle={"Back to Orders"}
-          onPress={() => navigation.goBack()}
-        />
+        {/* <FormButton
+          buttonTitle="Print Invoice as PDF"
+          onPress={() => {
+            pdf_gen();
+            navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
+          }}
+        /> */}
+        <FormButton buttonTitle="Confirm delivery" onPress={() => conf_del()} />
       </View>
     </ScrollView>
   );
 };
 
-export default InvoiceDelivered;
+export default BarcodeInvoice;
 
 const styles = StyleSheet.create({
   container: {
@@ -238,6 +310,7 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
     backgroundColor: "#fff",
   },
+
   head: { height: 40, backgroundColor: "#f1f8ff" },
   wrapper: { flexDirection: "row" },
   title: { flex: 1, backgroundColor: "#f6f8fa" },
@@ -248,18 +321,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingBottom: 20,
     color: "#051d5f",
-  },
-  imageHead: {
-    marginVertical: "5%",
-    textAlign: "center",
-    color: "#c43d10",
-    fontSize: 20,
-    fontFamily: "serif",
-  },
-  image: {
-    flex: 1,
-    width: windowWidth / 1.11,
-    height: windowHeight / 1.9,
   },
   bodyContent: {
     flex: 1,

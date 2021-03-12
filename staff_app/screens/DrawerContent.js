@@ -91,6 +91,7 @@ export function DrawerContent(props) {
                 props.navigation.navigate("Profile");
               }}
             />
+            
              <DrawerItem
               icon={({ color, size }) => (
                 <Icon name="crosshairs-gps" color={color} size={size} />
@@ -98,6 +99,16 @@ export function DrawerContent(props) {
               label="Location"
               onPress={() => {
                 props.navigation.navigate("TrackMe");
+              }}
+            />
+
+          <DrawerItem
+              icon={({ color, size }) => (
+                <Icon name="barcode" color={color} size={size} />
+              )}
+              label="Barcode Scanner"
+              onPress={() => {
+                props.navigation.navigate("Barcode");
               }}
             />
           </Drawer.Section>

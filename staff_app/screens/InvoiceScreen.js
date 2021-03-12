@@ -1,3 +1,4 @@
+
 import React, { useContext, useState, useEffect } from "react";
 import {
   View,
@@ -7,6 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   CheckBox,
+  Button,
   Alert,
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
@@ -17,22 +19,20 @@ import {
   Row,
   Rows,
   Col,
-  Cols,
 } from "react-native-table-component";
 import * as firebase from "firebase";
 import { db } from "../firebaseConfig";
-import Icon from "react-native-vector-icons/Ionicons";
-import { Camera } from "expo-camera";
+// import Icon from "react-native-vector-icons/Ionicons";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 import { windowHeight, windowWidth } from "../utils/Dimensions";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const InvoiceScreen = ({ route, navigation }) => {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  const [ratio, setRatio] = useState("4:3");
-  const [camera, setcamera] = useState(null);
-  const [path, setpath] = useState("");
+  const [image, setImage] = useState(null);
   const { user } = useContext(AuthContext);
-  const [check, setcheck] = useState(false);
+  const [scanned, setScanned] = useState(false);
   const staff_id = user.uid;
   var pdf_obj;
   var phone,
@@ -51,7 +51,8 @@ const InvoiceScreen = ({ route, navigation }) => {
     insurance,
     dimension,
     priority,
-    shorttime;
+    shorttime,
+    barcode;
   const { user_id, order_id } = route.params;
   var bookingRef = firebase
     .database()
@@ -61,14 +62,14 @@ const InvoiceScreen = ({ route, navigation }) => {
     phone = newBooking.phone;
     console.log("-" + newBooking.phone);
     console.log("--" + phone);
-    pickup = newBooking.residence_locality_pickup;
+    pickup = newBooking.street_pickup + ", " + newBooking.residence_locality_pickup;
     pickup2 =
       newBooking.city_pickup +
       ", " +
       newBooking.state_pickup +
       ", " +
       newBooking.pincode_pickup;
-    delivery = newBooking.residence_locality_delivery;
+    delivery = newBooking.street_delivery + ", " + newBooking.residence_locality_delivery;
     delivery2 =
       newBooking.city_delivery +
       "," +
@@ -79,7 +80,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     length = newBooking.length;
     breadth = newBooking.breadth;
     height = newBooking.height;
-    dimension=length+" * "+breadth+" * "+height;
+    dimension = length + " * " + breadth + " * " + height;
     weight = newBooking.weight;
     typee = newBooking.type;
     order_val = newBooking.order;
@@ -95,6 +96,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       time.getHours() +
       ":" +
       time.getMinutes();
+    barcode = newBooking.isBarcodeScanned;
     if (newBooking.insurance == true) insurance = "Yes";
     else insurance = "No";
 
@@ -151,9 +153,9 @@ const InvoiceScreen = ({ route, navigation }) => {
       delivery2: delivery2,
       phone: phone,
       category: category,
-      volume: `${length}*${breadth}*${height}`,
+      volume: `${length}${breadth}${height}`,
       weight: weight,
-      type: type,
+      type: typee,
       order_val: order_val,
       vehicle_type: vehicle_type,
       insurance: insurance,
@@ -163,51 +165,56 @@ const InvoiceScreen = ({ route, navigation }) => {
     console.log(pdf_obj);
   };
   const state = curr;
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
-
-  const takePicture = () => {
-    if (camera) {
-      camera.takePictureAsync({
-        onPictureSaved: onPictureSaved,
-        skipProcessing: true,
-        base64: true,
-      });
+  const checkPerm = async () => {
+    if (Platform.OS !== "web") {
+      const { status } = await Permissions.getAsync(Permissions.CAMERA);
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
     }
   };
+  const pickImage = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true,
+    });
 
-  const onPictureSaved = (photo) => {
-    console.log(photo["height"]);
-    console.log(photo["uri"]);
-    setpath(photo["uri"]);
-    console.log(photo["width"]);
-    // console.log(photo["base64"]);
-    setpath(photo["base64"]);
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.base64);
+    }
   };
-
-
+  const clickImage = () => {
+    checkPerm();
+    pickImage();
+  };
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    db.ref(`/users/booking/${user_id}/${order_id}`).update({
+      barcodeNumber: data,
+      isBarcodeScanned: true,
+    });
+    Alert.alert(
+      `Bar code with type ${type} and data ${data} has been scanned!`
+    );
+    navigation.goBack();
+  };
   const conf_del = () => {
     db.ref(`staff/Delivered/${staff_id}`).push({
       staffId: staff_id,
       orderId: order_id,
       userId: user_id,
-      base64: path,
+      base64: image,
     });
     db.ref(`admin/Unverified`).push({
       staffId: staff_id,
       orderId: order_id,
       userId: user_id,
-      base64: path,
+      base64: image,
     });
     db.ref(`/users/booking/${user_id}/${order_id}`).update({
       isScheduled: "Delivered",
@@ -237,9 +244,8 @@ const InvoiceScreen = ({ route, navigation }) => {
     db.ref(`staff/Undelivered/${staff_id}/${node}`).remove();
 
     Alert.alert("The order has been delivered");
-    navigation.navigate("MyOrders");
+    navigation.goBack();
   };
-
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -266,67 +272,78 @@ const InvoiceScreen = ({ route, navigation }) => {
             />
           </TableWrapper>
         </Table>
-        <FormButton
-          buttonTitle="Back to Orders"
-          onPress={() => navigation.goBack()}
-        />
-        <View style={{ flexDirection: "column", marginTop: 10, padding: 10 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 1,
-              borderColor: "white",
-            }}
-          >
-            <CheckBox value={check} onValueChange={setcheck} />
-            <Text style={[styles.text, { fontSize: 20, fontWeight: "normal" }]}>
-              {" "}
-              Delivered
-            </Text>
+        {/* <FormButton buttonTitle="Back" onPress={() => navigation.goBack()} /> */}
+        {barcode == false ? (
+          <View style={styles.barcodeScanner}>
+            <BarCodeScanner
+              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+              style={StyleSheet.absoluteFillObject}
+            />
+            {scanned && (
+              <Button
+                title={"Tap to Scan Again"}
+                onPress={() => setScanned(false)}
+              />
+            )}
           </View>
-        </View>
-        <View style={{ marginRight: 10 }}>
-          <Text style={styles.imageHead}>
-            {"Capture the Consignment Delivered:"}
-          </Text>
-          <Camera
-            style={styles.camera}
-            type={type}
-            ratio={ratio}
-            autofocus={Camera.Constants.AutoFocus.on}
-            ref={(ref) => {
-              setcamera(ref);
-            }}
-          >
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={takePicture}>
-                <Icon
-                  name="ios-aperture"
-                  size={50}
-                  color="#FFFFFF"
-                  style={styles.cameraview}
-                />
+        ) : (
+          <View>
+            {/* <FormButton
+              buttonTitle="Capture consignment"
+              onPress={clickImage}
+            /> */}
+
+
+            <View style={[styles.bodyContent, { marginBottom: 0 }]}>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={
+                  clickImage
+                }
+              >
+                <Icon size={45} color="black" name="camera" style={{ marginHorizontal: 20, fontWeight: 'bold' }} />
+                <Text style={styles.name}>Capture</Text>
               </TouchableOpacity>
             </View>
-          </Camera>
-        </View>
-        <View>
-          <Text style={styles.imageHead}>{"Consignment Image:"}</Text>
-          <Image
-            source={{
-              uri: `data:image/jpeg;base64,${path}`,
-            }}
-            style={styles.image}
-          />
-        </View>
-        <FormButton
-          buttonTitle="Print Invoice as PDF"
-          onPress={() => {
-            pdf_gen();
-            navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
-          }}
-        />
-        <FormButton buttonTitle="Confirm delivery" onPress={() => conf_del()} />
+
+
+            {/* <Text>{"\n\nConsignment Image:"}</Text> */}
+            {image && (
+              <Image
+                source={{ uri: `data:image/jpeg;base64,${image}` }}
+                style={{
+                  marginTop: 10,
+                  width: windowWidth / 1.11,
+                  height: windowHeight / 2,
+                }}
+              />
+            )}
+            {/* <Text>{"\n"}</Text> */}
+            <View style={[styles.bodyContent, { marginBottom: 0 }]}>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => {
+                  pdf_gen();
+                  navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
+                }}
+              >
+                <Icon size={45} color="black" name="file-pdf-o" style={{ marginHorizontal: 20, fontWeight: 'bold' }} />
+                <Text style={styles.name}>Invoice PDF</Text>
+              </TouchableOpacity>
+            </View>
+            {/* <FormButton
+              buttonTitle="Print Invoice as PDF"
+              onPress={() => {
+                pdf_gen();
+                navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
+              }}
+            /> */}
+            <FormButton
+              buttonTitle="Confirm delivery"
+              onPress={() => conf_del()}
+            />
+          </View>
+        )}
       </View>
     </ScrollView>
   );
@@ -341,11 +358,7 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
     backgroundColor: "#fff",
   },
-  camera: {
-    flex: 1,
-    width: windowWidth / 1.11,
-    height: windowHeight / 1.9,
-  },
+
   head: { height: 40, backgroundColor: "#f1f8ff" },
   wrapper: { flexDirection: "row" },
   title: { flex: 1, backgroundColor: "#f6f8fa" },
@@ -357,23 +370,32 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     color: "#051d5f",
   },
-  button: {
-    alignItems: "center",
-  },
-  cameraview: {
-    marginTop: "80%",
-  },
-  imageHead: {
-    marginBottom: "5%",
-    marginTop: "5%",
-    textAlign: "center",
-    color: "#c43d10",
-    fontSize: 20,
-    fontFamily: "serif",
-  },
-  image: {
+  barcodeScanner: {
+    marginTop: 20,
     flex: 1,
     width: windowWidth / 1.11,
     height: windowHeight / 1.9,
+  },
+  bodyContent: {
+    flex: 1,
+    alignItems: "center",
+    //padding: 30,
+    marginVertical: 20
+  },
+  name: {
+    fontSize: 28,
+    color: "white",
+    fontWeight: "600",
+  },
+  buttonContainer: {
+    //marginTop: 10,
+    height: 55,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginBottom: 10,
+    width: '100%',
+    borderRadius: 10,
+    backgroundColor: "#00BFFF",
   },
 });
