@@ -140,6 +140,8 @@ const BookingScreen = ({ navigation }) => {
       Time: d,
       zone: zone,
       isScheduled: "Not Yet Scheduled",
+      isBarcodeScanned: false,
+      barcodeNumber: "",
     });
 
     //   var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
