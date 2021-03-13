@@ -193,7 +193,7 @@ const InvoiceTrack = ({ route, navigation }) => {
         />
         <FormButton
           buttonTitle="Back to Orders"
-          onPress={() => navigation.navigate("History")}
+          onPress={() => navigation.goBack()}
         />
       </View>
     </ScrollView>

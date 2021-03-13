@@ -87,6 +87,15 @@ export function DrawerContent(props) {
             />
             <DrawerItem
               icon={({ color, size }) => (
+                <Icon name="crosshairs-gps" color={color} size={size} />
+              )}
+              label="Track"
+              onPress={() => {
+                props.navigation.navigate("Track");
+              }}
+            />
+            <DrawerItem
+              icon={({ color, size }) => (
                 <Icon name="account-outline" color={color} size={size} />
               )}
               label="Profile"
