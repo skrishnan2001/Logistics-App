@@ -71,52 +71,57 @@ const ScheduledOrders = ({ navigation }) => {
       <Text style={[styles.text, { marginTop: 20 }]}>Search Filter</Text>
       <View style={{ flexDirection: "row" }}>
         <View style={styles.buttonStyle}>
-      <Picker
-        selectedValue={PickerSelectedVal}
-        style={[styles.inputsingle, { height: 50, width: 200 }]}
-        onValueChange={(itemValue, itemIndex) =>
-          setPickerSelectedVal(itemValue)
-        }
-      >
-        <Picker.Item
-          label="Order ID"
-          value="orderid"
-          style={styles.labelPicker}
-        />
-        <Picker.Item
-          label="User ID"
-          value="userid"
-          style={styles.labelPicker}
-        />
-      </Picker>
+          <Picker
+            selectedValue={PickerSelectedVal}
+            style={[styles.inputsingle, { height: 50, width: 200 }]}
+            onValueChange={(itemValue, itemIndex) =>
+              setPickerSelectedVal(itemValue)
+            }
+          >
+            <Picker.Item
+              label="Order ID"
+              value="orderid"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="User ID"
+              value="userid"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Staff ID"
+              value="staffid"
+              style={styles.labelPicker}
+            />
+          </Picker>
+        </View>
+        <View style={styles.buttonStyle}>
+          <Picker
+            selectedValue={Shift}
+            style={[styles.inputsingle, { height: 50, width: 100 }]}
+            onValueChange={(itemValue, itemIndex) => {
+              setshift_picker(itemValue);
+              setarrHolder([]);
+            }}
+          >
+            <Picker.Item
+              label="Shift 1"
+              value="Shift 1"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Shift 2"
+              value="Shift 2"
+              style={styles.labelPicker}
+            />
+            <Picker.Item
+              label="Shift 3"
+              value="Shift 3"
+              style={styles.labelPicker}
+            />
+          </Picker>
+        </View>
       </View>
-      <View style={styles.buttonStyle}>
-        <Picker
-          selectedValue={Shift}
-          style={[styles.inputsingle, { height: 50, width: 100 }]}
-          onValueChange={(itemValue, itemIndex) => {
-            setshift_picker(itemValue);
-            setarrHolder([]);
-          }}
-        >
-          <Picker.Item
-            label="Shift 1"
-            value="Shift 1"
-            style={styles.labelPicker}
-          />
-          <Picker.Item
-            label="Shift 2"
-            value="Shift 2"
-            style={styles.labelPicker}
-          />
-          <Picker.Item
-            label="Shift 3"
-            value="Shift 3"
-            style={styles.labelPicker}
-          />
-        </Picker>
-      </View>
-    </View>  
       <FormInput
         onChangeText={(text) => filter_func(text)}
         placeholderText="Search..."

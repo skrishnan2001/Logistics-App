@@ -29,6 +29,8 @@ import InvoicePDF from "./InvoicePDF";
 import Notifications from "./notifications";
 import LeaveRequests from "./LeaveRequests";
 import Request from "./Request";
+import Track from "./Track";
+import InvoiceTrackStaff from "./InvoiceTrackStaff";
 
 import { DrawerContent } from "./DrawerContent";
 
@@ -46,6 +48,7 @@ const StaffProfileStack = createStackNavigator();
 //const NotificationStack = createStackNavigator();
 const LeaveReqStack = createStackNavigator();
 const RequestStack = createStackNavigator();
+const TrackStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
   return (
@@ -859,9 +862,61 @@ const ScheduledOrdersStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      <ScheduledOrdersStack.Screen
+      {/* <ScheduledOrdersStack.Screen
         name="Invoice"
         component={InvoiceOrders}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      /> */}
+      <SortStack.Screen
+        name="Invoice"
+        component={InvoiceOrders}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <SortStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -1020,6 +1075,157 @@ const RequestStackScreen = ({ navigation }) => {
         }}
       />
     </RequestStack.Navigator>
+  );
+};
+
+const TrackStackScreen = ({ navigation }) => {
+  return (
+    <TrackStack.Navigator>
+      <TrackStack.Screen
+        name="Track"
+        component={Track}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <TrackStack.Screen
+        name="Track-Order"
+        component={InvoiceTrackStaff}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <StaffProfileStack.Screen
+        name="TrackStaff"
+        component={TrackStaff}
+        options={{
+          //headerShown: false,
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+      <TrackStack.Screen
+        name="NotificationScreen"
+        component={Notifications}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+      <TrackStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      
+      {/*<TrackStack.Screen
+        name="Invoice-Track"
+        component={InvoiceTrack}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />*/}
+    </TrackStack.Navigator>
   );
 };
 
@@ -1214,6 +1420,7 @@ const DrawerNav = () => {
       <Drawer.Screen name="Home" component={bottomTabNav} />
       <Drawer.Screen name="LeaveReq" component={LeaveStackScreen} />
       <Drawer.Screen name="Bookings" component={BookingStackScreen} />
+      <Drawer.Screen name="Track" component={TrackStackScreen} />
       <Drawer.Screen name="Orders" component={OrderStackScreen} />
       <Drawer.Screen name="Sort" component={SortStackScreen} />
       <Drawer.Screen
