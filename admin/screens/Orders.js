@@ -5,15 +5,21 @@ import { View, FlatList, Picker, StyleSheet, Text, Button } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormInput from "../components/FormInput";
 import FormButton from "../components/FormButton";
-import moment from 'moment';
-import DatePicker from 'react-native-datepicker';
+import moment from "moment";
+import DatePicker from "react-native-datepicker";
 
 const Orders = ({ navigation }) => {
-  const yourDate = new Date()
+  const yourDate = new Date();
   //const NewDate = moment(yourDate, 'DD-MM-YYYY')
-  const shorttime = yourDate.getDate() +  "-" +  (yourDate.getMonth() + 1) +  "-" +  yourDate.getFullYear()
+  const shorttime =
+    yourDate.getDate() +
+    "-" +
+    (yourDate.getMonth() + 1) +
+    "-" +
+    yourDate.getFullYear();
   const [selectdate, setdate] = useState(shorttime);
   //console.log(selectdate);
+
   var users = [];
   var dbRef = firebase.database().ref("/users/booking/");
   dbRef.on("value", function (snapshot) {
@@ -26,10 +32,19 @@ const Orders = ({ navigation }) => {
           if (val.hasOwnProperty(key_2)) {
             var val_2 = val[key_2];
             var checktime = new Date(val_2["Time"]);
-            var check_time = checktime.getDate() +  "-" +  (checktime.getMonth() + 1) +  "-" +  checktime.getFullYear();
-            if(check_time == selectdate){
+            var check_time =
+              checktime.getDate() +
+              "-" +
+              (checktime.getMonth() + 1) +
+              "-" +
+              checktime.getFullYear();
+            if (check_time == selectdate) {
               let user = {
-                id: new Date().getTime().toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString(),
+                id:
+                  new Date().getTime().toString() +
+                  Math.floor(
+                    Math.random() * Math.floor(new Date().getTime())
+                  ).toString(),
                 userid: key,
                 orderid: key_2,
                 type: val_2["type"],
@@ -97,9 +112,6 @@ const Orders = ({ navigation }) => {
     setarrHolder(newData);
   };
 
-  
-
-
   return (
     <View
       style={{
@@ -108,45 +120,44 @@ const Orders = ({ navigation }) => {
         flex: 1,
       }}
     >
+      <View>
+        <Text style={[styles.text, { marginTop: 20, flexDirection: "row" }]}>
+          Select Date
+        </Text>
 
-      <View >
-      <Text style={[styles.text, { marginTop: 20, flexDirection: "row" }]}>
-      Select Date
-          </Text>
-
-      <DatePicker
-        style={styles.datePickerStyle}
-        date={selectdate} // Initial date from state
-        mode="date" // The enum of date, datetime and time
-        placeholder="select date"
-        format="D-M-YYYY"
-        minDate={new Date(Date.now() - (24 * 60 * 60 * 1000 * 7 * 4 * 12))}
-        maxDate={new Date(Date.now() + (24 * 60 * 60 * 1000 * 7 * 4 * 12))}
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
-        customStyles={{
+        <DatePicker
+          style={styles.datePickerStyle}
+          date={selectdate} // Initial date from state
+          mode="date" // The enum of date, datetime and time
+          placeholder="select date"
+          format="D-M-YYYY"
+          minDate={new Date(Date.now() - 24 * 60 * 60 * 1000 * 7 * 4 * 12)}
+          maxDate={new Date(Date.now() + 24 * 60 * 60 * 1000 * 7 * 4 * 12)}
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
             dateIcon: {
-                //display: 'none',
-                position: 'absolute',
-                left: 0,
-                top: 4,
-                marginLeft: 0,
+              //display: 'none',
+              position: "absolute",
+              left: 0,
+              top: 4,
+              marginLeft: 0,
             },
             dateInput: {
-                marginLeft: 36,
-                borderWidth: 0
+              marginLeft: 36,
+              borderWidth: 0,
             },
-        }}
-        onDateChange={(date) => {
+          }}
+          onDateChange={(date) => {
             setdate(date);
             setarrHolder([]);
-        }}
-      /> 
+          }}
+        />
       </View>
       <View style={{ flexDirection: "row" }}>
         <View style={styles.buttonStyle}>
           <Text style={[styles.text, { marginTop: 20, flexDirection: "row" }]}>
-              Filter By
+            Filter By
           </Text>
 
           <Picker
@@ -226,9 +237,9 @@ const Orders = ({ navigation }) => {
         iconType="search1"
         autoCapitalize="none"
         autoCorrect={false}
-      /> 
+      />
 
-    {/*<FormButton buttonTitle="Find Orders" onPress={findorders} />*/}
+      {/*<FormButton buttonTitle="Find Orders" onPress={findorders} />*/}
 
       <FlatList
         data={arrHolder}
@@ -270,22 +281,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   datePickerStyle: {
-    width: '100%',
+    width: "100%",
     marginTop: 10,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 3,
     borderWidth: 0,
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 5
-},
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 5,
+  },
 });
-
-
-
-
-
-
-
-
-

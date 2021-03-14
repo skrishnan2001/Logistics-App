@@ -7,6 +7,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import BookingScreen from "./Booking";
+import BookingScreen_2 from "./Booking_2";
 import HomeScreen from "./HomeScreen";
 import Orders from "./Orders";
 import FilterScreen from "./FilterScreen";
@@ -31,6 +32,8 @@ import LeaveRequests from "./LeaveRequests";
 import Request from "./Request";
 import Track from "./Track";
 import InvoiceTrackStaff from "./InvoiceTrackStaff";
+import BarCodeScreen from "./BarCodeScreen";
+import BarcodeValue from "./BarcodeValue";
 
 import { DrawerContent } from "./DrawerContent";
 
@@ -49,6 +52,7 @@ const StaffProfileStack = createStackNavigator();
 const LeaveReqStack = createStackNavigator();
 const RequestStack = createStackNavigator();
 const TrackStack = createStackNavigator();
+const BarcodeStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation }) => {
   return (
@@ -274,6 +278,32 @@ const BookingStackScreen = ({ navigation }) => {
       <BookingStack.Screen
         name="Booking"
         component={BookingScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("NotificationScreen")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <BookingStack.Screen
+        name="Booking_2"
+        component={BookingScreen_2}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -597,7 +627,118 @@ const UnverifiedStackScreen = ({ navigation }) => {
     </UnverifiedStack.Navigator>
   );
 };
+const BarcodeStackScreen = ({ navigation }) => {
+  return (
+    <BarcodeStack.Navigator>
+      <BarcodeStack.Screen
+        name="Barcode"
+        component={BarCodeScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
 
+      <BarcodeStack.Screen
+        name="Retrieved-Order"
+        component={BarcodeValue}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+
+      <BarcodeStack.Screen
+        name="Invoice"
+        component={InvoiceOrders}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+      <BarcodeStack.Screen
+        name="Invoice-PDF"
+        component={InvoicePDF}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.openDrawer()}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-notifications"
+              size={25}
+              backgroundColor="#88c7eb"
+              onPress={() => navigation.navigate("Notifications")}
+            ></Icon.Button>
+          ),
+          headerStyle: {
+            backgroundColor: "#88c7eb",
+          },
+          headerTintColor: "#35126e",
+        }}
+      />
+    </BarcodeStack.Navigator>
+  );
+};
 const VerifiedStackScreen = ({ navigation }) => {
   return (
     <VerifiedStack.Navigator>
@@ -1198,7 +1339,7 @@ const TrackStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      
+
       {/*<TrackStack.Screen
         name="Invoice-Track"
         component={InvoiceTrack}
@@ -1430,6 +1571,7 @@ const DrawerNav = () => {
       <Drawer.Screen name="Delivered" component={DeliveredNav} />
       <Drawer.Screen name="Request" component={RequestStackScreen} />
       <Drawer.Screen name="AllStaffs" component={TopNav} />
+      <Drawer.Screen name="Barcode" component={BarcodeStackScreen} />
     </Drawer.Navigator>
   );
 };

@@ -141,6 +141,15 @@ export function DrawerContent(props) {
                 props.navigation.navigate("AllStaffs");
               }}
             />
+            <DrawerItem
+              icon={({ color, size }) => (
+                <Icon name="barcode" color={color} size={size} />
+              )}
+              label="Barcode Scanner"
+              onPress={() => {
+                props.navigation.navigate("Barcode");
+              }}
+            />
           </Drawer.Section>
           {/* <Drawer.Section title="Preferences">
                         <TouchableRipple /*onPress={() => {toggleTheme()}}>

@@ -132,7 +132,7 @@ const BookingScreen = ({ navigation }) => {
       breadth: dimension2,
       height: dimension3,
       weight: weight,
-      vehicle: vehicle_type,
+      vehicle: vehicle,
       type: type,
       order: order,
       insurance: check,
