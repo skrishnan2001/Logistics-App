@@ -27,6 +27,7 @@ const BookingScreen_2 = ({ route, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [Shift, setshift_picker] = useState("");
+  //var global_bar_code;
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -68,9 +69,22 @@ const BookingScreen_2 = ({ route, navigation }) => {
   const Schedule_order = () => {
     var orderId;
     var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
-    bookingRef.limitToLast(1).on("child_added", function (data) {
-      orderId = data.key;
+    bookingRef.on("value", function (snapshot) {
+      const data = snapshot.val();
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          var val = data[key];
+          if (val["barcodeNumber"] == booking.barcodeNumber) {
+            console.log("-----" + key);
+            orderId = key;
+            break;
+          }
+        }
+      }
+      //orderId = data.key;
+      console.log(orderId);
     });
+
     db.ref(`staff/Undelivered/${staff_picker}/`).push({
       userId: user.uid,
       orderId: orderId,

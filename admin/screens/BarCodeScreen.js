@@ -24,18 +24,21 @@ const BarCodeScreen = ({ navigation }) => {
     var uid, oid;
     dbRef.on("value", function (snapshot) {
       const data1 = snapshot.val();
+      console.log("-----");
+      console.log(data1);
       for (var key in data1) {
         if (data1.hasOwnProperty(key)) {
           var val = data1[key];
           for (var key2 in val) {
             if (val.hasOwnProperty(key2)) {
               var val2 = val[key2];
-              console.log(val2.barcodeNumber);
-              console.log(data);
+              console.log("from db" + val2.barcodeNumber);
+              console.log("from arg" + data);
               if (
                 val2.barcodeNumber == data &&
                 val2.isScheduled == "Undelivered"
               ) {
+                console.log("HEyyyyyy");
                 flag = 1;
                 uid = key;
                 oid = key2;
@@ -49,8 +52,10 @@ const BarCodeScreen = ({ navigation }) => {
         }
       }
     });
+    console.log("-----");
     console.log(uid);
     console.log(oid);
+    console.log("-----");
     navigation.navigate("Retrieved-Order", {
       user_id: uid,
       order_id: oid,
