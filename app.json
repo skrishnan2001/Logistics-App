@@ -29,7 +29,7 @@
       }
     },
     "web": {
-      "favicon": "./app/assets/favicon.png"
+      "favicon": "./assets/favicon.png"
     }
   }
 }
