@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/delivery_truck.png",
     "splash": {
-      "image": "./app/assets/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -29,7 +29,7 @@
       }
     },
     "web": {
-      "favicon": "./app/assets/favicon.png"
+      "favicon": "./assets/favicon.png"
     },
     "description": "Logistics Admin App"
   }
