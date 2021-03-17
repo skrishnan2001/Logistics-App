@@ -19,7 +19,7 @@ import {
 } from "react-native-table-component";
 import * as firebase from "firebase";
 
-const InvoiceAdmin = ({ navigation }) => {
+const InvoiceAdmin = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
   var pdf_obj;
   var phone,
@@ -39,21 +39,28 @@ const InvoiceAdmin = ({ navigation }) => {
     insurance,
     priority,
     shorttime;
-  var bookingRef = firebase.database().ref(`/admin/booking/`);
-  bookingRef.limitToLast(1).on("child_added", function (data) {
+  const { user_id, order_id } = route.params;
+  var bookingRef = firebase
+    .database()
+    .ref(`/users/booking/${user_id}/${order_id}`);
+  bookingRef.on("value", function (data) {
     var newBooking = data.val();
     // console.log("Pick-up: " + newBooking.residence_locality_pickup);
     // console.log("Drop: " + newBooking.residence_locality_delivery);
     // console.log("Phone number: " + newBooking.phone);
     phone = newBooking.phone;
-    pickup = newBooking.street_pickup+", "+newBooking.residence_locality_pickup;
+    pickup =
+      newBooking.street_pickup + ", " + newBooking.residence_locality_pickup;
     pickup2 =
       newBooking.city_pickup +
       ", " +
       newBooking.state_pickup +
       ", " +
       newBooking.pincode_pickup;
-    delivery =newBooking.street_delivery+", "+ newBooking.residence_locality_delivery;
+    delivery =
+      newBooking.street_delivery +
+      ", " +
+      newBooking.residence_locality_delivery;
     delivery2 =
       newBooking.city_delivery +
       "," +
@@ -64,7 +71,7 @@ const InvoiceAdmin = ({ navigation }) => {
     length = newBooking.length;
     breadth = newBooking.breadth;
     height = newBooking.height;
-    dimension=length+" * "+breadth+" * "+height;
+    dimension = length + " * " + breadth + " * " + height;
     weight = newBooking.weight;
     type = newBooking.type;
     order_val = newBooking.order;
@@ -203,7 +210,7 @@ const styles = StyleSheet.create({
   wrapper: { flexDirection: "row" },
   title: { flex: 1, backgroundColor: "#f6f8fa" },
   row: { height: 60 },
-  text: { textAlign: "left",marginLeft:10 },
+  text: { textAlign: "left", marginLeft: 10 },
   top: {
     textAlign: "center",
     fontSize: 20,

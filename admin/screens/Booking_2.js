@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import * as firebase from "firebase";
-import Cards from "../components/Cards";
+//import Cards from "../components/Cards";
 import FormButton from "../components/FormButton";
 import {
   View,
@@ -18,7 +18,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { AuthContext } from "../navigation/AuthProvider";
 import { windowHeight, windowWidth } from "../utils/Dimensions";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import Schedule from "../app/components/Schedule";
+//import Schedule from "../app/components/Schedule";
 
 const BookingScreen_2 = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
@@ -28,6 +28,7 @@ const BookingScreen_2 = ({ route, navigation }) => {
   const [scanned, setScanned] = useState(false);
   const [Shift, setshift_picker] = useState("");
   //var global_bar_code;
+  var orderId;
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -54,6 +55,22 @@ const BookingScreen_2 = ({ route, navigation }) => {
     { label: "Shift 2" },
     { label: "Shift 3" },
   ];
+  // const sorting_undefined = () => {
+  //   var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
+  //   bookingRef.on("value", function (snapshot) {
+  //     const data = snapshot.val();
+  //     for (var key in data) {
+  //       if (data.hasOwnProperty(key)) {
+  //         var val = data[key];
+  //         if (val["barcodeNumber"] == barcode) {
+  //           orderId = key;
+  //           break;
+  //         }
+  //       }
+  //     }
+  //   });
+  //   console.log("inside func" + orderId);
+  // };
 
   var booking = route.params.booking_data;
   const onSubmit = () => {
@@ -63,28 +80,10 @@ const BookingScreen_2 = ({ route, navigation }) => {
     booking.isBarcodeScanned = true;
     booking["StaffId"] = staff_picker;
     db.ref(`/users/booking/${user.uid}`).push(booking);
-    Schedule_order();
-    navigation.navigate("Invoice-admin");
-  };
-  const Schedule_order = () => {
-    var orderId;
     var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
-    bookingRef.on("value", function (snapshot) {
-      const data = snapshot.val();
-      for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-          var val = data[key];
-          if (val["barcodeNumber"] == booking.barcodeNumber) {
-            console.log("-----" + key);
-            orderId = key;
-            break;
-          }
-        }
-      }
-      //orderId = data.key;
-      console.log(orderId);
+    bookingRef.limitToLast(1).on("child_added", function (snapshot) {
+      orderId = snapshot.key;
     });
-
     db.ref(`staff/Undelivered/${staff_picker}/`).push({
       userId: user.uid,
       orderId: orderId,
@@ -99,11 +98,12 @@ const BookingScreen_2 = ({ route, navigation }) => {
       title: "Order Scheduled",
       body: `Order ${orderId} has been scheduled`,
     });
-    db.ref(`users/booking/${user.uid}/notifications`).push({
-      title: "Order Scheduled",
-      body: `Order ${orderId} has been scheduled`,
+    navigation.navigate("Invoice-admin", {
+      user_id: user.uid,
+      order_id: orderId,
     });
   };
+
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setbarcode(data);
