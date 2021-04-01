@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import * as firebase from "firebase";
-//import Cards from "../components/Cards";
+import Cards from "../components/Cards";
 import FormButton from "../components/FormButton";
 import {
   View,
@@ -18,7 +18,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { AuthContext } from "../navigation/AuthProvider";
 import { windowHeight, windowWidth } from "../utils/Dimensions";
 import { BarCodeScanner } from "expo-barcode-scanner";
-//import Schedule from "../app/components/Schedule";
+import Schedule from "../app/components/Schedule";
 
 const BookingScreen_2 = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
@@ -55,22 +55,6 @@ const BookingScreen_2 = ({ route, navigation }) => {
     { label: "Shift 2" },
     { label: "Shift 3" },
   ];
-  // const sorting_undefined = () => {
-  //   var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
-  //   bookingRef.on("value", function (snapshot) {
-  //     const data = snapshot.val();
-  //     for (var key in data) {
-  //       if (data.hasOwnProperty(key)) {
-  //         var val = data[key];
-  //         if (val["barcodeNumber"] == barcode) {
-  //           orderId = key;
-  //           break;
-  //         }
-  //       }
-  //     }
-  //   });
-  //   console.log("inside func" + orderId);
-  // };
 
   var booking = route.params.booking_data;
   const onSubmit = () => {

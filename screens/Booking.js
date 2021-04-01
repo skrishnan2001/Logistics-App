@@ -82,7 +82,7 @@ const BookingScreen = ({ navigation }) => {
 
   var vehicle_type = "";
   var zone = "";
-
+  var booking_data;
   const clearInput = () => {
     setpickup("");
     setpickup2("");
@@ -111,7 +111,7 @@ const BookingScreen = ({ navigation }) => {
   var str = pickup2.split(",");
   var str1 = delivery2.split(",");
   const addItems = (d) => {
-    db.ref(`/users/booking/${user.uid}`).push({
+    booking_data = {
       street_pickup: street1,
       landmark_pickup: land1,
       residence_locality_pickup: pickup,
@@ -142,7 +142,9 @@ const BookingScreen = ({ navigation }) => {
       isScheduled: "Not Yet Scheduled",
       isBarcodeScanned: false,
       barcodeNumber: "",
-    });
+      isAdmin: false,
+    };
+    db.ref(`/users/booking/${user.uid}`).push(booking_data);
 
     //   var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
     //   var OrderID;
@@ -206,7 +208,7 @@ const BookingScreen = ({ navigation }) => {
     var d = new Date();
     addItems(d.toString());
     alert("Order Placed Successfully");
-    navigation.navigate("Invoice-Booking");
+    navigation.navigate("Invoice-Booking", { invoice_data: booking_data });
   };
 
   const insurance = () => {

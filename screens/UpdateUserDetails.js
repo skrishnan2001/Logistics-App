@@ -18,7 +18,22 @@ export default function UpdateUserDetails({ navigation }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [username, setusername] = useState("");
-
+  const [image, setImage] = useState(
+    "https://bootdey.com/img/Content/avatar/avatar6.png"
+  );
+  const fetch_img = () => {
+    var key;
+    var ref = db.ref(`/users/ProfileDetails/${user.uid}`);
+    ref.once("value").then(function (snapshot) {
+      ref.limitToLast(1).on("child_added", function (snapshot) {
+        key = snapshot.key;
+      });
+      const data = snapshot.val()[key];
+      setImage(data["Img_uri"]);
+      console.log("done");
+    });
+  };
+  fetch_img();
   const addItems = () => {
     var ref = db.ref(`/users/ProfileDetails/`);
     ref.once("value").then(function (snapshot) {
@@ -59,9 +74,7 @@ export default function UpdateUserDetails({ navigation }) {
         <View style={styles.header}>
           <Image
             style={styles.avatar}
-            source={{
-              uri: "https://bootdey.com/img/Content/avatar/avatar6.png",
-            }}
+            source={{ uri: `data:image/jpeg;base64,${image}` }}
           />
         </View>
         <View style={{ marginTop: 65, marginHorizontal: 20 }}>

@@ -644,7 +644,7 @@ const TrackStackScreen = ({ navigation }) => {
           headerTintColor: "#35126e",
         }}
       />
-      <TrackStack.Screen
+      {/* <TrackStack.Screen
         name="Invoice-Booking"
         component={InvoiceBooking}
         options={{
@@ -661,7 +661,7 @@ const TrackStackScreen = ({ navigation }) => {
           },
           headerTintColor: "#35126e",
         }}
-      />
+      /> */}
 
       <TrackStack.Screen
         name="NotificationScreen"

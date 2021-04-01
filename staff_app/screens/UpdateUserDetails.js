@@ -21,7 +21,18 @@ export default function UpdateUserDetails({ navigation }) {
   const [vehicle, setVehicle] = useState("");
   const [vehicleNo, setVehicleNo] = useState("");
   const [aadhar, setaadhar] = useState("");
+  const [image, setImage] = useState(
+    "https://bootdey.com/img/Content/avatar/avatar6.png"
+  );
 
+  const fetch_img = () => {
+    var ref = db.ref(`/staff/ProfileDetails/${user.uid}`);
+    ref.once("value").then(function (snapshot) {
+      const data = snapshot.val();
+      setImage(data["Img_uri"]);
+    });
+  };
+  fetch_img();
   const addItems = () => {
     var ref = db.ref(`/staff/ProfileDetails/`);
     ref.once("value").then(function (snapshot) {
@@ -36,7 +47,7 @@ export default function UpdateUserDetails({ navigation }) {
           Phone_number: phone,
           Vehicle_Type: vehicle,
           VehicleNum: vehicleNo,
-          aadharNo: aadhar
+          aadharNo: aadhar,
         });
       } else {
         db.ref(`/staff/ProfileDetails/${user.uid}`).set({
@@ -44,12 +55,11 @@ export default function UpdateUserDetails({ navigation }) {
           Phone_number: phone,
           Vehicle_Type: vehicle,
           VehicleNum: vehicleNo,
-          aadharNo: aadhar
+          aadharNo: aadhar,
         });
       }
     });
   };
-
 
   const updateHandle = () => {
     addItems();
@@ -68,9 +78,7 @@ export default function UpdateUserDetails({ navigation }) {
           <View style={styles.header}>
             <Image
               style={styles.avatar}
-              source={{
-                uri: "https://bootdey.com/img/Content/avatar/avatar6.png",
-              }}
+              source={{ uri: `data:image/jpeg;base64,${image}` }}
             />
           </View>
           <View style={{ marginTop: 65, marginHorizontal: 20 }}>
@@ -170,13 +178,13 @@ const styles = StyleSheet.create({
   },
   buttonContainer1: {
     marginTop: 10,
-    width: '100%',
+    width: "100%",
     height: windowHeight / 15,
-    backgroundColor: '#2e64e5',
+    backgroundColor: "#2e64e5",
     padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 3,
-    marginBottom: 20
+    marginBottom: 20,
   },
 });

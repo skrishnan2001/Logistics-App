@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "staff_app",
-    "slug": "staff_app",
+    "name": "LogisticsStaff",
+    "slug": "logisticsstaff",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/delivery_truck.png",

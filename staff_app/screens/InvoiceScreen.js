@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect } from "react";
 import {
   View,
@@ -33,6 +32,7 @@ const InvoiceScreen = ({ route, navigation }) => {
   const [image, setImage] = useState(null);
   const { user } = useContext(AuthContext);
   const [scanned, setScanned] = useState(false);
+
   const staff_id = user.uid;
   var pdf_obj;
   var phone,
@@ -62,14 +62,18 @@ const InvoiceScreen = ({ route, navigation }) => {
     phone = newBooking.phone;
     console.log("-" + newBooking.phone);
     console.log("--" + phone);
-    pickup = newBooking.street_pickup + ", " + newBooking.residence_locality_pickup;
+    pickup =
+      newBooking.street_pickup + ", " + newBooking.residence_locality_pickup;
     pickup2 =
       newBooking.city_pickup +
       ", " +
       newBooking.state_pickup +
       ", " +
       newBooking.pincode_pickup;
-    delivery = newBooking.street_delivery + ", " + newBooking.residence_locality_delivery;
+    delivery =
+      newBooking.street_delivery +
+      ", " +
+      newBooking.residence_locality_delivery;
     delivery2 =
       newBooking.city_delivery +
       "," +
@@ -165,6 +169,7 @@ const InvoiceScreen = ({ route, navigation }) => {
     console.log(pdf_obj);
   };
   const state = curr;
+
   const checkPerm = async () => {
     if (Platform.OS !== "web") {
       const { status } = await Permissions.getAsync(Permissions.CAMERA);
@@ -188,6 +193,7 @@ const InvoiceScreen = ({ route, navigation }) => {
       setImage(result.base64);
     }
   };
+
   const clickImage = () => {
     checkPerm();
     pickImage();
@@ -219,9 +225,16 @@ const InvoiceScreen = ({ route, navigation }) => {
     db.ref(`/users/booking/${user_id}/${order_id}`).update({
       isScheduled: "Delivered",
     });
-    db.ref(`/users/booking/${user_id}/notifications`).push({
-      title: "ORDER DELIVERED",
-      body: `Order ${order_id} has been delivered`,
+    var bkref = db.ref(`/users/booking/${user_id}/${order_id}`);
+    bkref.on("value", function (snapshot) {
+      const data = snapshot.val();
+      console.log(data);
+      if (!data["isAdmin"]) {
+        db.ref(`/users/booking/${user_id}/notifications`).push({
+          title: "ORDER DELIVERED",
+          body: `Order ${order_id} has been delivered`,
+        });
+      }
     });
     db.ref(`/admin/notifications`).push({
       title: "ORDER DELIVERED",
@@ -279,6 +292,7 @@ const InvoiceScreen = ({ route, navigation }) => {
               onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
               style={StyleSheet.absoluteFillObject}
             />
+
             {scanned && (
               <Button
                 title={"Tap to Scan Again"}
@@ -293,19 +307,20 @@ const InvoiceScreen = ({ route, navigation }) => {
               onPress={clickImage}
             /> */}
 
-
             <View style={[styles.bodyContent, { marginBottom: 0 }]}>
               <TouchableOpacity
                 style={styles.buttonContainer}
-                onPress={
-                  clickImage
-                }
+                onPress={clickImage}
               >
-                <Icon size={45} color="black" name="camera" style={{ marginHorizontal: 20, fontWeight: 'bold' }} />
+                <Icon
+                  size={45}
+                  color="black"
+                  name="camera"
+                  style={{ marginHorizontal: 20, fontWeight: "bold" }}
+                />
                 <Text style={styles.name}>Capture</Text>
               </TouchableOpacity>
             </View>
-
 
             {/* <Text>{"\n\nConsignment Image:"}</Text> */}
             {image && (
@@ -327,7 +342,12 @@ const InvoiceScreen = ({ route, navigation }) => {
                   navigation.navigate("Invoice-PDF", { pdf_det: pdf_obj });
                 }}
               >
-                <Icon size={45} color="black" name="file-pdf-o" style={{ marginHorizontal: 20, fontWeight: 'bold' }} />
+                <Icon
+                  size={45}
+                  color="black"
+                  name="file-pdf-o"
+                  style={{ marginHorizontal: 20, fontWeight: "bold" }}
+                />
                 <Text style={styles.name}>Invoice PDF</Text>
               </TouchableOpacity>
             </View>
@@ -380,7 +400,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     //padding: 30,
-    marginVertical: 20
+    marginVertical: 20,
   },
   name: {
     fontSize: 28,
@@ -394,7 +414,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     marginBottom: 10,
-    width: '100%',
+    width: "100%",
     borderRadius: 10,
     backgroundColor: "#00BFFF",
   },
