@@ -4,10 +4,10 @@
 
 1.	npm install --global expo-cli
 2.	expo init Logistics-App
-3.  cd Logistics-App
-		Navigate to admin app files in /admin
-		Navigate to staff app files in /staff
-		Default location contains customer app files
+3.  cd Logistics-App : Navigate to customer app files<br/>
+    cd Logistics-App/admin : Navigate to admin app files<br/>
+    cd Logistics-App/staff : Navigate to staff app files<br/>
+		
 4.  npm install
 5.	expo start
 
