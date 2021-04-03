@@ -1,4 +1,4 @@
-# Logistics-CustomerApp
+# Logistics-App
 
 ## Installation guide
 
