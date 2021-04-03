@@ -3,8 +3,13 @@
 ## Installation guide
 
 1.	npm install --global expo-cli
-2.	expo init LogisticsCustomerApp
-3.	expo start
+2.	expo init Logistics-App
+3.  cd Logistics-App
+		Navigate to admin app files in /admin
+		Navigate to staff app files in /staff
+		Default location contains customer app files
+4.  npm install
+5.	expo start
 
 One way to run react native apps on your android device is to use expo. 
 Install the expo client in your android device and scan the obtained QR code in the terminal screen.
@@ -16,28 +21,12 @@ Ios : https://apps.apple.com/us/app/expo-client/id982107779
 
 ## Final Build(APK)
 
-npm run eject - don't this immediately. Do it only when you finished the entire app
+expo build:android - don't this immediately. Do it only when you finished the entire app
 
-Android : react-native run-android
+## Some of the features of the applications are:
 
-IOS : react-native run-ios
-
-## For Stack navigation (version 5) Install (One by one)
-
-npm install @react-navigation/native
-
-expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
-
-npm install @react-navigation/stack
-
-npm install @react-navigation/bottom-tabs
-
-## For User-Authentication(Using firebase)
-
-npm install firebase --save
-
-npm install @react-native-community/async-storage --save
-
-## for using stars in rating(Form.js)
-
-npm install react-native-stars --save 
+->Real-time location tracking
+->QR and Bar code detection
+->Generating Booking-Invoices as PDFs
+->OTP Authentication
+->Scheduling orders and leave requests to staff in a real-time scenario
