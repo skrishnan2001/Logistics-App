@@ -25,8 +25,8 @@ expo build:android - don't this immediately. Do it only when you finished the en
 
 ## Some of the features of the applications are:
 
-->Real-time location tracking
-->QR and Bar code detection
-->Generating Booking-Invoices as PDFs
-->OTP Authentication
-->Scheduling orders and leave requests to staff in a real-time scenario
+->Real-time location tracking\n
+->QR and Bar code detection\n
+->Generating Booking-Invoices as PDFs\n
+->OTP Authentication\n
+->Scheduling orders and leave requests to staff in a real-time scenario\n
