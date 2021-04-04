@@ -146,6 +146,7 @@ const BookingScreen = ({ navigation }) => {
       isScheduled: "Undelivered",
       isBarcodeScanned: false,
       barcodeNumber: "",
+      isAdmin:true,
     };
 
     //   var bookingRef = firebase.database().ref(`/users/booking/${user.uid}`);
