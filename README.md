@@ -14,9 +14,8 @@ A cross-platform mobile application developed using Expo, React-Native and Fireb
 - `expo init Logistics-App`
 - `cd Logistics-App` : Navigate to customer app files<br/>
 - `cd Logistics-App/admin` : Navigate to admin app files<br/>
-- `cd Logistics-App/staff` : Navigate to staff app files<br/>
-		
-- `npm install`
+- `cd Logistics-App/staff` : Navigate to staff app files<br/>	
+- `npm install` : To install the npm dependencies of the respective app
 - `expo start`
 
 One way to run react native apps on your android device is to use expo. <br/>
